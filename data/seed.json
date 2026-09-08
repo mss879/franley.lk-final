@@ -1,0 +1,862 @@
+{
+  "categories": [
+    {
+      "slug": "neckties",
+      "name": "Neckties",
+      "description": "Woven silk-finish neckties in a modern blade width.",
+      "position": 1,
+      "parent": null
+    },
+    {
+      "slug": "plain-ties",
+      "name": "Plain",
+      "description": "Solid, fine-twill neckties for everyday tailoring.",
+      "position": 2,
+      "parent": "neckties"
+    },
+    {
+      "slug": "striped-ties",
+      "name": "Stripes",
+      "description": "Diagonal repp stripes with a classic city finish.",
+      "position": 3,
+      "parent": "neckties"
+    },
+    {
+      "slug": "cufflinks",
+      "name": "Cufflinks",
+      "description": "Cufflink and tie clip sets in premium alloy, gift boxed.",
+      "position": 4,
+      "parent": null
+    }
+  ],
+  "products": [
+    {
+      "slug": "franley-silver-tone-cufflinks-textured-square-3",
+      "title": "Silver Engine-Turned Cufflink & Tie Clip Set",
+      "description": "Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.",
+      "price_cents": 179000,
+      "compare_at_cents": null,
+      "category": "cufflinks",
+      "color_name": null,
+      "color_hex": null,
+      "width_cm": null,
+      "images": [
+        "/products/franley-silver-tone-cufflinks-textured-square-3-1.webp",
+        "/products/franley-silver-tone-cufflinks-textured-square-3-2.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "franley-silver-tone-cufflinks-textured-square-2",
+      "title": "Silver Diamond Lattice Cufflink & Tie Clip Set",
+      "description": "Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.",
+      "price_cents": 179000,
+      "compare_at_cents": null,
+      "category": "cufflinks",
+      "color_name": null,
+      "color_hex": null,
+      "width_cm": null,
+      "images": [
+        "/products/franley-silver-tone-cufflinks-textured-square-2-1.webp",
+        "/products/franley-silver-tone-cufflinks-textured-square-2-2.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "franley-silver-tone-cufflinks-textured-square-1",
+      "title": "Silver Bevelled Frame Cufflink & Tie Clip Set",
+      "description": "Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.",
+      "price_cents": 179000,
+      "compare_at_cents": null,
+      "category": "cufflinks",
+      "color_name": null,
+      "color_hex": null,
+      "width_cm": null,
+      "images": [
+        "/products/franley-silver-tone-cufflinks-textured-square-1-1.webp",
+        "/products/franley-silver-tone-cufflinks-textured-square-1-2.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "franley-silver-tone-cufflinks-textured-square",
+      "title": "Silver Half-Grid Cufflink & Tie Clip Set",
+      "description": "Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.",
+      "price_cents": 179000,
+      "compare_at_cents": null,
+      "category": "cufflinks",
+      "color_name": null,
+      "color_hex": null,
+      "width_cm": null,
+      "images": [
+        "/products/franley-silver-tone-cufflinks-textured-square-1.webp",
+        "/products/franley-silver-tone-cufflinks-textured-square-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "two-tone-diagonal-stripe-tie-2",
+      "title": "Black & Purple Two-Tone Tie",
+      "description": "Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble. Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways. Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation. Features: Bold diagonal stripe pattern Contrasting two-tone design Textured ribbed finish Standard tie width Effortlessly pairs with multiple outfits Perfect for: Business meetings and presentations Job interviews Weddings and formal events Date nights and celebrations Where classic meets contemporary—this is the tie that works as hard as you do.",
+      "price_cents": 119000,
+      "compare_at_cents": null,
+      "category": "striped-ties",
+      "color_name": "Black",
+      "color_hex": "#0d1a25",
+      "width_cm": "6.5",
+      "images": [
+        "/products/two-tone-diagonal-stripe-tie-2-1.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "two-tone-diagonal-stripe-tie-1",
+      "title": "Navy & Black Two-Tone Tie",
+      "description": "Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble. Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways. Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation. Features: Bold diagonal stripe pattern Contrasting two-tone design Textured ribbed finish Standard tie width Effortlessly pairs with multiple outfits Perfect for: Business meetings and presentations Job interviews Weddings and formal events Date nights and celebrations Where classic meets contemporary—this is the tie that works as hard as you do.",
+      "price_cents": 119000,
+      "compare_at_cents": null,
+      "category": "striped-ties",
+      "color_name": "Navy",
+      "color_hex": "#152959",
+      "width_cm": "6.5",
+      "images": [
+        "/products/two-tone-diagonal-stripe-tie-1-1.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "two-tone-diagonal-stripe-tie",
+      "title": "Black & Graphite Two-Tone Tie",
+      "description": "Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble. Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways. Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation. Features: Bold diagonal stripe pattern Contrasting two-tone design Textured ribbed finish Standard tie width Effortlessly pairs with multiple outfits Perfect for: Business meetings and presentations Job interviews Weddings and formal events Date nights and celebrations Where classic meets contemporary—this is the tie that works as hard as you do.",
+      "price_cents": 119000,
+      "compare_at_cents": null,
+      "category": "striped-ties",
+      "color_name": "Black",
+      "color_hex": "#0c1625",
+      "width_cm": "6.5",
+      "images": [
+        "/products/two-tone-diagonal-stripe-tie-1.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "classic-black-grey-diagonal-stripe-tie",
+      "title": "Black & Graphite Two-Tone Tie II",
+      "description": "Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble. Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways. Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation. Features: Bold diagonal stripe pattern Contrasting two-tone design Textured ribbed finish Standard tie width Effortlessly pairs with multiple outfits Perfect for: Business meetings and presentations Job interviews Weddings and formal events Date nights and celebrations Where classic meets contemporary—this is the tie that works as hard as you do.",
+      "price_cents": 119000,
+      "compare_at_cents": null,
+      "category": "striped-ties",
+      "color_name": "Black",
+      "color_hex": "#0b1725",
+      "width_cm": "6.5",
+      "images": [
+        "/products/classic-black-grey-diagonal-stripe-tie-1.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "41",
+      "title": "Magenta Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Magenta",
+      "color_hex": "#871657",
+      "width_cm": "6",
+      "images": [
+        "/products/41-1.webp",
+        "/products/41-2.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "40",
+      "title": "Pewter Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Pewter",
+      "color_hex": "#8b738b",
+      "width_cm": "6",
+      "images": [
+        "/products/40-1.webp",
+        "/products/40-2.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "39",
+      "title": "Orange Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Orange",
+      "color_hex": "#b67a43",
+      "width_cm": "6",
+      "images": [
+        "/products/39-1.webp",
+        "/products/39-2.webp"
+      ],
+      "featured": true,
+      "stock": 25
+    },
+    {
+      "slug": "38",
+      "title": "Graphite Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Graphite",
+      "color_hex": "#4c5964",
+      "width_cm": "6",
+      "images": [
+        "/products/38-1.webp",
+        "/products/38-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "37",
+      "title": "Black Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Black",
+      "color_hex": "#1b2428",
+      "width_cm": "6",
+      "images": [
+        "/products/37-1.webp",
+        "/products/37-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "36",
+      "title": "Silver Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Silver",
+      "color_hex": "#a8b7b8",
+      "width_cm": "6",
+      "images": [
+        "/products/36-1.webp",
+        "/products/36-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "35",
+      "title": "Silver Silk-Finish Tie II",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Silver",
+      "color_hex": "#c7d7d7",
+      "width_cm": "6",
+      "images": [
+        "/products/35-1.webp",
+        "/products/35-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "34",
+      "title": "Black Silk-Finish Tie II",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Black",
+      "color_hex": "#392623",
+      "width_cm": "6",
+      "images": [
+        "/products/34-1.webp",
+        "/products/34-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "33",
+      "title": "Teal Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Teal",
+      "color_hex": "#166986",
+      "width_cm": "6",
+      "images": [
+        "/products/33-1.webp",
+        "/products/33-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "32",
+      "title": "Navy Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Navy",
+      "color_hex": "#253a68",
+      "width_cm": "6",
+      "images": [
+        "/products/32-1.webp",
+        "/products/32-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "31",
+      "title": "Navy Silk-Finish Tie II",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Navy",
+      "color_hex": "#293866",
+      "width_cm": "6",
+      "images": [
+        "/products/31-1.webp",
+        "/products/31-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "30",
+      "title": "Teal Silk-Finish Tie II",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Teal",
+      "color_hex": "#375b86",
+      "width_cm": "6",
+      "images": [
+        "/products/30-1.webp",
+        "/products/30-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "29",
+      "title": "Cobalt Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Cobalt",
+      "color_hex": "#3767c9",
+      "width_cm": "6",
+      "images": [
+        "/products/29-1.webp",
+        "/products/29-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "28",
+      "title": "Bronze Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Bronze",
+      "color_hex": "#956936",
+      "width_cm": "6",
+      "images": [
+        "/products/28-1.webp",
+        "/products/28-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "27",
+      "title": "Pewter Silk-Finish Tie II",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Pewter",
+      "color_hex": "#9b9478",
+      "width_cm": "6",
+      "images": [
+        "/products/27-1.webp",
+        "/products/27-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "26",
+      "title": "Pewter Silk-Finish Tie III",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Pewter",
+      "color_hex": "#8c8884",
+      "width_cm": "6",
+      "images": [
+        "/products/26-1.webp",
+        "/products/26-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "25",
+      "title": "Beige Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Beige",
+      "color_hex": "#d9d8b9",
+      "width_cm": "6",
+      "images": [
+        "/products/25-1.webp",
+        "/products/25-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "24",
+      "title": "Beige Silk-Finish Tie II",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Beige",
+      "color_hex": "#d8d476",
+      "width_cm": "6",
+      "images": [
+        "/products/24-1.webp",
+        "/products/24-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "23",
+      "title": "Camel Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Camel",
+      "color_hex": "#b7b985",
+      "width_cm": "6",
+      "images": [
+        "/products/23-1.webp",
+        "/products/23-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "22",
+      "title": "Brick Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Brick",
+      "color_hex": "#cb4737",
+      "width_cm": "6",
+      "images": [
+        "/products/22-1.webp",
+        "/products/22-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "21",
+      "title": "Plum Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Plum",
+      "color_hex": "#84466a",
+      "width_cm": "6",
+      "images": [
+        "/products/21-1.webp",
+        "/products/21-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "20",
+      "title": "Purple Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Purple",
+      "color_hex": "#56449a",
+      "width_cm": "6",
+      "images": [
+        "/products/20-1.webp",
+        "/products/20-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "19",
+      "title": "Lavender Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Lavender",
+      "color_hex": "#ab95c7",
+      "width_cm": "6",
+      "images": [
+        "/products/19-1.webp",
+        "/products/19-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "18",
+      "title": "Burgundy Silk-Finish Tie",
+      "description": "A fine twill necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Burgundy",
+      "color_hex": "#682426",
+      "width_cm": "6",
+      "images": [
+        "/products/18-1.webp",
+        "/products/18-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "17",
+      "title": "Sky Blue Silk-Finish Tie",
+      "description": "Dive into sophistication with our Aqua Elegance Tie, the perfect blend of vibrancy and refinement. This tie boasts a refreshing aqua hue, reminiscent of serene ocean waves, making it ideal for adding a touch of calm confidence to your attire. Crafted from premium materials, its smooth texture and subtle sheen make it a versatile choice for both formal and semi-formal occasions. Pair it with a crisp white shirt for a classic look, or experiment with pastel tones for a modern twist. Whether you're heading to a wedding, a business meeting, or a night out, the Aqua Elegance Tie ensures you'll always stand out with understated charm.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "plain-ties",
+      "color_name": "Sky Blue",
+      "color_hex": "#79c8c3",
+      "width_cm": "6",
+      "images": [
+        "/products/17-1.webp",
+        "/products/17-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "4",
+      "title": "Midnight Blue & Black Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Midnight Blue",
+      "color_hex": "#19242b",
+      "width_cm": "6",
+      "images": [
+        "/products/4-1.webp",
+        "/products/4-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "16",
+      "title": "Black & Graphite Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Black",
+      "color_hex": "#1a232a",
+      "width_cm": "6",
+      "images": [
+        "/products/16-1.webp",
+        "/products/16-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "15",
+      "title": "Navy & Royal Blue Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Navy",
+      "color_hex": "#152658",
+      "width_cm": "6",
+      "images": [
+        "/products/15-1.webp",
+        "/products/15-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "14",
+      "title": "Charcoal & Black Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Charcoal",
+      "color_hex": "#35444a",
+      "width_cm": "6",
+      "images": [
+        "/products/14-1.webp",
+        "/products/14-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "13",
+      "title": "Chocolate & Pewter Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Chocolate",
+      "color_hex": "#533838",
+      "width_cm": "6",
+      "images": [
+        "/products/13-1.webp",
+        "/products/13-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "12",
+      "title": "Wine & Crimson Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Wine",
+      "color_hex": "#59222c",
+      "width_cm": "6",
+      "images": [
+        "/products/12-1.webp",
+        "/products/12-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "11",
+      "title": "Midnight Blue & Emerald Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Midnight Blue",
+      "color_hex": "#0d3b33",
+      "width_cm": "6",
+      "images": [
+        "/products/11-1.webp",
+        "/products/11-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "10",
+      "title": "Wine & Silver Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Wine",
+      "color_hex": "#571925",
+      "width_cm": "6",
+      "images": [
+        "/products/10-1.webp",
+        "/products/10-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "9",
+      "title": "Royal Blue Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Royal Blue",
+      "color_hex": "#0c2788",
+      "width_cm": "6",
+      "images": [
+        "/products/9-1.webp",
+        "/products/9-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "8",
+      "title": "Olive & Wine Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Olive",
+      "color_hex": "#776a45",
+      "width_cm": "6",
+      "images": [
+        "/products/8-1.webp",
+        "/products/8-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "7",
+      "title": "Crimson & Navy Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Crimson",
+      "color_hex": "#872626",
+      "width_cm": "6",
+      "images": [
+        "/products/7-1.webp",
+        "/products/7-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "5",
+      "title": "Navy & Crimson Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Navy",
+      "color_hex": "#0c2379",
+      "width_cm": "6",
+      "images": [
+        "/products/5-1.webp",
+        "/products/5-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "3",
+      "title": "Black & Graphite Stripe Tie II",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Black",
+      "color_hex": "#141c23",
+      "width_cm": "6",
+      "images": [
+        "/products/3-1.webp",
+        "/products/3-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "2",
+      "title": "Navy & Teal Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Navy",
+      "color_hex": "#0b247a",
+      "width_cm": "6",
+      "images": [
+        "/products/2-1.webp",
+        "/products/2-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "1",
+      "title": "Royal Blue & Navy Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Royal Blue",
+      "color_hex": "#132c87",
+      "width_cm": "6",
+      "images": [
+        "/products/1-1.webp",
+        "/products/1-2.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    },
+    {
+      "slug": "blue-black",
+      "title": "Black & Navy Stripe Tie",
+      "description": "A woven diagonal necktie cut to a modern 6cm blade. Constructed from a micro-textured fabric with a soft interlining that holds a clean, symmetrical knot and drapes without breaking. Hand-finished with a slip stitch and a matching keeper loop. Presented in FRANLEY packaging.",
+      "price_cents": 119000,
+      "compare_at_cents": 0,
+      "category": "striped-ties",
+      "color_name": "Black",
+      "color_hex": "#0d1318",
+      "width_cm": "6",
+      "images": [
+        "/products/blue-black-1.webp"
+      ],
+      "featured": false,
+      "stock": 25
+    }
+  ]
+}

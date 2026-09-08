@@ -30,8 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Real environment files never get committed. The template does — it is the
+# only record of which variables the app needs.
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +42,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.DS_Store
+
+.mailbuild/
+public/_mailpreview/

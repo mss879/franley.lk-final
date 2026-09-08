@@ -1,26 +1,144 @@
 @import "tailwindcss";
 
+/* ============================================================
+   FRANLEY — Design tokens
+   Brand maroon #711625 sampled from the official logo mark.
+   ============================================================ */
+@theme {
+  /* --- Wine / burgundy scale (brand) --- */
+  --color-wine-50:  #FCF4F5;
+  --color-wine-100: #F8E4E7;
+  --color-wine-200: #F0C7CD;
+  --color-wine-300: #E29AA6;
+  --color-wine-400: #CD6377;
+  --color-wine-500: #B03A51;
+  --color-wine-600: #8E2239;
+  --color-wine-700: #711625; /* ← official brand maroon */
+  --color-wine-800: #5C1220;
+  --color-wine-900: #400B16;
+  --color-wine-950: #26060D;
+
+  /* --- Champagne / gold accent --- */
+  --color-champagne-100: #F6EEDF;
+  --color-champagne-200: #EADCC0;
+  --color-champagne-300: #DCC79B;
+  --color-champagne-400: #CBAE73;
+  --color-champagne-500: #B8955A;
+  --color-champagne-600: #9A7A45;
+
+  /* --- Warm neutrals (product shots sit on white, so cards go cream) --- */
+  --color-cream-50:  #FDFBF7;
+  --color-cream-100: #F9F5EE;
+  --color-cream-200: #F2EBE0;
+  --color-cream-300: #E6DBCA;
+  --color-ink-400: #8C8279;
+  --color-ink-600: #55504A;
+  --color-ink-800: #2B2825;
+  --color-ink-900: #171514;
+
+  /* --- Typography --- */
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Motion --- */
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* --- Radii --- */
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --page: var(--color-cream-50);
+  --page-fg: var(--color-ink-900);
+  color-scheme: light;
+
+  /* Focus-indicator colour. DESIGN.md §7 mandates a champagne-400 ring, but
+     champagne-400 (#CBAE73) is only 2.06:1 against cream-50 and 2.13:1 against
+     white — it fails WCAG SC 1.4.11 Non-text Contrast (3:1) on every light
+     surface in the site. wine-700 is 11.02:1 there. On burgundy the ordering
+     reverses (champagne-400 is 5.34:1 on wine-700, 7.70:1 on wine-900), so the
+     ring colour is carried in this property and any burgundy container flips it
+     for everything inside by adding `focus-on-wine`. */
+  --focus-ring: var(--color-wine-700);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--page);
+    color: var(--page-fg);
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background: var(--color-wine-700);
+    color: var(--color-cream-50);
+  }
+  /* Display type wants tight, optical tracking */
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Burgundy surfaces flip the focus ring back to champagne — see --focus-ring
+     in :root. Custom properties inherit, so setting this on a container covers
+     every focusable element inside it. */
+  .focus-on-wine {
+    --focus-ring: var(--color-champagne-400);
+  }
+
+  /* Second product shot on a card: revealed on hover, so only pointer devices
+     should pay for it. display:none keeps its lazy load from ever firing. */
+  @media (hover: none) {
+    .hover-only { display: none; }
+  }
+
+  /* Small caps eyebrow label used throughout the site */
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  /* Subtle woven-silk texture for burgundy panels */
+  .silk-texture {
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(-45deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 4px);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-fade-up { animation: fade-up 0.7s var(--ease-lux) both; }
+.animate-marquee { animation: marquee 32s linear infinite; }
+.animate-spin-slow { animation: spin-slow 18s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

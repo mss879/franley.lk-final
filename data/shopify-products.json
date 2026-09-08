@@ -1,0 +1,3723 @@
+[
+  {
+    "id": 12213035139390,
+    "title": "Franley Silver-Tone Cufflinks – Textured Square",
+    "handle": "franley-silver-tone-cufflinks-textured-square-3",
+    "body_html": "<p>Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.</p>",
+    "published_at": "2025-12-19T09:00:41+05:30",
+    "created_at": "2025-12-19T08:59:53+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52759963042110,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1790.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12213035139390,
+        "created_at": "2025-12-19T08:59:53+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 53058563113278,
+        "created_at": "2025-12-19T09:00:15+05:30",
+        "position": 1,
+        "updated_at": "2025-12-19T09:00:17+05:30",
+        "product_id": 12213035139390,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/4.jpg?v=1766115017",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "id": 53058448785726,
+        "created_at": "2025-12-19T08:43:19+05:30",
+        "position": 2,
+        "updated_at": "2025-12-19T08:43:21+05:30",
+        "product_id": 12213035139390,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/box2.jpg?v=1766114001",
+        "width": 960,
+        "height": 1280
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12213034778942,
+    "title": "Franley Silver-Tone Cufflinks – Textured Square",
+    "handle": "franley-silver-tone-cufflinks-textured-square-2",
+    "body_html": "<p>Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.</p>",
+    "published_at": "2025-12-19T08:58:23+05:30",
+    "created_at": "2025-12-19T08:56:22+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52759961764158,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1790.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12213034778942,
+        "created_at": "2025-12-19T08:56:22+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 53058542928190,
+        "created_at": "2025-12-19T08:56:43+05:30",
+        "position": 1,
+        "updated_at": "2025-12-19T08:56:45+05:30",
+        "product_id": 12213034778942,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/3.jpg?v=1766114805",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "id": 53058448785726,
+        "created_at": "2025-12-19T08:43:19+05:30",
+        "position": 2,
+        "updated_at": "2025-12-19T08:43:21+05:30",
+        "product_id": 12213034778942,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/box2.jpg?v=1766114001",
+        "width": 960,
+        "height": 1280
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12213034385726,
+    "title": "Franley Silver-Tone Cufflinks – Textured Square",
+    "handle": "franley-silver-tone-cufflinks-textured-square-1",
+    "body_html": "<p>Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.</p>",
+    "published_at": "2025-12-19T08:55:02+05:30",
+    "created_at": "2025-12-19T08:53:49+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52759960224062,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1790.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12213034385726,
+        "created_at": "2025-12-19T08:53:49+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 53058515534142,
+        "created_at": "2025-12-19T08:54:16+05:30",
+        "position": 1,
+        "updated_at": "2025-12-19T08:54:18+05:30",
+        "product_id": 12213034385726,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/2.jpg?v=1766114658",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "id": 53058448785726,
+        "created_at": "2025-12-19T08:43:19+05:30",
+        "position": 2,
+        "updated_at": "2025-12-19T08:43:21+05:30",
+        "product_id": 12213034385726,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/box2.jpg?v=1766114001",
+        "width": 960,
+        "height": 1280
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12213033337150,
+    "title": "Franley Silver-Tone Cufflinks – Textured Square",
+    "handle": "franley-silver-tone-cufflinks-textured-square",
+    "body_html": "<p>Classic silver-tone cufflinks crafted from premium metal alloy, paired with a matching tie clip and presented in a luxury FRANLEY gift box.</p>",
+    "published_at": "2025-12-19T08:47:06+05:30",
+    "created_at": "2025-12-19T08:47:05+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52759955013950,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1790.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12213033337150,
+        "created_at": "2025-12-19T08:47:05+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 53058446852414,
+        "created_at": "2025-12-19T08:43:03+05:30",
+        "position": 1,
+        "updated_at": "2025-12-19T08:43:05+05:30",
+        "product_id": 12213033337150,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/1.jpg?v=1766113985",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "id": 53058448785726,
+        "created_at": "2025-12-19T08:43:19+05:30",
+        "position": 2,
+        "updated_at": "2025-12-19T08:43:21+05:30",
+        "product_id": 12213033337150,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/box2.jpg?v=1766114001",
+        "width": 960,
+        "height": 1280
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12177194582334,
+    "title": "Two-Tone Diagonal Stripe Tie",
+    "handle": "two-tone-diagonal-stripe-tie-2",
+    "body_html": "<p class=\"font-claude-response-body whitespace-normal break-words\">Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Features:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Bold diagonal stripe pattern</li>\n<li class=\"whitespace-normal break-words\">Contrasting two-tone design</li>\n<li class=\"whitespace-normal break-words\">Textured ribbed finish</li>\n<li class=\"whitespace-normal break-words\">Standard tie width</li>\n<li class=\"whitespace-normal break-words\">Effortlessly pairs with multiple outfits</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Perfect for:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Business meetings and presentations</li>\n<li class=\"whitespace-normal break-words\">Job interviews</li>\n<li class=\"whitespace-normal break-words\">Weddings and formal events</li>\n<li class=\"whitespace-normal break-words\">Date nights and celebrations</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Where classic meets contemporary—this is the tie that works as hard as you do.</p>",
+    "published_at": "2025-11-24T13:55:36+05:30",
+    "created_at": "2025-11-24T13:55:33+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52611919642942,
+        "title": "6.5cm / Two-Tone",
+        "option1": "6.5cm",
+        "option2": "Two-Tone",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12177194582334,
+        "created_at": "2025-11-24T13:55:33+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 52886545727806,
+        "created_at": "2025-11-24T13:54:06+05:30",
+        "position": 1,
+        "updated_at": "2025-11-24T13:54:08+05:30",
+        "product_id": 12177194582334,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/SJLE8882.jpg?v=1763972648",
+        "width": 3000,
+        "height": 3999
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "6.5cm"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Two-Tone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12177194451262,
+    "title": "Two-Tone Diagonal Stripe Tie",
+    "handle": "two-tone-diagonal-stripe-tie-1",
+    "body_html": "<p class=\"font-claude-response-body whitespace-normal break-words\">Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Features:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Bold diagonal stripe pattern</li>\n<li class=\"whitespace-normal break-words\">Contrasting two-tone design</li>\n<li class=\"whitespace-normal break-words\">Textured ribbed finish</li>\n<li class=\"whitespace-normal break-words\">Standard tie width</li>\n<li class=\"whitespace-normal break-words\">Effortlessly pairs with multiple outfits</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Perfect for:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Business meetings and presentations</li>\n<li class=\"whitespace-normal break-words\">Job interviews</li>\n<li class=\"whitespace-normal break-words\">Weddings and formal events</li>\n<li class=\"whitespace-normal break-words\">Date nights and celebrations</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Where classic meets contemporary—this is the tie that works as hard as you do.</p>",
+    "published_at": "2025-11-24T13:51:56+05:30",
+    "created_at": "2025-11-24T13:51:53+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52611918528830,
+        "title": "6.5cm / Two-Tone",
+        "option1": "6.5cm",
+        "option2": "Two-Tone",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12177194451262,
+        "created_at": "2025-11-24T13:51:53+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 52886539960638,
+        "created_at": "2025-11-24T13:50:58+05:30",
+        "position": 1,
+        "updated_at": "2025-11-24T13:51:00+05:30",
+        "product_id": 12177194451262,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/HVIP5886.jpg?v=1763972460",
+        "width": 3000,
+        "height": 3999
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "6.5cm"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Two-Tone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12177193599294,
+    "title": "Two-Tone Diagonal Stripe Tie",
+    "handle": "two-tone-diagonal-stripe-tie",
+    "body_html": "<p class=\"font-claude-response-body whitespace-normal break-words\">Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Features:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Bold diagonal stripe pattern</li>\n<li class=\"whitespace-normal break-words\">Contrasting two-tone design</li>\n<li class=\"whitespace-normal break-words\">Textured ribbed finish</li>\n<li class=\"whitespace-normal break-words\">Standard tie width</li>\n<li class=\"whitespace-normal break-words\">Effortlessly pairs with multiple outfits</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Perfect for:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Business meetings and presentations</li>\n<li class=\"whitespace-normal break-words\">Job interviews</li>\n<li class=\"whitespace-normal break-words\">Weddings and formal events</li>\n<li class=\"whitespace-normal break-words\">Date nights and celebrations</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Where classic meets contemporary—this is the tie that works as hard as you do.</p>",
+    "published_at": "2025-11-24T13:48:58+05:30",
+    "created_at": "2025-11-24T13:48:54+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52611917414718,
+        "title": "6.5cm / Two-Tone",
+        "option1": "6.5cm",
+        "option2": "Two-Tone",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12177193599294,
+        "created_at": "2025-11-24T13:48:55+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 52886528852286,
+        "created_at": "2025-11-24T13:43:23+05:30",
+        "position": 1,
+        "updated_at": "2025-11-24T13:43:24+05:30",
+        "product_id": 12177193599294,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/EQDO4772.jpg?v=1763972004",
+        "width": 3000,
+        "height": 3999
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "6.5cm"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Two-Tone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12177190486334,
+    "title": "Two-Tone Diagonal Stripe Tie",
+    "handle": "classic-black-grey-diagonal-stripe-tie",
+    "body_html": "<p class=\"font-claude-response-body whitespace-normal break-words\">Make a statement without saying a word. This striking two-tone diagonal stripe tie brings effortless sophistication to your professional ensemble.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Featuring bold contrasting bands that flow diagonally across the fabric, this tie creates visual impact while maintaining classic elegance. The textured ribbed finish adds dimension and depth, ensuring you stand out in all the right ways.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Versatile enough for the boardroom yet distinctive enough for special occasions, this tie is the secret weapon in a well-dressed man's arsenal. It pairs beautifully with solid dress shirts and complements a wide range of suit colors, making it an incredibly versatile addition to your rotation.</p>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Features:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Bold diagonal stripe pattern</li>\n<li class=\"whitespace-normal break-words\">Contrasting two-tone design</li>\n<li class=\"whitespace-normal break-words\">Textured ribbed finish</li>\n<li class=\"whitespace-normal break-words\">Standard tie width</li>\n<li class=\"whitespace-normal break-words\">Effortlessly pairs with multiple outfits</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\"><strong>Perfect for:</strong></p>\n<ul class=\"[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-2.5 pl-7\">\n<li class=\"whitespace-normal break-words\">Business meetings and presentations</li>\n<li class=\"whitespace-normal break-words\">Job interviews</li>\n<li class=\"whitespace-normal break-words\">Weddings and formal events</li>\n<li class=\"whitespace-normal break-words\">Date nights and celebrations</li>\n</ul>\n<p class=\"font-claude-response-body whitespace-normal break-words\">Where classic meets contemporary—this is the tie that works as hard as you do.</p>",
+    "published_at": "2025-11-24T13:36:03+05:30",
+    "created_at": "2025-11-24T13:36:00+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 52611909583166,
+        "title": "6.5cm / Two-Tone",
+        "option1": "6.5cm",
+        "option2": "Two-Tone",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 12177190486334,
+        "created_at": "2025-11-24T13:36:00+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 52886372155710,
+        "created_at": "2025-11-24T13:26:42+05:30",
+        "position": 1,
+        "updated_at": "2025-11-24T13:26:43+05:30",
+        "product_id": 12177190486334,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/AGWD8536_1_90658d81-6f98-42e2-ae5f-f5617cb4cd44.jpg?v=1763971003",
+        "width": 2999,
+        "height": 3999
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "6.5cm"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Two-Tone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975306154302,
+    "title": "Pink",
+    "handle": "41",
+    "body_html": "",
+    "published_at": "2024-04-11T08:27:04+05:30",
+    "created_at": "2024-04-11T08:27:05+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Pink",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273668108606,
+        "title": "S (6cm) / Pink",
+        "option1": "S (6cm)",
+        "option2": "Pink",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975306154302,
+        "created_at": "2024-04-11T08:27:06+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671785820478,
+        "created_at": "2024-04-11T09:01:31+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:35+05:30",
+        "product_id": 10975306154302,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/416.png?v=1712806715",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671785918782,
+        "created_at": "2024-04-11T09:01:31+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:35+05:30",
+        "product_id": 10975306154302,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/414.png?v=1712806715",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Pink"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975306121534,
+    "title": "Pink",
+    "handle": "40",
+    "body_html": "",
+    "published_at": "2024-04-11T08:27:01+05:30",
+    "created_at": "2024-04-11T08:27:03+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Pink",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273667944766,
+        "title": "S (6cm) / Pink",
+        "option1": "S (6cm)",
+        "option2": "Pink",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975306121534,
+        "created_at": "2024-04-11T08:27:03+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671783788862,
+        "created_at": "2024-04-11T09:00:46+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:32+05:30",
+        "product_id": 10975306121534,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/415.png?v=1712806712",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671783821630,
+        "created_at": "2024-04-11T09:00:46+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:32+05:30",
+        "product_id": 10975306121534,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/413.png?v=1712806712",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Pink"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975306088766,
+    "title": "Orange",
+    "handle": "39",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:59+05:30",
+    "created_at": "2024-04-11T08:27:00+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Orange",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273667748158,
+        "title": "S (6cm) / Orange",
+        "option1": "S (6cm)",
+        "option2": "Orange",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975306088766,
+        "created_at": "2024-04-11T08:27:00+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671780512062,
+        "created_at": "2024-04-11T08:59:42+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:59:44+05:30",
+        "product_id": 10975306088766,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/412.png?v=1712806184",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671780544830,
+        "created_at": "2024-04-11T08:59:42+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:59:44+05:30",
+        "product_id": 10975306088766,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/411.png?v=1712806184",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Orange"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975306055998,
+    "title": "Grey",
+    "handle": "38",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:56+05:30",
+    "created_at": "2024-04-11T08:26:58+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Grey",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273667584318,
+        "title": "S (6cm) / Grey",
+        "option1": "S (6cm)",
+        "option2": "Grey",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975306055998,
+        "created_at": "2024-04-11T08:26:58+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671778971966,
+        "created_at": "2024-04-11T08:59:05+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:59:08+05:30",
+        "product_id": 10975306055998,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/44.png?v=1712806148",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671778939198,
+        "created_at": "2024-04-11T08:59:05+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:59:08+05:30",
+        "product_id": 10975306055998,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/45.png?v=1712806148",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Grey"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975306023230,
+    "title": "Black",
+    "handle": "37",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:53+05:30",
+    "created_at": "2024-04-11T08:26:55+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Black",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273667453246,
+        "title": "S (6cm) / Black",
+        "option1": "S (6cm)",
+        "option2": "Black",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975306023230,
+        "created_at": "2024-04-11T08:26:55+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671775891774,
+        "created_at": "2024-04-11T08:58:15+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:58:18+05:30",
+        "product_id": 10975306023230,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/42.png?v=1712806098",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671775826238,
+        "created_at": "2024-04-11T08:58:15+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:58:18+05:30",
+        "product_id": 10975306023230,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/43.png?v=1712806098",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Black"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305990462,
+    "title": "Grey",
+    "handle": "36",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:51+05:30",
+    "created_at": "2024-04-11T08:26:52+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Grey",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273667289406,
+        "title": "S (6cm) / Grey",
+        "option1": "S (6cm)",
+        "option2": "Grey",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305990462,
+        "created_at": "2024-04-11T08:26:52+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671773892926,
+        "created_at": "2024-04-11T08:57:40+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:57:43+05:30",
+        "product_id": 10975305990462,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/40.png?v=1712806063",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671773958462,
+        "created_at": "2024-04-11T08:57:40+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:57:43+05:30",
+        "product_id": 10975305990462,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/41.png?v=1712806063",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Grey"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305957694,
+    "title": "White",
+    "handle": "35",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:48+05:30",
+    "created_at": "2024-04-11T08:26:50+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "S",
+      "White"
+    ],
+    "variants": [
+      {
+        "id": 49273667125566,
+        "title": "S (6cm) / White",
+        "option1": "S (6cm)",
+        "option2": "White",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305957694,
+        "created_at": "2024-04-11T08:26:50+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671770779966,
+        "created_at": "2024-04-11T08:57:03+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:57:05+05:30",
+        "product_id": 10975305957694,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/38.png?v=1712806025",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 52867961520446,
+        "created_at": "2025-11-20T15:39:59+05:30",
+        "position": 2,
+        "updated_at": "2025-11-20T15:40:00+05:30",
+        "product_id": 10975305957694,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/Gemini_Generated_Image_8jtcpe8jtcpe8jtc.jpg?v=1763633400",
+        "width": 1024,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "White"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305924926,
+    "title": "Brown",
+    "handle": "34",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:46+05:30",
+    "created_at": "2024-04-11T08:26:47+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Brown",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273666961726,
+        "title": "S (6cm) / Brown",
+        "option1": "S (6cm)",
+        "option2": "Brown",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305924926,
+        "created_at": "2024-04-11T08:26:47+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671769207102,
+        "created_at": "2024-04-11T08:56:32+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:56:35+05:30",
+        "product_id": 10975305924926,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/36.png?v=1712805995",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671769272638,
+        "created_at": "2024-04-11T08:56:32+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:56:35+05:30",
+        "product_id": 10975305924926,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/37.png?v=1712805995",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Brown"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305859390,
+    "title": "Blue",
+    "handle": "33",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:43+05:30",
+    "created_at": "2024-04-11T08:26:44+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273666732350,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305859390,
+        "created_at": "2024-04-11T08:26:44+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671763472702,
+        "created_at": "2024-04-11T08:55:06+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:55:10+05:30",
+        "product_id": 10975305859390,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/34.png?v=1712805910",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671763439934,
+        "created_at": "2024-04-11T08:55:06+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:55:09+05:30",
+        "product_id": 10975305859390,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/35.png?v=1712805909",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305826622,
+    "title": "Blue",
+    "handle": "32",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:40+05:30",
+    "created_at": "2024-04-11T08:26:42+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273666634046,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305826622,
+        "created_at": "2024-04-11T08:26:42+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671758229822,
+        "created_at": "2024-04-11T08:53:39+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:06:58+05:30",
+        "product_id": 10975305826622,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/33.png?v=1712806618",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671758262590,
+        "created_at": "2024-04-11T08:53:39+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:06:58+05:30",
+        "product_id": 10975305826622,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/32.png?v=1712806618",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305728318,
+    "title": "Blue",
+    "handle": "31",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:38+05:30",
+    "created_at": "2024-04-11T08:26:39+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273664569662,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305728318,
+        "created_at": "2024-04-11T08:26:39+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671756984638,
+        "created_at": "2024-04-11T08:53:00+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:06:54+05:30",
+        "product_id": 10975305728318,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/31.png?v=1712806614",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671756820798,
+        "created_at": "2024-04-11T08:53:00+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:06:54+05:30",
+        "product_id": 10975305728318,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/30.png?v=1712806614",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305695550,
+    "title": "Blue",
+    "handle": "30",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:35+05:30",
+    "created_at": "2024-04-11T08:26:37+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273664405822,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305695550,
+        "created_at": "2024-04-11T08:26:37+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671753314622,
+        "created_at": "2024-04-11T08:51:29+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:51:32+05:30",
+        "product_id": 10975305695550,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/28.png?v=1712805692",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671753380158,
+        "created_at": "2024-04-11T08:51:29+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:51:32+05:30",
+        "product_id": 10975305695550,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/29.png?v=1712805692",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305630014,
+    "title": "Blue",
+    "handle": "29",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:33+05:30",
+    "created_at": "2024-04-11T08:26:34+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273662439742,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305630014,
+        "created_at": "2024-04-11T08:26:34+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671750857022,
+        "created_at": "2024-04-11T08:50:38+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:50:42+05:30",
+        "product_id": 10975305630014,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/26.png?v=1712805642",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671750791486,
+        "created_at": "2024-04-11T08:50:38+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:50:42+05:30",
+        "product_id": 10975305630014,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/27.png?v=1712805642",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305597246,
+    "title": "Gold",
+    "handle": "28",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:30+05:30",
+    "created_at": "2024-04-11T08:26:32+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Gold",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273662308670,
+        "title": "S (6cm) / Gold",
+        "option1": "S (6cm)",
+        "option2": "Gold",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305597246,
+        "created_at": "2024-04-11T08:26:32+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671748235582,
+        "created_at": "2024-04-11T08:50:00+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:50:02+05:30",
+        "product_id": 10975305597246,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/24.png?v=1712805602",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671748268350,
+        "created_at": "2024-04-11T08:50:00+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:50:03+05:30",
+        "product_id": 10975305597246,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/25.png?v=1712805603",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Gold"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305498942,
+    "title": "yellow",
+    "handle": "27",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:28+05:30",
+    "created_at": "2024-04-11T08:26:29+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "S",
+      "Yellow"
+    ],
+    "variants": [
+      {
+        "id": 49273660506430,
+        "title": "S (6cm) / Yellow",
+        "option1": "S (6cm)",
+        "option2": "Yellow",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305498942,
+        "created_at": "2024-04-11T08:26:29+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671746859326,
+        "created_at": "2024-04-11T08:49:22+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:49:24+05:30",
+        "product_id": 10975305498942,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/20.png?v=1712805564",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671746892094,
+        "created_at": "2024-04-11T08:49:22+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:49:24+05:30",
+        "product_id": 10975305498942,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/21.png?v=1712805564",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Yellow"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305433406,
+    "title": "Grey",
+    "handle": "26",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:25+05:30",
+    "created_at": "2024-04-11T08:26:27+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Grey",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273658540350,
+        "title": "S (6cm) / Grey",
+        "option1": "S (6cm)",
+        "option2": "Grey",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305433406,
+        "created_at": "2024-04-11T08:26:27+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671742566718,
+        "created_at": "2024-04-11T08:47:36+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:47:39+05:30",
+        "product_id": 10975305433406,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/19.png?v=1712805459",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671742599486,
+        "created_at": "2024-04-11T08:47:36+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:47:39+05:30",
+        "product_id": 10975305433406,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/22.png?v=1712805459",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Grey"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305400638,
+    "title": "White",
+    "handle": "25",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:23+05:30",
+    "created_at": "2024-04-11T08:26:24+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "White"
+    ],
+    "variants": [
+      {
+        "id": 49273702285630,
+        "title": "S (6cm) / White",
+        "option1": "S (6cm)",
+        "option2": "White",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305400638,
+        "created_at": "2024-04-11T08:45:36+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671729918270,
+        "created_at": "2024-04-11T08:42:54+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:42:56+05:30",
+        "product_id": 10975305400638,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/17.png?v=1712805176",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671729983806,
+        "created_at": "2024-04-11T08:42:54+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:42:56+05:30",
+        "product_id": 10975305400638,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/18.png?v=1712805176",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "White"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305335102,
+    "title": "Yellow",
+    "handle": "24",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:20+05:30",
+    "created_at": "2024-04-11T08:26:21+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "S",
+      "Yellow"
+    ],
+    "variants": [
+      {
+        "id": 49273656410430,
+        "title": "S (6cm) / Yellow",
+        "option1": "S (6cm)",
+        "option2": "Yellow",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305335102,
+        "created_at": "2024-04-11T08:26:22+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671728116030,
+        "created_at": "2024-04-11T08:42:10+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:10:16+05:30",
+        "product_id": 10975305335102,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/16.png?v=1712806816",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671728148798,
+        "created_at": "2024-04-11T08:42:10+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:10:16+05:30",
+        "product_id": 10975305335102,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/15.png?v=1712806816",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Yellow"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305171262,
+    "title": "Yellow",
+    "handle": "23",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:18+05:30",
+    "created_at": "2024-04-11T08:26:19+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "S",
+      "Yellow"
+    ],
+    "variants": [
+      {
+        "id": 49273654673726,
+        "title": "S (6cm) / Yellow",
+        "option1": "S (6cm)",
+        "option2": "Yellow",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305171262,
+        "created_at": "2024-04-11T08:26:19+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671725920574,
+        "created_at": "2024-04-11T08:41:27+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:10:12+05:30",
+        "product_id": 10975305171262,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/14.png?v=1712806812",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671725953342,
+        "created_at": "2024-04-11T08:41:27+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:10:12+05:30",
+        "product_id": 10975305171262,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/13.png?v=1712806812",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Yellow"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975305138494,
+    "title": "Orange",
+    "handle": "22",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:15+05:30",
+    "created_at": "2024-04-11T08:26:16+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Orange",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273654083902,
+        "title": "S (6cm) / Orange",
+        "option1": "S (6cm)",
+        "option2": "Orange",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975305138494,
+        "created_at": "2024-04-11T08:26:17+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671724282174,
+        "created_at": "2024-04-11T08:40:47+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:40:49+05:30",
+        "product_id": 10975305138494,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/11.png?v=1712805049",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671724314942,
+        "created_at": "2024-04-11T08:40:47+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:40:49+05:30",
+        "product_id": 10975305138494,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/12.png?v=1712805049",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Orange"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975304974654,
+    "title": "Purple",
+    "handle": "21",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:13+05:30",
+    "created_at": "2024-04-11T08:26:14+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Purple",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273652576574,
+        "title": "S (6cm) / Purple",
+        "option1": "S (6cm)",
+        "option2": "Purple",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975304974654,
+        "created_at": "2024-04-11T08:26:14+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671721103678,
+        "created_at": "2024-04-11T08:39:26+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:39:29+05:30",
+        "product_id": 10975304974654,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/9.png?v=1712804969",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671721070910,
+        "created_at": "2024-04-11T08:39:26+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:39:28+05:30",
+        "product_id": 10975304974654,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/10.png?v=1712804968",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Purple"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975304876350,
+    "title": "Purple",
+    "handle": "20",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:10+05:30",
+    "created_at": "2024-04-11T08:26:11+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Purple",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273650381118,
+        "title": "S (6cm) / Purple",
+        "option1": "S (6cm)",
+        "option2": "Purple",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975304876350,
+        "created_at": "2024-04-11T08:26:11+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671719170366,
+        "created_at": "2024-04-11T08:38:38+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:44+05:30",
+        "product_id": 10975304876350,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/7.png?v=1712806724",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671719137598,
+        "created_at": "2024-04-11T08:38:39+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:44+05:30",
+        "product_id": 10975304876350,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/8.png?v=1712806724",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Purple"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975304778046,
+    "title": "Purple",
+    "handle": "19",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:07+05:30",
+    "created_at": "2024-04-11T08:26:09+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Purple",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273648644414,
+        "title": "S (6cm) / Purple",
+        "option1": "S (6cm)",
+        "option2": "Purple",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975304778046,
+        "created_at": "2024-04-11T08:26:09+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671717269822,
+        "created_at": "2024-04-11T08:37:47+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:38+05:30",
+        "product_id": 10975304778046,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/6.png?v=1712806718",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671717302590,
+        "created_at": "2024-04-11T08:37:47+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:38+05:30",
+        "product_id": 10975304778046,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/5.png?v=1712806718",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Purple"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975304679742,
+    "title": "Maroon",
+    "handle": "18",
+    "body_html": "",
+    "published_at": "2024-04-11T08:26:05+05:30",
+    "created_at": "2024-04-11T08:26:06+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Maroon",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273648546110,
+        "title": "S (6cm) / Red",
+        "option1": "S (6cm)",
+        "option2": "Red",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975304679742,
+        "created_at": "2024-04-11T08:26:06+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671714451774,
+        "created_at": "2024-04-11T08:36:39+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:24+05:30",
+        "product_id": 10975304679742,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/4.png?v=1712806704",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671714484542,
+        "created_at": "2024-04-11T08:36:39+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:24+05:30",
+        "product_id": 10975304679742,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/3.png?v=1712806704",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Red"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975304483134,
+    "title": "Aqua",
+    "handle": "17",
+    "body_html": "<p>Dive into sophistication with our Aqua Elegance Tie, the perfect blend of vibrancy and refinement. This tie boasts a refreshing aqua hue, reminiscent of serene ocean waves, making it ideal for adding a touch of calm confidence to your attire.</p>\n<p>Crafted from premium materials, its smooth texture and subtle sheen make it a versatile choice for both formal and semi-formal occasions. Pair it with a crisp white shirt for a classic look, or experiment with pastel tones for a modern twist.</p>\n<p>Whether you're heading to a wedding, a business meeting, or a night out, the Aqua Elegance Tie ensures you'll always stand out with understated charm.</p>",
+    "published_at": "2024-04-11T08:26:01+05:30",
+    "created_at": "2024-04-11T08:26:03+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Plain",
+    "tags": [
+      "Aqua",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273646514494,
+        "title": "S (6cm) / Aqua",
+        "option1": "S (6cm)",
+        "option2": "Aqua",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975304483134,
+        "created_at": "2024-04-11T08:26:03+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46671712485694,
+        "created_at": "2024-04-11T08:36:03+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T08:36:06+05:30",
+        "product_id": 10975304483134,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/1.png?v=1712804766",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46671712616766,
+        "created_at": "2024-04-11T08:36:03+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T08:36:06+05:30",
+        "product_id": 10975304483134,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/2.png?v=1712804766",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Aqua"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10975285150014,
+    "title": "Black / Red & blue stripes",
+    "handle": "4",
+    "body_html": "",
+    "published_at": "2024-04-11T07:57:40+05:30",
+    "created_at": "2024-04-11T07:57:49+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Black",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273152143678,
+        "title": "S (6cm) / Black",
+        "option1": "S (6cm)",
+        "option2": "Black",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10975285150014,
+        "created_at": "2024-04-11T07:57:50+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46681437438270,
+        "created_at": "2024-04-11T23:43:43+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T23:43:43+05:30",
+        "product_id": 10975285150014,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/232_c9765c47-962c-4cc8-9cdc-52102edc8db4.png?v=1712859223",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46681437471038,
+        "created_at": "2024-04-11T23:43:43+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T23:43:43+05:30",
+        "product_id": 10975285150014,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/231_21dafdfb-a3fd-4906-bd10-c50254c44c31.png?v=1712859223",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Black"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862692158,
+    "title": "Silver / Black & Grey stripes",
+    "handle": "16",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:15+05:30",
+    "created_at": "2024-04-05T08:09:15+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "S",
+      "Silver"
+    ],
+    "variants": [
+      {
+        "id": 49273149882686,
+        "title": "S (6cm) / Silver",
+        "option1": "S (6cm)",
+        "option2": "Silver",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862692158,
+        "created_at": "2024-04-11T07:57:29+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611258016062,
+        "created_at": "2024-04-06T08:31:07+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:09:16+05:30",
+        "product_id": 10947862692158,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/254.png?v=1712806756",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611258245438,
+        "created_at": "2024-04-06T08:31:07+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:09:16+05:30",
+        "product_id": 10947862692158,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/253.png?v=1712806756",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Silver"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862659390,
+    "title": "Blue / Light blue & Black stripes",
+    "handle": "15",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:14+05:30",
+    "created_at": "2024-04-05T08:09:14+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150013758,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862659390,
+        "created_at": "2024-04-11T07:57:29+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611216236862,
+        "created_at": "2024-04-06T08:29:10+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:07:29+05:30",
+        "product_id": 10947862659390,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/252.png?v=1712806649",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611216466238,
+        "created_at": "2024-04-06T08:29:10+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:07:29+05:30",
+        "product_id": 10947862659390,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/251.png?v=1712806649",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862626622,
+    "title": "Grey / Silver & Black stripes",
+    "handle": "14",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:13+05:30",
+    "created_at": "2024-04-05T08:09:13+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Grey",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150079294,
+        "title": "S (6cm) / Grey",
+        "option1": "S (6cm)",
+        "option2": "Grey",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862626622,
+        "created_at": "2024-04-11T07:57:30+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611177210174,
+        "created_at": "2024-04-06T08:26:55+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:20+05:30",
+        "product_id": 10947862626622,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/250.png?v=1712806700",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611177079102,
+        "created_at": "2024-04-06T08:26:55+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:20+05:30",
+        "product_id": 10947862626622,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/249.png?v=1712806700",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Grey"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862593854,
+    "title": "Brown / Beige & Black stripes",
+    "handle": "13",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:12+05:30",
+    "created_at": "2024-04-05T08:09:12+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Beige",
+      "Brown",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150144830,
+        "title": "S (6cm) / Brown",
+        "option1": "S (6cm)",
+        "option2": "Brown",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862593854,
+        "created_at": "2024-04-11T07:57:31+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611150471486,
+        "created_at": "2024-04-06T08:25:42+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:07:48+05:30",
+        "product_id": 10947862593854,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/248.png?v=1712806668",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611150635326,
+        "created_at": "2024-04-06T08:25:42+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:07:48+05:30",
+        "product_id": 10947862593854,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/247.png?v=1712806668",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Brown"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862561086,
+    "title": "Red / Light Red & Silver stripes",
+    "handle": "12",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:11+05:30",
+    "created_at": "2024-04-05T08:09:11+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Red",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150243134,
+        "title": "S (6cm) / Red",
+        "option1": "S (6cm)",
+        "option2": "Red",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862561086,
+        "created_at": "2024-04-11T07:57:32+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611135365438,
+        "created_at": "2024-04-06T08:24:37+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:09:02+05:30",
+        "product_id": 10947862561086,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/246.png?v=1712806742",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611135332670,
+        "created_at": "2024-04-06T08:24:37+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:09:02+05:30",
+        "product_id": 10947862561086,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/245.png?v=1712806742",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Red"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862528318,
+    "title": "Green / Light Green & Grey stripes",
+    "handle": "11",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:10+05:30",
+    "created_at": "2024-04-05T08:09:10+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Green",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150308670,
+        "title": "S (6cm) / Green",
+        "option1": "S (6cm)",
+        "option2": "Green",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862528318,
+        "created_at": "2024-04-11T07:57:33+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611088867646,
+        "created_at": "2024-04-06T08:22:29+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:06+05:30",
+        "product_id": 10947862528318,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/244.png?v=1712806686",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611089097022,
+        "created_at": "2024-04-06T08:22:29+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:06+05:30",
+        "product_id": 10947862528318,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/243.png?v=1712806686",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Green"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862495550,
+    "title": "Red / White stripes",
+    "handle": "10",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:09+05:30",
+    "created_at": "2024-04-05T08:09:09+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Red",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150374206,
+        "title": "S (6cm) / Red",
+        "option1": "S (6cm)",
+        "option2": "Red",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862495550,
+        "created_at": "2024-04-11T07:57:34+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611072876862,
+        "created_at": "2024-04-06T08:21:48+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:09:10+05:30",
+        "product_id": 10947862495550,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/242.png?v=1712806750",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611073007934,
+        "created_at": "2024-04-06T08:21:48+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:09:10+05:30",
+        "product_id": 10947862495550,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/241.png?v=1712806750",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Red"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862430014,
+    "title": "Blue / Cyan stripes",
+    "handle": "9",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:08+05:30",
+    "created_at": "2024-04-05T08:09:08+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150472510,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862430014,
+        "created_at": "2024-04-11T07:57:34+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611062784318,
+        "created_at": "2024-04-06T08:19:41+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:07:14+05:30",
+        "product_id": 10947862430014,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/240.png?v=1712806634",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611062817086,
+        "created_at": "2024-04-06T08:19:41+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:07:14+05:30",
+        "product_id": 10947862430014,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/239.png?v=1712806634",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947862397246,
+    "title": "Red",
+    "handle": "8",
+    "body_html": "",
+    "published_at": "2024-04-05T08:09:07+05:30",
+    "created_at": "2024-04-05T08:09:07+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Red",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150570814,
+        "title": "S (6cm) / Red",
+        "option1": "S (6cm)",
+        "option2": "Red",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947862397246,
+        "created_at": "2024-04-11T07:57:35+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611038437694,
+        "created_at": "2024-04-06T08:09:36+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:02+05:30",
+        "product_id": 10947862397246,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/238.png?v=1712806682",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611038470462,
+        "created_at": "2024-04-06T08:09:36+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:02+05:30",
+        "product_id": 10947862397246,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/237.png?v=1712806682",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Red"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947854598462,
+    "title": "Red / Blue stripes",
+    "handle": "7",
+    "body_html": "",
+    "published_at": "2024-04-05T08:02:01+05:30",
+    "created_at": "2024-04-05T08:02:01+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Red",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150636350,
+        "title": "S (6cm) / Red",
+        "option1": "S (6cm)",
+        "option2": "Red",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947854598462,
+        "created_at": "2024-04-11T07:57:36+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611013435710,
+        "created_at": "2024-04-06T07:56:53+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:08:56+05:30",
+        "product_id": 10947854598462,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/236.png?v=1712806736",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611013501246,
+        "created_at": "2024-04-06T07:56:53+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:08:56+05:30",
+        "product_id": 10947854598462,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/235.png?v=1712806736",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Red"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947854369086,
+    "title": "Blue / Red stripes",
+    "handle": "5",
+    "body_html": "",
+    "published_at": "2024-04-05T08:01:53+05:30",
+    "created_at": "2024-04-05T08:01:57+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Blue",
+      "Red",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150669118,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947854369086,
+        "created_at": "2024-04-11T07:57:37+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611001704766,
+        "created_at": "2024-04-06T07:51:47+05:30",
+        "position": 1,
+        "updated_at": "2024-04-06T07:51:50+05:30",
+        "product_id": 10947854369086,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/234.png?v=1712370110",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611001639230,
+        "created_at": "2024-04-06T07:51:47+05:30",
+        "position": 2,
+        "updated_at": "2024-04-06T07:51:50+05:30",
+        "product_id": 10947854369086,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/233.png?v=1712370110",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947854106942,
+    "title": "Black / White stripes",
+    "handle": "3",
+    "body_html": "",
+    "published_at": "2024-04-05T08:01:44+05:30",
+    "created_at": "2024-04-05T08:01:47+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "6cm",
+      "Black"
+    ],
+    "variants": [
+      {
+        "id": 49273150734654,
+        "title": "S (6cm) / Black",
+        "option1": "S (6cm)",
+        "option2": "Black",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": {
+          "id": 46601930080574,
+          "product_id": 10947854106942,
+          "position": 1,
+          "created_at": "2024-04-05T11:21:46+05:30",
+          "updated_at": "2024-04-11T09:06:42+05:30",
+          "alt": null,
+          "width": 4000,
+          "height": 4000,
+          "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/230.png?v=1712806602",
+          "variant_ids": [
+            49273150734654
+          ]
+        },
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947854106942,
+        "created_at": "2024-04-11T07:57:38+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46601930080574,
+        "created_at": "2024-04-05T11:21:46+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:06:42+05:30",
+        "product_id": 10947854106942,
+        "variant_ids": [
+          49273150734654
+        ],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/230.png?v=1712806602",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46601930047806,
+        "created_at": "2024-04-05T11:21:46+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:06:42+05:30",
+        "product_id": 10947854106942,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/229.png?v=1712806602",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Black"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947853943102,
+    "title": "Blue / Grey & black stripes",
+    "handle": "2",
+    "body_html": "",
+    "published_at": "2024-04-05T08:01:38+05:30",
+    "created_at": "2024-04-05T08:01:43+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150800190,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947853943102,
+        "created_at": "2024-04-11T07:57:38+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46601895182654,
+        "created_at": "2024-04-05T11:17:52+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:07:24+05:30",
+        "product_id": 10947853943102,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/228.png?v=1712806644",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46601895149886,
+        "created_at": "2024-04-05T11:17:52+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:07:24+05:30",
+        "product_id": 10947853943102,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/227.png?v=1712806644",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947853812030,
+    "title": "Blue / Grey & black stripes",
+    "handle": "1",
+    "body_html": "",
+    "published_at": "2024-04-05T08:01:32+05:30",
+    "created_at": "2024-04-05T08:01:37+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49273150898494,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947853812030,
+        "created_at": "2024-04-11T07:57:39+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46601469493566,
+        "created_at": "2024-04-05T10:08:39+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:07:19+05:30",
+        "product_id": 10947853812030,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/226.png?v=1712806639",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46601469460798,
+        "created_at": "2024-04-05T10:08:39+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:07:19+05:30",
+        "product_id": 10947853812030,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/225.png?v=1712806639",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10947836281150,
+    "title": "Black / Red & blue stripes",
+    "handle": "0004",
+    "body_html": "",
+    "published_at": "2024-04-05T07:48:37+05:30",
+    "created_at": "2024-04-05T07:48:43+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "6cm",
+      "Black",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49197309034814,
+        "title": "S (6cm) / Black",
+        "option1": "S (6cm)",
+        "option2": "Black",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10947836281150,
+        "created_at": "2024-04-05T07:48:43+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46602054992190,
+        "created_at": "2024-04-05T11:37:35+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:06:32+05:30",
+        "product_id": 10947836281150,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/232.png?v=1712806592",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46602055024958,
+        "created_at": "2024-04-05T11:37:35+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:06:32+05:30",
+        "product_id": 10947836281150,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/231.png?v=1712806592",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Black"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10878069965118,
+    "title": "Blue / Black",
+    "handle": "blue-black",
+    "body_html": "",
+    "published_at": "2024-03-16T16:54:41+05:30",
+    "created_at": "2024-03-16T16:54:41+05:30",
+    "updated_at": "2026-09-07T22:44:36+05:30",
+    "vendor": "Franley",
+    "product_type": "Stripes",
+    "tags": [
+      "Blue",
+      "S"
+    ],
+    "variants": [
+      {
+        "id": 49101869515070,
+        "title": "S (6cm) / Blue",
+        "option1": "S (6cm)",
+        "option2": "Blue",
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "1190.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 10878069965118,
+        "created_at": "2024-03-29T11:46:22+05:30",
+        "updated_at": "2026-09-07T22:44:36+05:30"
+      }
+    ],
+    "images": [
+      {
+        "id": 46611327156542,
+        "created_at": "2024-04-06T08:34:51+05:30",
+        "position": 1,
+        "updated_at": "2024-04-11T09:07:09+05:30",
+        "product_id": 10878069965118,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/256.png?v=1712806629",
+        "width": 4000,
+        "height": 4000
+      },
+      {
+        "id": 46611327058238,
+        "created_at": "2024-04-06T08:34:51+05:30",
+        "position": 2,
+        "updated_at": "2024-04-11T09:07:09+05:30",
+        "product_id": 10878069965118,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0853/1499/4494/files/255.png?v=1712806629",
+        "width": 4000,
+        "height": 4000
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S (6cm)"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Blue"
+        ]
+      }
+    ]
+  }
+]
