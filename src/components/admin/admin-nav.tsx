@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import {
-  LayoutDashboard, Package, FolderTree, ReceiptText,
+  LayoutDashboard, Package, FolderTree, ReceiptText, Users, Layers, Settings,
   Image as ImageIcon, LogOut, Menu, X, ExternalLink,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -15,9 +15,12 @@ import { useFocusTrap } from "@/lib/a11y/use-focus-trap";
 const LINKS = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard, exact: true },
   { href: "/admin/orders", label: "Orders", Icon: ReceiptText },
+  { href: "/admin/customers", label: "Customers", Icon: Users },
   { href: "/admin/products", label: "Products", Icon: Package },
   { href: "/admin/categories", label: "Categories", Icon: FolderTree },
+  { href: "/admin/collections", label: "Collections", Icon: Layers },
   { href: "/admin/content", label: "Content & Banners", Icon: ImageIcon },
+  { href: "/admin/settings", label: "Settings", Icon: Settings },
 ];
 
 export function AdminNav({ email }: { email: string }) {

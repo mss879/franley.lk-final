@@ -142,3 +142,19 @@
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * iOS Safari zooms the whole page when a form field under 16px is focused,
+ * and does not zoom back out — on a phone that turns checkout into a pan-and-
+ * scroll exercise. Fields are text-sm (14px) by design, so on narrow screens
+ * they are raised to 16px here. Deliberately unlayered: Tailwind v4 keeps its
+ * utilities in a cascade layer, and unlayered rules win over layered ones
+ * without needing !important.
+ */
+@media (max-width: 639px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

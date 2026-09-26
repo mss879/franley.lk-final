@@ -9,11 +9,19 @@ export const HTML_LANG = "en-LK";
 
 /** Brand card for every page that has no photograph of its own. */
 export const OG_FALLBACK = "/brand/og-hero.jpg";
+/** Its real pixel size and a description, so link previews can lay it out before it loads. */
+export const OG_FALLBACK_IMAGE = {
+  url: OG_FALLBACK,
+  width: 1920,
+  height: 1080,
+  alt: "Franley neckties and cufflinks",
+} as const;
 
 /**
- * Launch revision date. Neither the seed catalogue nor `products_public`
- * carries an updated_at, so pages that move with the catalogue share this
- * rather than each crawl being told everything changed a second ago.
+ * Launch revision date: the sitemap's lastModified for pages with no database
+ * row of their own, and for everything while the site runs on the bundled
+ * seed catalogue — rather than each crawl being told everything changed a
+ * second ago.
  */
 export const CONTENT_REVISED = new Date("2026-09-08T00:00:00.000Z");
 

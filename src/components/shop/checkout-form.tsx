@@ -4,22 +4,63 @@ import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Banknote, Landmark, Loader2 } from "lucide-react";
+import { Banknote, CreditCard, Landmark, Loader2 } from "lucide-react";
 import { useCart } from "@/lib/cart/cart-context";
 import { SL_DISTRICTS, type PaymentMethod } from "@/lib/checkout/schema";
 import { formatPrice, cn } from "@/lib/utils";
-import { FLAT_SHIPPING_CENTS, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/settings/provider";
+import { shippingFor, waLink } from "@/lib/settings/shipping";
 import { ButtonLink } from "@/components/ui/button";
+import { redirectToPayHere } from "@/lib/payhere/redirect";
 
 type FieldErrors = Record<string, string>;
 
+/**
+ * The card order this tab last sent to PayHere. Pressing Back on PayHere's
+ * page (or its "Go Back" on an error) returns the shopper HERE, not to the
+ * order page, with an emptied bag — and the unpaid order still holding stock.
+ * Remembering it lets the empty checkout offer the way back instead.
+ */
+const PENDING_KEY = "franley.pendingPayment";
+type PendingPayment = { orderNumber: string; token: string; at: number };
+
+function readPending(): PendingPayment | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const p = JSON.parse(sessionStorage.getItem(PENDING_KEY) ?? "null") as PendingPayment | null;
+    if (p?.orderNumber && p.token && Date.now() - p.at < 24 * 60 * 60 * 1000) return p;
+    sessionStorage.removeItem(PENDING_KEY);
+  } catch {
+    /* storage blocked: nothing to offer */
+  }
+  return null;
+}
+
+function PendingPaymentNotice({ pending, compact = false }: { pending: PendingPayment; compact?: boolean }) {
+  const href = `/order/${encodeURIComponent(pending.orderNumber)}?token=${encodeURIComponent(pending.token)}`;
+  return (
+    <div role="status" className={cn("rounded-2xl border border-wine-700/25 bg-wine-50 px-5 py-4 text-left", compact ? "mb-8" : "mx-auto mb-8 max-w-md")}>
+      <p className="text-sm font-medium text-wine-800">You started paying for order {pending.orderNumber}</p>
+      <p className="mt-1.5 text-xs leading-relaxed text-ink-600">
+        If that payment did not go through, finish it on the order page rather than ordering again — the pieces are
+        held for you.
+      </p>
+      <Link href={href} className="mt-3 inline-block text-xs font-medium text-wine-700 underline underline-offset-4 hover:text-wine-600">
+        Go to order {pending.orderNumber}
+      </Link>
+    </div>
+  );
+}
+
 const PAYMENTS: { value: PaymentMethod; label: string; note: string; Icon: typeof Banknote }[] = [
+  { value: "card", label: "Pay online", note: "Visa, Mastercard, Amex and local wallets — paid securely through PayHere.", Icon: CreditCard },
   { value: "cod", label: "Cash on delivery", note: "Pay the courier when your order arrives.", Icon: Banknote },
   { value: "bank_transfer", label: "Bank transfer", note: "We send account details right after you order.", Icon: Landmark },
 ];
 
-export function CheckoutForm() {
-  const { lines, subtotalCents, clear, ready } = useCart();
+export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean }) {
+  const { lines, subtotalCents, clear, remove, ready } = useCart();
+  const settings = useSiteSettings();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   // /api/checkout reads x-idempotency-key and hands it to place_order so a
@@ -28,15 +69,39 @@ export function CheckoutForm() {
   // retry after a network timeout made a duplicate real order. One key per
   // checkout attempt, regenerated only once an order actually succeeds.
   const idempotencyKey = useRef<string | null>(null);
+  const payments = useMemo(() => PAYMENTS.filter((p) => cardEnabled || p.value !== "card"), [cardEnabled]);
   const [payment, setPayment] = useState<PaymentMethod>("cod");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  // Set when the server says this submission already placed an order.
+  const [placed, setPlaced] = useState<{ orderNumber: string; awaitingPayment: boolean } | null>(null);
+  // Read once on the client; nothing that uses it renders before the bag has
+  // loaded, so the server's null never has to match.
+  const [pending] = useState(readPending);
 
-  const shipping = useMemo(
-    () => (subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : FLAT_SHIPPING_CENTS),
-    [subtotalCents],
-  );
+  // The same rule place_order charges, read from the admin's settings.
+  const shipping = useMemo(() => shippingFor(subtotalCents, settings), [subtotalCents, settings]);
+
+  if (placed) {
+    return (
+      <div role="status" className="mx-auto max-w-xl rounded-3xl border border-cream-300 bg-cream-100 px-8 py-14 text-center">
+        <p className="font-display text-3xl">Order {placed.orderNumber} is already placed</p>
+        <p className="mt-4 text-sm leading-relaxed text-ink-600">
+          {placed.awaitingPayment
+            ? "We received this order a moment ago, but it has not been paid yet. Message us on WhatsApp with the order number and we will send you a payment link or switch it to cash on delivery."
+            : "We received this order a moment ago — there is no need to place it again. Your confirmation email has the link to track it."}
+        </p>
+        <ButtonLink
+          href={waLink(settings.whatsapp, `Hi Franley, about order ${placed.orderNumber}`)}
+          size="lg"
+          className="mt-7"
+        >
+          Message us on WhatsApp
+        </ButtonLink>
+      </div>
+    );
+  }
 
   if (!ready) {
     return (
@@ -49,6 +114,13 @@ export function CheckoutForm() {
   if (!lines.length) {
     return (
       <div className="rounded-3xl border border-dashed border-cream-300 py-24 text-center">
+        {/* e.g. the stale-bag notice, when removing those lines emptied the bag */}
+        {formError && (
+          <p role="alert" className="mx-auto mb-8 max-w-md rounded-2xl bg-wine-700/10 px-4 py-3 text-xs text-wine-800">
+            {formError}
+          </p>
+        )}
+        {pending && <PendingPaymentNotice pending={pending} />}
         <p className="font-display text-3xl">Nothing to check out</p>
         <p className="mt-3 text-sm text-ink-600">Add a piece to your bag first.</p>
         <ButtonLink href="/shop" size="lg" className="mt-7">Browse the collection</ButtonLink>
@@ -85,6 +157,7 @@ export function CheckoutForm() {
       items: lines.map((l) => ({ productId: l.productId, quantity: l.quantity })),
     };
 
+    let leaving = false;
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -97,6 +170,12 @@ export function CheckoutForm() {
       const json = await res.json();
 
       if (!res.ok) {
+        // Lines saved before the shop was connected to its database: drop them
+        // so the next attempt can succeed, and say why.
+        if (Array.isArray(json.staleItems)) {
+          for (const id of json.staleItems as string[]) remove(id);
+          idempotencyKey.current = null;
+        }
         if (json.fieldErrors) {
           setErrors(json.fieldErrors);
           const failed = new Set(Object.keys(json.fieldErrors as FieldErrors));
@@ -112,11 +191,44 @@ export function CheckoutForm() {
 
       idempotencyKey.current = null;
       clear();
+
+      // The first attempt got through but its response did not come back.
+      // The order link cannot be re-issued (only its hash is stored), so say
+      // plainly what happened rather than inviting a second order.
+      if (json.duplicate) {
+        setPlaced({ orderNumber: json.orderNumber, awaitingPayment: Boolean(json.awaitingPayment) });
+        return;
+      }
+
+      // A card order exists but is unpaid at this point. Hand the shopper to
+      // PayHere; they come back to the order page, which also offers "Pay now"
+      // again if they back out. Stay in the submitting state — the page is
+      // about to navigate away.
+      if (json.payhere) {
+        leaving = true;
+        try {
+          sessionStorage.setItem(
+            PENDING_KEY,
+            JSON.stringify({ orderNumber: json.orderNumber, token: json.accessToken, at: Date.now() } satisfies PendingPayment),
+          );
+        } catch {
+          /* storage blocked: the order page link in PayHere's cancel URL still works */
+        }
+        redirectToPayHere(json.payhere);
+        return;
+      }
+
+      try {
+        sessionStorage.removeItem(PENDING_KEY);
+      } catch {
+        /* nothing to clear */
+      }
+
       router.push(`/order/${json.orderNumber}?token=${encodeURIComponent(json.accessToken)}`);
     } catch {
       setFormError("Network problem — check your connection and try again.");
     } finally {
-      setSubmitting(false);
+      if (!leaving) setSubmitting(false);
     }
   }
 
@@ -135,6 +247,8 @@ export function CheckoutForm() {
     );
 
   return (
+    <>
+    {pending && <PendingPaymentNotice pending={pending} compact />}
     <form ref={formRef} onSubmit={onSubmit} className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
       <div className="space-y-10">
         <fieldset>
@@ -192,7 +306,7 @@ export function CheckoutForm() {
         <fieldset>
           <legend className="font-display text-2xl">Payment</legend>
           <div className="mt-6 space-y-3">
-            {PAYMENTS.map(({ value, label, note, Icon }) => (
+            {payments.map(({ value, label, note, Icon }) => (
               <label
                 key={value}
                 className={cn(
@@ -212,6 +326,11 @@ export function CheckoutForm() {
                 <span>
                   <span className="block text-sm font-medium">{label}</span>
                   <span className="mt-1 block text-xs text-ink-600">{note}</span>
+                  {value === "bank_transfer" && payment === "bank_transfer" && settings.bankTransferDetails && (
+                    <span className="mt-3 block whitespace-pre-line rounded-xl bg-cream-50 px-4 py-3 text-xs leading-relaxed text-ink-800">
+                      {settings.bankTransferDetails}
+                    </span>
+                  )}
                 </span>
               </label>
             ))}
@@ -274,8 +393,10 @@ export function CheckoutForm() {
           {submitting ? (
             <span className="flex items-center gap-2">
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-              Placing order…
+              {payment === "card" ? "Taking you to PayHere…" : "Placing order…"}
             </span>
+          ) : payment === "card" ? (
+            "Continue to payment"
           ) : (
             "Place order"
           )}
@@ -287,5 +408,6 @@ export function CheckoutForm() {
         </p>
       </aside>
     </form>
+    </>
   );
 }

@@ -17,6 +17,8 @@ export function OrderPagination({
   total,
   status,
   q,
+  hrefFor,
+  noun = "order",
 }: {
   page: number;
   pageCount: number;
@@ -26,18 +28,26 @@ export function OrderPagination({
   total: number;
   status?: OrderStatus;
   q?: string;
+  /** Builds the link for a page. Left out, the orders list is assumed and
+   *  `status` and `q` are carried along; any other list passes its own. */
+  hrefFor?: (page: number) => string;
+  /** What the rows are, singular, for the count line and the nav label. */
+  noun?: string;
 }) {
+  const href = hrefFor ?? ((target: number) => ordersHref({ status, q, page: target }));
+  const plural = `${noun}s`;
+
   if (pageCount <= 1) {
     return (
       <p className="mt-5 text-xs text-ink-600">
-        {total} order{total === 1 ? "" : "s"}
+        {total} {total === 1 ? noun : plural}
       </p>
     );
   }
 
   return (
     <nav
-      aria-label="Orders pagination"
+      aria-label={`${plural.charAt(0).toUpperCase()}${plural.slice(1)} pagination`}
       className="mt-6 flex flex-wrap items-center justify-between gap-4"
     >
       <p className="text-xs text-ink-600">
@@ -45,7 +55,7 @@ export function OrderPagination({
       </p>
       <div className="flex items-center gap-2">
         {page > 1 ? (
-          <Link href={ordersHref({ status, q, page: page - 1 })} rel="prev" className={step}>
+          <Link href={href(page - 1)} rel="prev" className={step}>
             <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
             Previous
           </Link>
@@ -56,7 +66,7 @@ export function OrderPagination({
           </span>
         )}
         {page < pageCount ? (
-          <Link href={ordersHref({ status, q, page: page + 1 })} rel="next" className={step}>
+          <Link href={href(page + 1)} rel="next" className={step}>
             Next
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
           </Link>

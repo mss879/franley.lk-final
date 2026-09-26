@@ -1,4 +1,5 @@
-import { DELIVERY, FLAT_SHIPPING_CENTS, SITE } from "@/lib/constants";
+import { DELIVERY, FLAT_SHIPPING_CENTS, FREE_SHIPPING_THRESHOLD_CENTS, SITE } from "@/lib/constants";
+import { shippingFor } from "@/lib/settings/shipping";
 import type { Product } from "@/types/domain";
 import { HTML_LANG, OG_FALLBACK, SITE_ORIGIN, absoluteUrl, schemaPrice } from "./config";
 
@@ -24,12 +25,34 @@ export function JsonLd({ data }: { data: object }) {
   );
 }
 
+export type SiteGraphOptions = {
+  /** From /admin/settings, so the graph never contradicts the footer. */
+  phone?: string;
+  email?: string;
+  instagram?: string | null;
+  facebook?: string | null;
+  /** PayHere is configured, so cards are taken at checkout. */
+  cardPayments?: boolean;
+};
+
 /**
  * The site-wide graph: who Franley is, where the search box goes, and the
- * Dehiwala shop itself. Emitted once from the root layout, so every page's
- * Product and Breadcrumb nodes can point at `#organization` and resolve.
+ * Dehiwala shop itself. Emitted once from the storefront layout, so every
+ * page's Product and Breadcrumb nodes can point at `#organization` and resolve.
  */
-export function siteJsonLd() {
+export function siteJsonLd(options: SiteGraphOptions = {}) {
+  const phone = options.phone || SITE.phone;
+  const email = options.email || SITE.email;
+  // Only the profiles the owner has entered in Settings. Invented ones would not be verified.
+  const sameAs = [options.instagram, options.facebook].filter(
+    (url): url is string => typeof url === "string" && url.startsWith("https://"),
+  );
+  const paymentAccepted = [
+    "Cash on delivery",
+    "Bank transfer",
+    ...(options.cardPayments ? ["Credit card", "Debit card"] : []),
+  ].join(", ");
+
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -40,8 +63,8 @@ export function siteJsonLd() {
         url: SITE_ORIGIN,
         description: SITE.description,
         slogan: SITE.tagline,
-        email: SITE.email,
-        telephone: SITE.phone,
+        email,
+        telephone: phone,
         address: POSTAL_ADDRESS,
         logo: {
           "@type": "ImageObject",
@@ -54,13 +77,12 @@ export function siteJsonLd() {
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer support",
-          telephone: SITE.phone,
-          email: SITE.email,
+          telephone: phone,
+          email,
           areaServed: "LK",
           availableLanguage: "English",
         },
-        // No verified brand profiles yet. An empty array says so; invented ones would not.
-        sameAs: [],
+        ...(sameAs.length ? { sameAs } : {}),
       },
       {
         "@type": "WebSite",
@@ -86,12 +108,12 @@ export function siteJsonLd() {
         url: SITE_ORIGIN,
         image: absoluteUrl(OG_FALLBACK),
         description: SITE.description,
-        telephone: SITE.phone,
-        email: SITE.email,
+        telephone: phone,
+        email,
         address: POSTAL_ADDRESS,
         areaServed: { "@type": "Country", name: SITE.address.country },
         currenciesAccepted: SITE.currency,
-        paymentAccepted: "Cash on delivery, Bank transfer",
+        paymentAccepted,
         priceRange: "Rs 1,190 – Rs 1,790",
         openingHoursSpecification: [
           {
@@ -154,7 +176,8 @@ export function collectionJsonLd({
       "@type": "ItemList",
       name,
       numberOfItems: products.length,
-      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      // Curated or newest-first — neither is an ascending order of anything.
+      itemListOrder: "https://schema.org/ItemListUnordered",
       itemListElement: products.map((product, i) => ({
         "@type": "ListItem",
         position: i + 1,
@@ -180,27 +203,36 @@ const RETURN_POLICY = {
 } as const;
 
 /**
- * Shipping is stated as the rate this offer actually attracts. Free delivery
- * starts at Rs 5,000 and no single piece reaches Rs 1,790, so the flat rate is
- * the honest figure here — advertising the free tier per-offer would let Google
- * surface "free delivery" on a Rs 1,190 tie.
+ * Shipping is stated as the rate this offer actually attracts: what one of
+ * this piece, bought on its own, is charged under the delivery rule in
+ * /admin/settings. Advertising the free tier per-offer would let Google
+ * surface "free delivery" on a piece that does not qualify for it alone.
  */
-const SHIPPING_DETAILS = {
-  "@type": "OfferShippingDetails",
-  shippingDestination: { "@type": "DefinedRegion", addressCountry: "LK" },
-  shippingRate: {
-    "@type": "MonetaryAmount",
-    value: schemaPrice(FLAT_SHIPPING_CENTS),
-    currency: SITE.currency,
-  },
-  deliveryTime: {
-    "@type": "ShippingDeliveryTime",
-    handlingTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 2, unitCode: "DAY" },
-    transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 5, unitCode: "DAY" },
-  },
-} as const;
+function shippingDetails(priceCents: number, rule: { flatRateCents: number; freeThresholdCents: number }) {
+  return {
+    "@type": "OfferShippingDetails",
+    shippingDestination: { "@type": "DefinedRegion", addressCountry: "LK" },
+    shippingRate: {
+      "@type": "MonetaryAmount",
+      value: schemaPrice(shippingFor(priceCents, rule)),
+      currency: SITE.currency,
+    },
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 2, unitCode: "DAY" },
+      transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 5, unitCode: "DAY" },
+    },
+  } as const;
+}
 
-export function productJsonLd(product: Product, path: string) {
+export function productJsonLd(
+  product: Product,
+  path: string,
+  rule: { flatRateCents: number; freeThresholdCents: number } = {
+    flatRateCents: FLAT_SHIPPING_CENTS,
+    freeThresholdCents: FREE_SHIPPING_THRESHOLD_CENTS,
+  },
+) {
   const url = absoluteUrl(path);
   const images = (product.images.length ? product.images : [OG_FALLBACK]).map(absoluteUrl);
   const width = product.widthCm ? Number(product.widthCm) : null;
@@ -232,7 +264,7 @@ export function productJsonLd(product: Product, path: string) {
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@type": "Organization", "@id": ORG_ID, name: SITE.name },
       hasMerchantReturnPolicy: RETURN_POLICY,
-      shippingDetails: SHIPPING_DETAILS,
+      shippingDetails: shippingDetails(product.priceCents, rule),
     },
   };
 }

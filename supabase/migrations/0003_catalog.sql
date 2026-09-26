@@ -7,7 +7,7 @@
 --          IF NOT EXISTS, policies are dropped before being created, triggers
 --          are dropped before being created.
 --
--- VARIANTS: deliberately not modelled. All 29 products in data/seed.json are
+-- VARIANTS: deliberately not modelled. All 49 products in data/seed.json are
 --          single-variant (one width, one colour, one price). A variants table
 --          would be exactly one row per product forever: an extra join on
 --          every storefront query, a second RLS surface, a second admin form,
@@ -17,7 +17,7 @@
 --          unit_price_cents and carries a nullable variant_label, so adding
 --          product_variants + a nullable order_items.variant_id later needs no
 --          rewrite of existing orders. Accepted cost, stated plainly: the same
---          tie in two blade widths needs two product rows and two slugs. At 29
+--          tie in two blade widths needs two product rows and two slugs. At 49
 --          SKUs that is cheaper than the join.
 -- =============================================================================
 

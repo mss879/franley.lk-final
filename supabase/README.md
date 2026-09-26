@@ -4,9 +4,9 @@ This folder holds the database for **franley.lk**: the products, the categories,
 the orders, and the content you can edit from the admin panel.
 
 It is written for someone who has never used a database before. You do not need
-to understand the SQL. You need to **paste eleven files, in order, into one box on
-a website**, and then create your admin login. That is the whole job. It takes
-about fifteen minutes.
+to understand the SQL. You need to **paste sixteen files, in order, into one box on
+a website**, run the safety check once more at the end, and then create your admin
+login. That is the whole job. It takes about twenty minutes.
 
 ---
 
@@ -29,11 +29,12 @@ You need:
 
 ---
 
-## Step 2 — Run the ten migration files, in order
+## Step 2 — Run the sixteen migration files, in order
 
-Everything the database needs is in `supabase/migrations/`. There are eleven files.
-**Run them in number order — 0001 first, 0011 last.** Each one builds on the one
-before it.
+Everything the database needs is in `supabase/migrations/`. There are sixteen files.
+**Run them in number order — 0001 first, 0016 last — then run `0010_guardrails.sql`
+one more time.** Each one builds on the one before it, and the final re-run of 0010
+checks the files that came after it the first time round.
 
 1. In the Supabase dashboard, click **SQL Editor** in the left sidebar.
 2. Click **New query**.
@@ -43,14 +44,17 @@ before it.
 5. You should see **Success. No rows returned**, or a short green notice. That
    is what success looks like.
 6. Clear the box, and repeat steps 3–5 for `0002`, then `0003`, and so on,
-   all the way to `0011`.
+   all the way to `0016`.
+7. Finally, run `0010_guardrails.sql` once more.
 
-Two of the files print a friendly summary when they finish:
+Some of the files print a friendly summary when they finish:
 
 * `0008_seed_catalog.sql` prints `Franley catalogue: 4 categories, 49 products, 93 images`
+* `0013_collections.sql` prints how many collections and collection items it created
+  (2 collections and 13 items on a fresh database)
 * `0010_guardrails.sql` prints `Franley schema guardrails passed.`
 
-If you see those two lines, the database is correct.
+If you see those lines, the database is correct.
 
 > **If something goes red.** Read the message. If it says something *already
 > exists*, that file has already been run — that is harmless, move on to the
@@ -61,7 +65,7 @@ If you see those two lines, the database is correct.
 
 ### If you prefer the command line
 
-If you have the Supabase CLI installed, the same eleven files run with:
+If you have the Supabase CLI installed, the same sixteen files run with:
 
 ```bash
 supabase link --project-ref <your-project-ref>
@@ -69,6 +73,8 @@ supabase db push
 ```
 
 `supabase db push` applies them in filename order, which is the correct order.
+It will not run `0010_guardrails.sql` a second time, so paste that one into the
+SQL Editor afterwards.
 
 ---
 
@@ -102,6 +108,11 @@ and it is deliberately a separate one.
 
 If it says *No auth user with email …*, the address does not match the one you
 created in Step 3. Check for typos and try again.
+
+If it says the account *has not confirmed its email address*, the login was
+created without **Auto Confirm User** — or by someone else, while sign-ups were
+still open. Delete it under **Authentication → Users** and create it again as in
+Step 3. An unconfirmed account is never made an admin.
 
 `owner` is the highest level. If you later want to give a staff member access
 that cannot manage other admins, use `'admin'` instead of `'owner'`.
@@ -148,8 +159,10 @@ The database cannot do these for you.
    Franley has no customer accounts — shoppers check out as guests — so nobody
    should be able to create a login. Leaving this on is the single most common
    way a small store gets abused.
-2. **Turn on two-factor authentication** for your own admin login. Your admin
-   account can see every customer's name, phone number and address. Protect it.
+2. **Give the admin login a long, unique password** — from a password manager —
+   and protect the email account behind it. That login can see every
+   customer's name, phone number and address. (The admin does not ask for a
+   second factor yet; the password is the lock.)
 
 ---
 
@@ -168,6 +181,11 @@ The database cannot do these for you.
 | `0009_seed_cms.sql` | The homepage wording as it is today, so the admin opens onto real content. |
 | `0010_guardrails.sql` | A safety check. Run it again any time. It changes nothing. |
 | `0011_email_log.sql` | A record of every order email sent, so a customer is never emailed twice. |
+| `0012_payhere.sql` | Online card payments through PayHere: where the payment ID is kept, and the one function allowed to mark a card order paid. |
+| `0013_collections.sql` | Collections — hand-picked groups of products such as "Featured" — and two starter collections filled from the catalogue. |
+| `0014_customers.sql` | A customer list built from orders: everyone who has ordered, with their totals. Existing orders are added to it automatically. |
+| `0015_ops_and_fixes.sql` | Releasing abandoned card orders, real contact details in the settings, and a few small fixes. |
+| `0016_security_hardening.sql` | Security fixes: only the website's server can place an order, order pages can no longer be locked out, uploaded images cannot be listed, and admin rights need a confirmed account. |
 
 ---
 
@@ -178,11 +196,15 @@ All of these live on the **Settings** page of the admin (they are rows in the
 
 | Setting | What it does |
 | --- | --- |
-| Delivery charge | In cents. `35000` means Rs 350.00. |
-| Free delivery over | In cents. `500000` means Rs 5,000.00. |
+| Delivery charge | Typed in rupees in the admin (`350`); stored as cents. |
+| Free delivery over | Typed in rupees in the admin (`5000`). |
 | Accept orders | Turn this off to close checkout — during a stock take, say — without taking the website down. |
-| WhatsApp number | Powers the floating WhatsApp button. |
-| Bank transfer instructions | Shown at checkout when a customer picks bank transfer. |
+| Phone, WhatsApp, email | Shown in the footer, on the contact and policy pages, and on every WhatsApp button. |
+| Bank transfer instructions | Shown at checkout, on the order page and in the confirmation email when a customer picks bank transfer. **Fill this in before launch** — until you do, customers are told the details will follow by email. |
+
+The admin also has **Customers** (everyone who has ordered, with name, email,
+phone and what they have spent) and **Collections** (hand-picked groups such as
+"Featured", shown at `/collections/<name>` alongside the category pages).
 
 The delivery charge is read by the checkout **at the moment the order is placed**,
 so the amount a customer is shown and the amount they are charged can never
@@ -227,6 +249,9 @@ not by you, not by the website, not even by someone holding the master key.
 * **Product web addresses are the ones the old Shopify store used**, including
   the ones that are just numbers (`/products/41`). Changing them later breaks
   any Google result pointing at them, so decide before launch, not after.
+* **A card order holds its stock until it is paid or released.** A shopper who
+  closes the PayHere page leaves an unpaid order behind. In the admin, open
+  **Orders → Awaiting card payment** and use **Release and restock**.
 * **Deleted images stay in storage.** Removing an image from a product does not
   remove the file from the bucket. Harmless at this size, but it accumulates.
 
@@ -234,9 +259,9 @@ not by you, not by the website, not even by someone holding the master key.
 
 ## Troubleshooting
 
-**"permission denied for table orders"** — you are logged in, but that login is
-not an admin. Re-run Step 4 with the exact email address of the login you are
-using.
+**"That account does not have admin access" on the login page** — the login
+exists but is not an admin. Re-run Step 4 with the exact email address of the
+login you are using.
 
 **The admin loads but every list is empty** — the login is not an admin (Step 4),
 or `.env.local` points at a different project (Step 5).

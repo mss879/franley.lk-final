@@ -1,12 +1,15 @@
 import "server-only";
-import { createClient } from "@/lib/supabase/server";
+import { createAnonClient } from "@/lib/supabase/server";
 
 /**
  * Reads published CMS blocks for a page and folds them into a single object
  * keyed by block key, e.g. { hero: {...}, editorial: {...} }.
  */
 export async function getContentBlocksLive(page: string): Promise<Record<string, unknown>> {
-  const supabase = await createClient();
+  // Cookie-less on purpose: see src/lib/data/supabase-source.ts. Published
+  // blocks are public, and reading cookies here (the shop layout calls this for
+  // the announcement bar) made every storefront page dynamic.
+  const supabase = createAnonClient();
   const { data, error } = await supabase
     .from("content_blocks")
     .select("key, payload")

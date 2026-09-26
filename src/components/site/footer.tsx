@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
-import { WhatsAppIcon } from "@/components/ui/social-icons";
+import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/social-icons";
 import { SITE } from "@/lib/constants";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { getSiteSettings } from "@/lib/settings";
+import { getCollections } from "@/lib/data";
+import { waLink } from "@/lib/settings/shipping";
 
 const COLUMNS = [
   {
@@ -37,15 +40,31 @@ const COLUMNS = [
 ] as const;
 
 // Only channels that resolve to a real Franley account belong here. The
-// Instagram and Facebook entries pointed at the bare platform homepages, which
-// dropped a shopper on a logged-out feed. This matches the honest `sameAs: []`
-// already emitted in src/lib/seo/json-ld.tsx — add profiles back here and there
-// together once the accounts exist.
-const SOCIAL = [
-  { href: `https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`, label: "WhatsApp", Icon: WhatsAppIcon },
-];
-
-export function Footer() {
+// Instagram and Facebook entries used to point at the bare platform homepages,
+// which dropped a shopper on a logged-out feed; they now appear only once the
+// owner enters the real profile address in /admin/settings.
+export async function Footer() {
+  const [s, collections] = await Promise.all([getSiteSettings(), getCollections()]);
+  const SOCIAL = [
+    { href: waLink(s.whatsapp), label: "WhatsApp", Icon: WhatsAppIcon },
+    ...(s.instagram ? [{ href: s.instagram, label: "Instagram", Icon: InstagramIcon }] : []),
+    ...(s.facebook ? [{ href: s.facebook, label: "Facebook", Icon: FacebookIcon }] : []),
+  ];
+  // Collections the owner creates in the admin join the Shop column; the
+  // category links stay first so the footer never loses its fixed shape.
+  const columns = COLUMNS.map((col) =>
+    col.title === "Shop"
+      ? {
+          ...col,
+          links: [
+            ...col.links,
+            ...collections.slice(0, 4).map((c) => ({ href: `/collections/${c.slug}`, label: c.name })),
+            // The index page was otherwise reachable from the sitemap alone.
+            { href: "/collections", label: "All collections" },
+          ],
+        }
+      : col,
+  );
   return (
     <footer className="silk-texture bg-wine-900 text-cream-100">
       <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24">
@@ -75,18 +94,18 @@ export function Footer() {
 
             <div className="mt-6 flex flex-col gap-3 text-sm">
               <a
-                href={`tel:${SITE.phone.replace(/\s/g, "")}`}
+                href={`tel:${s.phone.replace(/[^\d+]/g, "")}`}
                 className="inline-flex items-center gap-3 text-cream-100/80 transition-colors hover:text-champagne-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-wine focus-visible:ring-offset-wine-900"
               >
                 <Phone className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
-                {SITE.phone}
+                {s.phone}
               </a>
               <a
-                href={`mailto:${SITE.email}`}
+                href={`mailto:${s.email}`}
                 className="inline-flex items-center gap-3 text-cream-100/80 transition-colors hover:text-champagne-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-wine focus-visible:ring-offset-wine-900"
               >
                 <Mail className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
-                {SITE.email}
+                {s.email}
               </a>
             </div>
 
@@ -113,7 +132,7 @@ export function Footer() {
           </div>
 
           <div className="grid gap-10 sm:grid-cols-3">
-            {COLUMNS.map((col) => (
+            {columns.map((col) => (
               <div key={col.title}>
                 <Eyebrow tone="light">{col.title}</Eyebrow>
                 <ul className="mt-5 space-y-3">
@@ -134,7 +153,7 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-cream-100/12 pt-8 text-xs text-cream-100/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {s.storeName}. All rights reserved.</p>
           <p>Islandwide delivery across Sri Lanka &middot; Prices in LKR</p>
         </div>
       </div>

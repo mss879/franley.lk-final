@@ -60,7 +60,7 @@ export default function AboutPage() {
               src="/editorial/desk-ties.webp"
               alt="Franley silk neckties laid across a writing desk beside a decanter and a leather notebook"
               fill
-              priority
+              preload
               sizes="(max-width: 1024px) 100vw, 520px"
               className="object-cover"
             />

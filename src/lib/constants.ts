@@ -1,6 +1,8 @@
 export const SITE = {
   name: "Franley",
   tagline: "The Art of Modern Man",
+  /** The home page's title: what people search for, not just the brand line. */
+  seoTitle: "Franley — Men's Neckties & Cufflinks in Sri Lanka",
   description:
     "FRANLEY is a Sri Lankan men's accessories brand built for the modern gentleman — neckties, cufflinks and finishing pieces, chosen for fabric feel, craftsmanship and presentation.",
   url: "https://franley.lk",

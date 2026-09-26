@@ -1,8 +1,11 @@
 "use server";
 
+import { headers } from "next/headers";
 import { z } from "zod";
+import { isLive } from "@/lib/data";
 import { sendContactEnquiry, emailEnabled } from "@/lib/email/send";
-import { SITE } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/settings";
+import { createServiceClient } from "@/lib/supabase/server";
 
 export type ContactState = { ok: boolean; message: string } | null;
 
@@ -16,6 +19,37 @@ const schema = z.object({
   // everything. Cheaper and less hostile than a CAPTCHA.
   website: z.string().max(0).optional().or(z.literal("")),
 });
+
+/**
+ * Flood control, checked before any email is sent: five messages an hour from
+ * one address, sixty a day from everyone together. This action can be called
+ * by a script as easily as by the form, and every call is an email through
+ * the same Resend quota the order confirmations depend on.
+ *
+ * Fails open — a missing key or an unapplied migration (0016) must not silence
+ * a real customer — and says why in the log.
+ */
+async function withinContactLimits(): Promise<boolean> {
+  if (!isLive()) return true;
+  try {
+    const h = await headers();
+    const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
+    const supabase = createServiceClient();
+    const limits = [
+      { p_key: `ip|${ip}`, p_limit: 5, p_window_seconds: 60 * 60 },
+      { p_key: "all", p_limit: 60, p_window_seconds: 24 * 60 * 60 },
+    ];
+    for (const limit of limits) {
+      const { data, error } = await supabase.rpc("throttle_take", { p_kind: "contact", ...limit });
+      if (error) throw error;
+      if (data === false) return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("contact form throttle unavailable", err);
+    return true;
+  }
+}
 
 export async function submitEnquiry(_prev: ContactState, formData: FormData): Promise<ContactState> {
   const raw = Object.fromEntries(
@@ -35,9 +69,18 @@ export async function submitEnquiry(_prev: ContactState, formData: FormData): Pr
   if (parsed.data.website) return { ok: true, message: "Thank you — we will be in touch shortly." };
 
   if (!emailEnabled()) {
+    const { phone, email } = await getSiteSettings();
     return {
       ok: false,
-      message: `Our contact form is not connected yet. Please WhatsApp us on ${SITE.phoneLocal} or email ${SITE.email}.`,
+      message: `Our contact form is not connected yet. Please WhatsApp us on ${phone} or email ${email}.`,
+    };
+  }
+
+  if (!(await withinContactLimits())) {
+    const { phone } = await getSiteSettings();
+    return {
+      ok: false,
+      message: `We have had a lot of messages just now. Please WhatsApp us on ${phone} instead.`,
     };
   }
 
@@ -50,9 +93,10 @@ export async function submitEnquiry(_prev: ContactState, formData: FormData): Pr
   });
 
   if (!result.sent) {
+    const { phone } = await getSiteSettings();
     return {
       ok: false,
-      message: `We could not send that just now. Please WhatsApp us on ${SITE.phoneLocal} instead.`,
+      message: `We could not send that just now. Please WhatsApp us on ${phone} instead.`,
     };
   }
 

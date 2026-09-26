@@ -75,7 +75,7 @@ export default function TieGuidePage() {
             src="/video/tie-adjust-poster.webp"
             alt="A man adjusting the knot of a burgundy silk necktie"
             fill
-            priority
+            preload
             sizes="100vw"
             className="object-cover"
           />

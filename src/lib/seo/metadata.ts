@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/constants";
-import { OG_FALLBACK, OG_LOCALE, absoluteUrl } from "./config";
+import { OG_FALLBACK_IMAGE, OG_LOCALE, absoluteUrl } from "./config";
 
 export type PageSeo = {
   /** Page title without the brand suffix — the root template adds it. */
@@ -10,6 +10,8 @@ export type PageSeo = {
   canonical: string;
   /** Root-relative or absolute image paths. Falls back to the brand card. */
   images?: string[];
+  /** Alt text for `images` in link previews — the product or collection name. */
+  imageAlt?: string;
   /**
    * og:type. Product pages pass "none" and render `og:type=product` themselves,
    * because Next's OpenGraph union has no product variant.
@@ -28,13 +30,17 @@ export function buildMetadata({
   description,
   canonical,
   images,
+  imageAlt,
   ogType = "website",
   noindex,
 }: PageSeo): Metadata {
-  const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+  const fullTitle = title ? `${title} · ${SITE.name}` : SITE.seoTitle;
   const desc = description ?? SITE.description;
   const url = absoluteUrl(canonical);
-  const pictures = (images?.length ? images : [OG_FALLBACK]).map(absoluteUrl);
+  // The brand card's size is known; a page's own photographs are described by alt only.
+  const pictures = images?.length
+    ? images.map((src) => ({ url: absoluteUrl(src), ...(imageAlt ? { alt: imageAlt } : {}) }))
+    : [{ ...OG_FALLBACK_IMAGE, url: absoluteUrl(OG_FALLBACK_IMAGE.url) }];
 
   const og = {
     url,
@@ -82,20 +88,24 @@ export function isSearch(sp: ListingParams) {
  * Which listing query parameters survive into the canonical.
  *
  * `sort` reorders the same set of products, so it never does — otherwise four
- * sort values multiply every listing URL by four. A *single* colour is a real
- * facet with its own demand ("navy tie") and keeps a self-referencing
- * canonical; a multi-colour combination is one of hundreds of thin permutations
- * and folds back onto the bare path. Search pages keep `q` so their noindex
- * sits on a self-referencing canonical instead of pointing away from the page,
- * which Google reads as a conflicting signal.
+ * sort values multiply every listing URL by four. `color` never does either:
+ * the colour pills are buttons, not links, so no crawler can find a colour page
+ * anyway, and the parameter is free text — `?color=anything` would otherwise be
+ * an indexable page titled "anything Neckties" with nothing on it. Colour pages
+ * fold back onto the bare listing and are noindexed (see listingNoindex).
+ * Search pages keep `q` so their noindex sits on a self-referencing canonical
+ * instead of pointing away from the page, which Google reads as a conflicting
+ * signal.
  */
 export function listingCanonical(basePath: string, sp: ListingParams) {
   const params = new URLSearchParams();
-  const colors = activeColors(sp);
-
   if (isSearch(sp)) params.set("q", sp.q!.trim());
-  else if (colors.length === 1) params.set("color", colors[0]);
 
   const query = params.toString();
   return query ? `${basePath}?${query}` : basePath;
+}
+
+/** A filtered or searched listing is for the shopper in front of it, never for the index. */
+export function listingNoindex(sp: ListingParams) {
+  return isSearch(sp) || activeColors(sp).length > 0;
 }

@@ -483,8 +483,11 @@ begin
 end;
 $$;
 
-revoke execute on function public.place_order(jsonb, jsonb, jsonb, public.payment_method, text, text, text) from public;
-grant  execute on function public.place_order(jsonb, jsonb, jsonb, public.payment_method, text, text, text) to anon, authenticated;
+-- Server only (0016): /api/checkout calls this with the service key and passes
+-- the shopper's real address. Granting it to anon let anyone call it directly
+-- with a fresh p_ip_hint each time and hold the whole catalogue as unpaid orders.
+revoke execute on function public.place_order(jsonb, jsonb, jsonb, public.payment_method, text, text, text) from public, anon, authenticated;
+grant  execute on function public.place_order(jsonb, jsonb, jsonb, public.payment_method, text, text, text) to service_role;
 
 -- -----------------------------------------------------------------------------
 -- get_order_by_token — "track my order" for a guest with no account.

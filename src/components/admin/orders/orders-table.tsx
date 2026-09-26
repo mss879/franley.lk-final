@@ -10,6 +10,13 @@ import {
   type PaymentStatus,
 } from "./status";
 
+/** The columns an `OrderListRow` needs. Every page that renders an
+ *  `<OrdersTable>` selects exactly this, so the row type and the query
+ *  cannot drift apart. */
+export const ORDER_LIST_SELECT =
+  "id, order_number, created_at, customer_name, customer_email, customer_phone, " +
+  "status, payment_status, payment_method, total_cents, order_items(quantity)";
+
 export type OrderListRow = {
   id: string;
   order_number: string;
@@ -31,13 +38,21 @@ export function itemCount(row: OrderListRow) {
 const th = "eyebrow px-5 py-3.5 text-left font-medium text-ink-600";
 const td = "px-5 py-4 align-middle";
 
-export function OrdersTable({ rows }: { rows: OrderListRow[] }) {
+export function OrdersTable({
+  rows,
+  caption = "Orders, newest first",
+}: {
+  rows: OrderListRow[];
+  /** Read out to screen readers only; say whose orders these are when the
+   *  table sits on anything other than the orders list. */
+  caption?: string;
+}) {
   return (
     <div className="overflow-hidden rounded-3xl border border-cream-300 bg-white">
       {/* Desktop: the scannable grid */}
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full min-w-[900px] border-collapse text-sm">
-          <caption className="sr-only">Orders, newest first</caption>
+          <caption className="sr-only">{caption}</caption>
           <thead>
             <tr className="border-b border-cream-300 bg-cream-100">
               <th scope="col" className={th}>Order</th>

@@ -13,7 +13,7 @@ import "server-only";
 type Check = { key: string; ok: boolean; required: boolean; hint: string };
 
 const isPlaceholder = (v?: string) =>
-  !v || /YOUR-PROJECT-REF|your-anon|your-service|re_your_api_key|yourdomain/i.test(v);
+  !v || /YOUR-PROJECT-REF|your-anon|your-service|re_your_api_key|yourdomain|your-merchant/i.test(v);
 
 export function checkEnv(): Check[] {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -35,7 +35,7 @@ export function checkEnv(): Check[] {
       key: "SUPABASE_SERVICE_ROLE_KEY",
       ok: !isPlaceholder(process.env.SUPABASE_SERVICE_ROLE_KEY),
       required: false,
-      hint: "Server-only. Needed for order confirmation emails, which read the order back past RLS.",
+      hint: "Server-only. Checkout places every order with it (without it nobody can order), and it sends order emails, records PayHere card payments and makes refunds from the admin.",
     },
     {
       key: "NEXT_PUBLIC_SITE_URL",
@@ -55,6 +55,36 @@ export function checkEnv(): Check[] {
       required: false,
       hint: "Must be on a domain verified in Resend, e.g. 'Franley <orders@franley.lk>'.",
     },
+    {
+      key: "PAYHERE_MERCHANT_ID",
+      ok: /^\d+$/.test(process.env.PAYHERE_MERCHANT_ID?.trim() ?? ""),
+      required: false,
+      hint: "PayHere → Integrations → Merchant ID. Without it and the secret, checkout offers cash on delivery and bank transfer only.",
+    },
+    {
+      key: "PAYHERE_MERCHANT_SECRET",
+      ok: !isPlaceholder(process.env.PAYHERE_MERCHANT_SECRET),
+      required: false,
+      hint: "Server-only. PayHere → Integrations → the Merchant Secret shown against your approved domain.",
+    },
+    {
+      key: "PAYHERE_MODE",
+      ok: ["", "sandbox", "live"].includes(process.env.PAYHERE_MODE?.trim().toLowerCase() ?? ""),
+      required: false,
+      hint: "sandbox or live. Anything else is treated as sandbox — set live in production.",
+    },
+    {
+      key: "PAYHERE_APP_ID / PAYHERE_APP_SECRET",
+      ok: Boolean(process.env.PAYHERE_APP_ID?.trim() && process.env.PAYHERE_APP_SECRET?.trim()),
+      required: false,
+      hint: "Optional. PayHere → Settings → API Keys. Lets the store look up a payment whose notification was missed, and refund from the admin. On live, PayHere must whitelist this server's IP (support@payhere.lk).",
+    },
+    {
+      key: "RESEND_REPLY_TO / ORDER_NOTIFICATION_EMAIL",
+      ok: Boolean(process.env.RESEND_REPLY_TO && process.env.ORDER_NOTIFICATION_EMAIL),
+      required: false,
+      hint: "Optional. Where customer replies land and who gets the new-order alert. Both default to the store email.",
+    },
   ];
 }
 
@@ -73,13 +103,33 @@ export function reportEnv() {
 
   const checks = checkEnv();
   const missing = checks.filter((c) => !c.ok);
-  if (!missing.length) return;
-
   const isProd = process.env.NODE_ENV === "production";
-  const lines = missing.map((c) => `  • ${c.key} — ${c.hint}`).join("\n");
-  console.warn(
-    `\n[franley] ${missing.length} environment variable(s) not set${isProd ? " IN PRODUCTION" : ""}:\n${lines}\n`,
-  );
+
+  if (missing.length) {
+    const lines = missing.map((c) => `  • ${c.key} — ${c.hint}`).join("\n");
+    console.warn(
+      `\n[franley] ${missing.length} environment variable(s) not set${isProd ? " IN PRODUCTION" : ""}:\n${lines}\n`,
+    );
+  }
+
+  const supabaseConfigured = checks
+    .filter((c) => c.key === "NEXT_PUBLIC_SUPABASE_URL" || c.key === "NEXT_PUBLIC_SUPABASE_ANON_KEY")
+    .every((c) => c.ok);
+  if (supabaseConfigured && isPlaceholder(process.env.SUPABASE_SERVICE_ROLE_KEY)) {
+    console.error("[franley] SUPABASE_SERVICE_ROLE_KEY is not set — checkout cannot place orders.");
+  }
+
+  // Combinations that look configured but would quietly lose card payments.
+  const payhere = Boolean(process.env.PAYHERE_MERCHANT_ID?.trim() && process.env.PAYHERE_MERCHANT_SECRET?.trim());
+  if (payhere && isPlaceholder(process.env.SUPABASE_SERVICE_ROLE_KEY)) {
+    console.error("[franley] PayHere is configured but SUPABASE_SERVICE_ROLE_KEY is not — card payments will be taken but never recorded.");
+  }
+  if (isProd && payhere && process.env.PAYHERE_MODE?.trim().toLowerCase() !== "live") {
+    console.error("[franley] PayHere is in SANDBOX mode in production. Set PAYHERE_MODE=live to take real payments.");
+  }
+  if (isProd && process.env.PAYHERE_NOTIFY_URL?.trim()) {
+    console.error("[franley] PAYHERE_NOTIFY_URL is set in production. It is for local tunnel testing only — remove it.");
+  }
 }
 
 export const siteUrl = () =>

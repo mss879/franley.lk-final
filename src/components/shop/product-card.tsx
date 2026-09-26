@@ -46,7 +46,7 @@ export function ProductCard({
               src={product.image}
               alt={product.title}
               fill
-              priority={priority}
+              preload={priority}
               sizes="(max-width: 1024px) 50vw, (max-width: 1520px) 25vw, 340px"
               className={cn(
                 "object-contain p-4 transition-transform duration-700 ease-[--ease-lux]",

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/page-header";
 import { Prose } from "@/components/site/prose";
-import { SITE, DELIVERY, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/constants";
+import { DELIVERY } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/settings";
+import { waLink } from "@/lib/settings/shipping";
 import { formatPrice } from "@/lib/utils";
 import { buildMetadata } from "@/lib/seo";
 
@@ -11,7 +13,8 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/shipping",
 });
 
-export default function ShippingPage() {
+export default async function ShippingPage() {
+  const s = await getSiteSettings();
   return (
     <>
       <PageHeader
@@ -45,7 +48,7 @@ export default function ShippingPage() {
 
           <h2>Shipping charges</h2>
           <ul>
-            <li>Delivery is free on orders over {formatPrice(FREE_SHIPPING_THRESHOLD_CENTS)}.</li>
+            <li>Delivery is free on orders over {formatPrice(s.freeThresholdCents)}.</li>
             <li>Below that, a flat delivery charge is shown clearly at checkout before you pay.</li>
             <li>Any promotional free-delivery offer is stated on the product or checkout page.</li>
           </ul>
@@ -72,8 +75,8 @@ export default function ShippingPage() {
 
           <h2>Shipping questions</h2>
           <p>
-            Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or message{" "}
-            <a href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}>{SITE.phoneLocal}</a> on WhatsApp.
+            Email <a href={`mailto:${s.email}`}>{s.email}</a> or message{" "}
+            <a href={waLink(s.whatsapp)}>{s.phone}</a> on WhatsApp.
           </p>
         </Prose>
       </div>

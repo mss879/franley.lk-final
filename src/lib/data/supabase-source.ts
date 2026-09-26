@@ -1,13 +1,24 @@
 import "server-only";
-import { createClient } from "@/lib/supabase/server";
-import type { Category, Product, ProductQuery } from "@/types/domain";
+import { createAnonClient } from "@/lib/supabase/server";
+
+/*
+ * Every read here is public catalogue data, so it goes through the cookie-less
+ * anon client. The cookie-bound client would call cookies(), which marks every
+ * storefront route dynamic: no static render, no ISR, a database round trip on
+ * every page view. RLS is identical either way — a signed-in admin browsing the
+ * shop now simply sees what a shopper sees (the queries filter to active rows
+ * regardless).
+ */
+import type { Category, Collection, Product, ProductQuery } from "@/types/domain";
 
 /**
  * Live catalogue reads.
  *
  * Everything goes through `products_public` — a security_invoker view defined
  * in 0003_catalog.sql that already joins the category and aggregates images in
- * position order, so the storefront never needs an embedded select.
+ * position order, so the storefront never needs an embedded select. Collection
+ * pages read `collection_products_public` (0013_collections.sql), which is the
+ * same row shape plus `collection_slug` and the member's `item_position`.
  */
 
 type PublicRow = {
@@ -65,11 +76,24 @@ const ORDER: Record<NonNullable<ProductQuery["sort"]>, [string, boolean]> = {
   "price-desc": ["price_cents", false],
   "name-asc": ["title", true],
   newest: ["created_at", false],
+  // The admin's hand-set order. Inside a collection that is the member's
+  // `item_position`; on the plain catalogue it falls back to the product's own.
+  curated: ["position", true],
 };
+
+/**
+ * `sort` comes from the URL, so it can hold anything. An unknown value must
+ * fall back to the default order rather than throw: getProducts() treats a
+ * throw as "database unreachable" and serves the seed catalogue, whose
+ * `seed-N` ids then fail checkout's uuid cast on a live store.
+ */
+function isSort(value: unknown): value is keyof typeof ORDER {
+  return typeof value === "string" && Object.hasOwn(ORDER, value);
+}
 
 /** Child categories roll up into their parent, so /collections/neckties shows both. */
 async function categorySlugsFor(
-  supabase: Awaited<ReturnType<typeof createClient>>,
+  supabase: ReturnType<typeof createAnonClient>,
   slug: string,
 ) {
   const { data } = await supabase.from("categories").select("slug, parent:parent_id(slug)");
@@ -79,12 +103,13 @@ async function categorySlugsFor(
 }
 
 export async function getProductsLive(q: ProductQuery = {}) {
-  const supabase = await createClient();
+  const supabase = createAnonClient();
   let query = supabase
-    .from("products_public")
+    .from(q.collectionSlug ? "collection_products_public" : "products_public")
     .select("*", { count: "exact" })
     .eq("status", "active");
 
+  if (q.collectionSlug) query = query.eq("collection_slug", q.collectionSlug);
   if (q.featured) query = query.eq("featured", true);
   if (q.excludeSlug) query = query.neq("slug", q.excludeSlug);
   if (q.colors?.length) query = query.in("color_name", q.colors);
@@ -96,8 +121,11 @@ export async function getProductsLive(q: ProductQuery = {}) {
     query = query.in("category_slug", await categorySlugsFor(supabase, q.categorySlug));
   }
 
-  const [column, ascending] = ORDER[q.sort ?? "newest"];
-  query = query.order(column, { ascending }).order("id", { ascending: true });
+  const sort = isSort(q.sort) ? q.sort : q.collectionSlug ? "curated" : "newest";
+  const [column, ascending] = ORDER[sort];
+  query = query
+    .order(sort === "curated" && q.collectionSlug ? "item_position" : column, { ascending })
+    .order("id", { ascending: true });
 
   const offset = q.offset ?? 0;
   if (q.limit) query = query.range(offset, offset + q.limit - 1);
@@ -109,7 +137,7 @@ export async function getProductsLive(q: ProductQuery = {}) {
 }
 
 export async function getProductBySlugLive(slug: string): Promise<Product | null> {
-  const supabase = await createClient();
+  const supabase = createAnonClient();
   const { data, error } = await supabase
     .from("products_public")
     .select("*")
@@ -121,7 +149,7 @@ export async function getProductBySlugLive(slug: string): Promise<Product | null
 }
 
 export async function getCategoriesLive(): Promise<Category[]> {
-  const supabase = await createClient();
+  const supabase = createAnonClient();
 
   const [{ data, error }, counts] = await Promise.all([
     supabase
@@ -159,4 +187,85 @@ export async function getCategoriesLive(): Promise<Category[]> {
       productCount: own + fromChildren,
     };
   });
+}
+
+/* ---------------------------------------------------------------------------
+ * Collections
+ * ------------------------------------------------------------------------- */
+
+type CollectionRow = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  hero_eyebrow: string | null;
+  image_url: string | null;
+  position: number;
+};
+
+const COLLECTION_SELECT = "id, slug, name, description, hero_eyebrow, image_url, position";
+
+function toCollection(row: CollectionRow, productCount: number): Collection {
+  return {
+    id: row.id,
+    slug: row.slug,
+    name: row.name,
+    description: row.description,
+    heroEyebrow: row.hero_eyebrow,
+    imageUrl: row.image_url,
+    position: row.position,
+    productCount,
+  };
+}
+
+/*
+ * Members are counted from `collection_products_public` with the same
+ * `status = active` filter the collection page lists with, so a count of zero
+ * means exactly "this page would be empty". An embedded `collection_products(count)`
+ * would not: the join table's RLS shows a signed-in admin every member, drafts
+ * included, so the admin and a shopper would disagree about which collections exist.
+ */
+
+export async function getCollectionsLive(): Promise<Collection[]> {
+  const supabase = createAnonClient();
+  const [{ data, error }, members] = await Promise.all([
+    supabase
+      .from("collections")
+      .select(COLLECTION_SELECT)
+      .eq("is_active", true)
+      .order("position", { ascending: true })
+      .order("name", { ascending: true }),
+    supabase.from("collection_products_public").select("collection_slug").eq("status", "active"),
+  ]);
+  if (error) throw error;
+  if (members.error) throw members.error;
+
+  const perSlug = new Map<string, number>();
+  for (const row of (members.data ?? []) as { collection_slug: string }[]) {
+    perSlug.set(row.collection_slug, (perSlug.get(row.collection_slug) ?? 0) + 1);
+  }
+
+  return ((data ?? []) as CollectionRow[]).map((row) =>
+    toCollection(row, perSlug.get(row.slug) ?? 0),
+  );
+}
+
+export async function getCollectionBySlugLive(slug: string): Promise<Collection | null> {
+  const supabase = createAnonClient();
+  const [{ data, error }, members] = await Promise.all([
+    supabase
+      .from("collections")
+      .select(COLLECTION_SELECT)
+      .eq("slug", slug)
+      .eq("is_active", true)
+      .maybeSingle(),
+    supabase
+      .from("collection_products_public")
+      .select("id", { count: "exact", head: true })
+      .eq("collection_slug", slug)
+      .eq("status", "active"),
+  ]);
+  if (error) throw error;
+  if (members.error) throw members.error;
+  return data ? toCollection(data as CollectionRow, members.count ?? 0) : null;
 }

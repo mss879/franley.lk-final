@@ -18,12 +18,16 @@ import {
  * re-checks before it touches a row.
  */
 
-/** Storefront surfaces that read the category tree. */
+/**
+ * Category names and counts reach every storefront page (header, footer,
+ * filter pills, product eyebrows), so the whole tree is purged from the root
+ * layout, as the products and collections actions do. A dynamic pattern such
+ * as `/collections/[slug]` would not do it on its own: revalidatePath matches
+ * the route's file path, and these pages live under the `(shop)` group.
+ */
 function revalidateStorefront() {
   revalidatePath("/admin/categories");
-  revalidatePath("/");
-  revalidatePath("/shop");
-  revalidatePath("/collections/[slug]", "page");
+  revalidatePath("/", "layout");
 }
 
 const idSchema = z.uuid();
@@ -35,10 +39,17 @@ type DbError = { code?: string; message?: string; details?: string | null };
 function describeDbError(error: DbError, subject = "category"): string {
   switch (error.code) {
     case "23505":
-      return "That slug is already taken by another category. Try a different one.";
+      // tg_categories_slug_free (0013) raises 23505 with this wording when a
+      // collection already owns the address, since both share /collections/<slug>.
+      return error.message?.includes("already uses the slug")
+        ? "That slug is used by a collection. Categories and collections share /collections/…, so pick another."
+        : "That slug is already taken by another category. Try a different one.";
     case "23503":
       return `This ${subject} is still referenced by other rows, so the database refused the change. Move what points at it first.`;
     case "23514":
+      if (error.message?.includes("must stay top level")) {
+        return "This category has sub-categories of its own, so it has to stay top level. Move its children out first.";
+      }
       return (
         error.message?.includes("circular") || error.message?.includes("two levels")
           ? "Categories may only nest two levels deep, and a category cannot sit inside its own branch."
@@ -85,6 +96,24 @@ function parse(formData: FormData):
 }
 
 type Supabase = Awaited<ReturnType<typeof createClient>>;
+
+/**
+ * Curated collections answer to the same /collections/<slug> address, and the
+ * storefront resolves a collection before a category — so a clash would
+ * silently hide this category. The database trigger refuses it too; asking
+ * first gives a field-level message instead of a bare unique violation.
+ */
+async function slugTakenByCollection(supabase: Supabase, slug: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from("collections")
+    .select("name")
+    .eq("slug", slug)
+    .maybeSingle();
+  // Before 0013 is applied the table does not exist; the trigger will not
+  // exist either, so there is nothing to clash with.
+  if (error || !data) return null;
+  return `That slug is used by the “${data.name}” collection. Categories and collections share /collections/…, so pick another.`;
+}
 
 /**
  * The DB trigger only walks *upwards*, so it catches a category adopting its
@@ -134,6 +163,9 @@ export async function createCategory(
   const input = parsed.value;
 
   const supabase = await createClient();
+  const slugClash = await slugTakenByCollection(supabase, input.slug);
+  if (slugClash) return fieldError("slug", slugClash);
+
   const parentProblem = await assertParentAllowed(supabase, input.parentId, null);
   if (parentProblem) return fieldError("parentId", parentProblem);
 
@@ -172,6 +204,9 @@ export async function updateCategory(
   const input = parsed.value;
 
   const supabase = await createClient();
+  const slugClash = await slugTakenByCollection(supabase, input.slug);
+  if (slugClash) return fieldError("slug", slugClash);
+
   const parentProblem = await assertParentAllowed(supabase, input.parentId, id);
   if (parentProblem) return fieldError("parentId", parentProblem);
 
@@ -344,8 +379,8 @@ export async function moveProductToCategory(
 
   if (error) return { ok: false, message: describeDbError(error, "product") };
 
+  // revalidateStorefront() purges the root layout, product pages included.
   revalidateStorefront();
   revalidatePath("/admin/products");
-  revalidatePath("/products/[slug]", "page");
   return { ok: true };
 }

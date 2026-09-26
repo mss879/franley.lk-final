@@ -75,7 +75,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             src={slide.image}
             alt={i === index ? slide.imageAlt : ""}
             fill
-            priority={i === 0}
+            preload={i === 0}
             sizes="100vw"
             className={cn(
               "object-cover transition-transform duration-[8000ms] ease-linear",

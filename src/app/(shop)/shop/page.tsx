@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/site/page-header";
 import { ProductGrid } from "@/components/shop/product-grid";
 import { ShopFilters } from "@/components/shop/shop-filters";
 import { getProducts, getCategories } from "@/lib/data";
+import { listingParams, shopSort, type RawSearchParams } from "@/lib/listing-params";
 import {
   JsonLd,
   activeColors,
@@ -11,9 +12,9 @@ import {
   collectionJsonLd,
   isSearch,
   listingCanonical,
+  listingNoindex,
   type ListingParams,
 } from "@/lib/seo";
-import type { ProductQuery } from "@/types/domain";
 
 export const revalidate = 60;
 
@@ -43,30 +44,32 @@ function describe(sp: ListingParams) {
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: Promise<ListingParams>;
+  searchParams: Promise<RawSearchParams>;
 }): Promise<Metadata> {
-  const sp = await searchParams;
+  const sp = listingParams(await searchParams);
   const { title, description } = describe(sp);
   return buildMetadata({
     title,
     description,
     canonical: listingCanonical("/shop", sp),
-    // Search pages keep a self-referencing canonical; the noindex does the work.
-    noindex: isSearch(sp),
+    // Search pages keep a self-referencing canonical; colour pages point at
+    // /shop. Either way the noindex does the work.
+    noindex: listingNoindex(sp),
   });
 }
 
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<ListingParams>;
+  searchParams: Promise<RawSearchParams>;
 }) {
-  const sp = await searchParams;
+  // Repeated keys arrive as arrays and `sort` can be anything; see listing-params.
+  const sp = listingParams(await searchParams);
   const colorFilter = activeColors(sp);
 
   const [{ products, total }, categories, all] = await Promise.all([
     getProducts({
-      sort: (sp.sort as ProductQuery["sort"]) ?? "newest",
+      sort: shopSort(sp.sort),
       colors: colorFilter.length ? colorFilter : undefined,
       search: sp.q,
     }),

@@ -9,7 +9,8 @@ export const SL_DISTRICTS = [
   "Trincomalee", "Vavuniya",
 ] as const;
 
-export const PAYMENT_METHODS = ["cod", "bank_transfer"] as const;
+/** `card` is paid online through PayHere — see src/lib/payhere. */
+export const PAYMENT_METHODS = ["cod", "bank_transfer", "card"] as const;
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
 /** A local mobile number, with or without the +94 country code. */
@@ -19,14 +20,19 @@ const phone = z
   .regex(/^(?:\+94|0)?[1-9]\d{8}$/, "Enter a valid Sri Lankan phone number");
 
 export const checkoutSchema = z.object({
-  email: z.email("Enter a valid email address"),
+  email: z.email("Enter a valid email address").max(254, "That email address is too long"),
   fullName: z.string().trim().min(2, "Enter your full name").max(120),
   phone,
   addressLine1: z.string().trim().min(4, "Enter your street address").max(200),
   addressLine2: z.string().trim().max(200).optional().or(z.literal("")),
   city: z.string().trim().min(2, "Enter your city").max(100),
   district: z.enum(SL_DISTRICTS),
-  postalCode: z.string().trim().max(10).optional().or(z.literal("")),
+  postalCode: z
+    .string()
+    .trim()
+    .regex(/^\d{5}$/, "Enter the 5-digit postal code, or leave it blank")
+    .optional()
+    .or(z.literal("")),
   paymentMethod: z.enum(PAYMENT_METHODS),
   notes: z.string().trim().max(500).optional().or(z.literal("")),
   /**
@@ -41,7 +47,10 @@ export const checkoutSchema = z.object({
         quantity: z.number().int().min(1).max(99),
       }),
     )
-    .min(1, "Your bag is empty"),
+    .min(1, "Your bag is empty")
+    // place_order enforces the store's own (lower) line limit; this only stops
+    // an absurd payload being parsed at all.
+    .max(50, "Your bag has too many different pieces"),
 });
 
 export type CheckoutInput = z.infer<typeof checkoutSchema>;

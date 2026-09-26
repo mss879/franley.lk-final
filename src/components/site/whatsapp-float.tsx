@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { WhatsAppIcon } from "@/components/ui/social-icons";
-import { SITE } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/settings/provider";
+import { waLink } from "@/lib/settings/shipping";
 import { cn } from "@/lib/utils";
 
 /**
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils";
  */
 export function WhatsAppFloat() {
   const pathname = usePathname();
+  const { whatsapp } = useSiteSettings();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export function WhatsAppFloat() {
 
   return (
     <a
-      href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}
+      href={waLink(whatsapp)}
       target="_blank"
       rel="noreferrer noopener"
       aria-label="Chat with Franley on WhatsApp"

@@ -7,6 +7,8 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { sendOrderStatusEmail } from "@/lib/email/send";
 import type { EmailOrder } from "@/lib/email/templates";
 import { ORDER_STATUSES, ORDER_STATUS_LABEL, PAYMENT_STATUSES } from "@/components/admin/orders/status";
+import { paymentState, payhereRefundEnabled, refundPayment } from "@/lib/payhere";
+import { formatPrice } from "@/lib/utils";
 
 export type ActionState = { ok: boolean; message: string } | null;
 
@@ -233,4 +235,178 @@ export async function updatePaymentStatus(_prev: ActionState, formData: FormData
 
   revalidate(parsed.data.orderId);
   return { ok: true, message: "Payment status updated." };
+}
+
+const releaseSchema = z.object({
+  hours: z.coerce.number().int("Whole hours only.").min(1, "At least 1 hour.").max(720, "At most 720 hours (30 days)."),
+});
+
+/**
+ * Cancels, with restock, every card order still waiting for payment after N
+ * hours. A card order takes its stock the moment it is placed, so a shopper
+ * who closed the PayHere page would otherwise hold those pieces forever. No
+ * email: they never paid and never received a confirmation.
+ */
+export async function releaseStaleCardOrders(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  await requireAdmin();
+
+  const parsed = releaseSchema.safeParse({ hours: field(formData, "hours") || "24" });
+  if (!parsed.success) return firstIssue(parsed.error);
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_cancel_stale_card_orders", { p_hours: parsed.data.hours });
+  if (error) return { ok: false, message: error.message };
+
+  const result = data as { released?: number; order_numbers?: string[] } | null;
+  const released = result?.released ?? 0;
+  revalidatePath("/admin/orders");
+
+  if (!released) return { ok: true, message: `No pending, unpaid card orders older than ${parsed.data.hours} hours.` };
+  return {
+    ok: true,
+    message: `Released ${released} order${released === 1 ? "" : "s"} and returned the stock: ${(result?.order_numbers ?? []).join(", ")}.`,
+  };
+}
+
+const refundSchema = z.object({
+  orderId: idSchema,
+  reason: z.string().min(3, "Say briefly why — PayHere shows it on the refund.").max(200, "Keep the reason under 200 characters."),
+  cancelAndRestock: z.boolean(),
+});
+
+/**
+ * Puts a refund on the order's record. admin_set_payment_status does the
+ * paid -> refunded move and writes the note — but only when the status
+ * actually changes. If a chargeback or another admin got there first, or the
+ * write fails, the PayHere reference must still land in the order history, so
+ * it is written directly (service role) and, failing that, logged.
+ */
+async function recordRefund(
+  order: { id: string; status: string },
+  note: string,
+  adminUserId: string,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_set_payment_status", {
+    p_order_id: order.id,
+    p_status: "refunded",
+    p_note: note,
+  });
+  if (!error && (data as { changed?: boolean } | null)?.changed !== false) return { ok: true };
+
+  try {
+    const { error: eventError } = await createServiceClient().from("order_events").insert({
+      order_id: order.id,
+      from_status: order.status,
+      to_status: order.status,
+      actor_kind: "admin",
+      actor_user_id: adminUserId,
+      note: note.slice(0, 500),
+    });
+    if (eventError) throw eventError;
+  } catch (err) {
+    console.error("PayHere refund could not be written to the order history", { orderId: order.id, note, err });
+  }
+  return error ? { ok: false, message: error.message } : { ok: true };
+}
+
+/**
+ * Refunds a PayHere card payment in full through PayHere's Refund API, then
+ * records it with admin_set_payment_status — the admin is the actor, so the
+ * audit row says so, and the RPC enforces paid -> refunded.
+ * record_gateway_payment stays reserved for PayHere's own verified callbacks.
+ *
+ * PayHere is asked about the payment BEFORE anything is sent. That is what
+ * makes pressing the button again safe after a timeout: a refund that did go
+ * through shows up as REFUND REQUESTED / REFUNDED and is recorded here, never
+ * sent a second time.
+ */
+export async function refundViaPayHere(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const admin = await requireAdmin();
+
+  const parsed = refundSchema.safeParse({
+    orderId: field(formData, "orderId"),
+    reason: field(formData, "reason"),
+    cancelAndRestock: field(formData, "cancelAndRestock") === "on",
+  });
+  if (!parsed.success) return firstIssue(parsed.error);
+  if (!payhereRefundEnabled()) {
+    return { ok: false, message: "Refunds from here need PAYHERE_APP_ID and PAYHERE_APP_SECRET. Refund in the PayHere dashboard, then mark the payment refunded." };
+  }
+
+  const { orderId, reason, cancelAndRestock } = parsed.data;
+  const supabase = await createClient();
+  const { data: order, error: readError } = await supabase
+    .from("orders")
+    .select("id, order_number, status, payment_method, payment_status, payment_gateway, payment_reference, total_cents")
+    .eq("id", orderId)
+    .maybeSingle();
+  if (readError) return { ok: false, message: readError.message };
+  if (!order) return { ok: false, message: "That order no longer exists." };
+
+  if (order.payment_method !== "card" || order.payment_gateway !== "payhere" || !order.payment_reference) {
+    return { ok: false, message: "Only card orders paid through PayHere can be refunded from here." };
+  }
+  if (order.payment_status !== "paid") {
+    return { ok: false, message: "This payment is not in the paid state, so there is nothing to refund." };
+  }
+
+  // 1. What does PayHere say about this payment right now?
+  const state = await paymentState(order.order_number, order.payment_reference);
+  if (state === "unknown") {
+    return { ok: false, message: "Could not check this payment with PayHere, so nothing was sent. Try again in a moment, or refund in the PayHere dashboard." };
+  }
+  if (state === "missing") {
+    return { ok: false, message: `PayHere has no successful payment ${order.payment_reference} for ${order.order_number}. Check the PayHere dashboard — nothing was sent.` };
+  }
+  if (state !== "RECEIVED") {
+    // Already on its way back (or charged back). Record it; never refund twice.
+    const recorded = await recordRefund(order, `PayHere shows payment ${order.payment_reference} as ${state.toLowerCase()}: ${reason}`, admin.userId);
+    revalidate(orderId);
+    return recorded.ok
+      ? { ok: true, message: `PayHere already shows this payment as ${state.toLowerCase()}, so nothing was sent again. The order is now marked refunded.` }
+      : { ok: false, message: `PayHere already shows this payment as ${state.toLowerCase()}, but the order could not be updated: ${recorded.message}` };
+  }
+
+  // 2. Refund it.
+  const refund = await refundPayment(order.payment_reference, `Order ${order.order_number}: ${reason}`);
+  if (!refund.ok) {
+    const fallback =
+      refund.code === "access-denied" || refund.code === "auth"
+        ? " Refund it in the PayHere dashboard instead, then mark the payment refunded here."
+        : refund.code === "unknown"
+          ? " Pressing the button again is safe: it asks PayHere first and will not send a second refund."
+          : "";
+    return { ok: false, message: `${refund.message}${fallback}` };
+  }
+
+  // 3. The money has gone back. From here on, never lose the refund number.
+  const ref = refund.refundNumber ? `PayHere refund ${refund.refundNumber}` : "PayHere refund";
+  const recorded = await recordRefund(order, `${ref}: ${reason}`, admin.userId);
+  if (!recorded.ok) {
+    revalidate(orderId);
+    return {
+      ok: false,
+      message: `PayHere refunded ${formatPrice(order.total_cents)} (${ref}), but the order could not be updated: ${recorded.message}. The reference is in the order history — mark the payment refunded by hand.`,
+    };
+  }
+
+  let cancelled = false;
+  if (cancelAndRestock && ["pending", "confirmed", "packed", "shipped"].includes(order.status)) {
+    const { error: cancelError } = await supabase.rpc("admin_cancel_order", {
+      p_order_id: orderId,
+      p_restock: true,
+      p_reason: `Refunded via PayHere (${ref})`,
+    });
+    if (!cancelError) {
+      cancelled = true;
+      await notifyCustomer(orderId, "cancelled", { reason });
+    }
+  }
+
+  revalidate(orderId);
+  return {
+    ok: true,
+    message: `Refunded ${formatPrice(order.total_cents)} through PayHere (${ref}).${cancelled ? " The order is cancelled and its stock returned." : ""}`,
+  };
 }

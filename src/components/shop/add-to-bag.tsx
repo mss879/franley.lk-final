@@ -60,7 +60,9 @@ export function AddToBag({ product }: { product: Product }) {
         </button>
       </div>
 
-      <Button onClick={onAdd} size="lg" className="flex-1">
+      {/* sm:flex-1 only: in the stacked mobile column, flex-1 sets a 0 basis on
+          the vertical axis and collapsed this 56px button to its 20px text. */}
+      <Button onClick={onAdd} size="lg" className="w-full sm:w-auto sm:flex-1">
         {added ? (
           <>
             <Check className="h-4 w-4" strokeWidth={2} aria-hidden />

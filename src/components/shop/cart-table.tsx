@@ -6,10 +6,12 @@ import { Minus, Plus, X } from "lucide-react";
 import { useCart } from "@/lib/cart/cart-context";
 import { ButtonLink } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
-import { FLAT_SHIPPING_CENTS, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/settings/provider";
+import { shippingFor } from "@/lib/settings/shipping";
 
 export function CartTable() {
   const { lines, setQty, remove, subtotalCents, ready } = useCart();
+  const settings = useSiteSettings();
 
   if (!ready) {
     return <div className="py-24 text-center text-sm text-ink-600">Loading your bag…</div>;
@@ -25,7 +27,7 @@ export function CartTable() {
     );
   }
 
-  const shipping = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : FLAT_SHIPPING_CENTS;
+  const shipping = shippingFor(subtotalCents, settings);
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-16">

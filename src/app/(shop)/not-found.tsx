@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
+
+// Next adds the noindex to every 404 on its own; this just stops the tab
+// reading like the home page.
+export const metadata: Metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (

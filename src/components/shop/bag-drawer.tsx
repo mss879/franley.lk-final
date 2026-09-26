@@ -7,11 +7,12 @@ import { Minus, Plus, X, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart/cart-context";
 import { ButtonLink } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
-import { FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/settings/provider";
 import { useFocusTrap } from "@/lib/a11y/use-focus-trap";
 
 export function BagDrawer() {
   const { lines, isOpen, closeBag, setQty, remove, subtotalCents, count } = useCart();
+  const { freeThresholdCents } = useSiteSettings();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -26,8 +27,8 @@ export function BagDrawer() {
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  const remaining = FREE_SHIPPING_THRESHOLD_CENTS - subtotalCents;
-  const pct = Math.min(100, (subtotalCents / FREE_SHIPPING_THRESHOLD_CENTS) * 100);
+  const remaining = freeThresholdCents - subtotalCents;
+  const pct = freeThresholdCents > 0 ? Math.min(100, (subtotalCents / freeThresholdCents) * 100) : 100;
 
   return (
     <div hidden={!isOpen} className="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-label="Shopping bag">

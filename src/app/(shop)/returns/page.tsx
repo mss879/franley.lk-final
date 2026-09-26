@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/page-header";
 import { Prose } from "@/components/site/prose";
-import { SITE, DELIVERY } from "@/lib/constants";
+import { DELIVERY } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/settings";
+import { waLink } from "@/lib/settings/shipping";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -10,7 +12,8 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/returns",
 });
 
-export default function ReturnsPage() {
+export default async function ReturnsPage() {
+  const s = await getSiteSettings();
   return (
     <>
       <PageHeader
@@ -61,8 +64,8 @@ export default function ReturnsPage() {
 
           <h2>Start a return</h2>
           <p>
-            Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or message{" "}
-            <a href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}>{SITE.phoneLocal}</a> with
+            Email <a href={`mailto:${s.email}`}>{s.email}</a> or message{" "}
+            <a href={waLink(s.whatsapp)}>{s.phone}</a> with
             your order number and a photo of the item.
           </p>
         </Prose>

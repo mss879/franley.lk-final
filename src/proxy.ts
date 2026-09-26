@@ -11,7 +11,8 @@ export default async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Everything except static assets and image files.
-    "/((?!_next/static|_next/image|favicon.ico|brand/|products/|editorial/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    // Everything except static assets and image files — and the payment
+    // gateway's server-to-server callbacks, which carry no session to refresh.
+    "/((?!_next/static|_next/image|favicon.ico|api/payments/|brand/|products/|editorial/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };

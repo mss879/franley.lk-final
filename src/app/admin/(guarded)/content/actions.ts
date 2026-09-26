@@ -18,8 +18,9 @@ import { ACCEPTED_MIME, MAX_UPLOAD_BYTES, MEDIA_FOLDERS } from "@/components/adm
 // Mirrors public.is_safe_link_href / public.is_safe_asset_url from
 // 0001_init_extensions.sql. The database is the authority; failing here first
 // just turns a constraint violation into a sentence the client can act on.
-const SAFE_LINK = /^(https:\/\/|\/)/;
-const SAFE_ASSET = /^(https:\/\/|\/|product-images\/|cms-media\/)/;
+// "//host" and "/\host" leave the site, so a bare "/" must not be followed by either.
+const SAFE_LINK = /^(https:\/\/|\/(?![/\\]))/;
+const SAFE_ASSET = /^(https:\/\/|\/(?![/\\])|product-images\/|cms-media\/)/;
 const UNSAFE_SCHEME = /^\s*(javascript|data|vbscript):/i;
 
 const PAYLOAD_BYTE_LIMIT = 30_000; // the column check is 32768; leave headroom

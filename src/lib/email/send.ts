@@ -2,6 +2,7 @@ import "server-only";
 import { Resend } from "resend";
 import { createServiceClient } from "@/lib/supabase/server";
 import { SITE } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/settings";
 import * as templates from "./templates";
 import type { EmailOrder } from "./templates";
 
@@ -108,19 +109,61 @@ const trackUrl = (order: EmailOrder, token: string | null, siteUrl: string) =>
     : `${siteUrl}/contact`;
 
 /**
- * Fired after checkout. Sends the customer their confirmation and the shop its
- * alert. Never throws — the order is already placed and paid for by the time
+ * Reads an order back in the shape the templates want. Uses the service client
+ * because `anon` deliberately has no SELECT on orders — see 0005_orders.sql.
+ * Nothing from this read is returned to the browser.
+ */
+export async function loadOrderForEmail(orderId: string): Promise<EmailOrder | null> {
+  const { data, error } = await createServiceClient()
+    .from("orders")
+    .select(
+      "order_number, customer_name, customer_email, customer_phone, payment_method," +
+      "subtotal_cents, shipping_cents, discount_cents, total_cents," +
+      "shipping_line1, shipping_line2, shipping_city, shipping_district, shipping_postal_code," +
+      "customer_note, tracking_number," +
+      "items:order_items(product_title, variant_label, quantity, unit_price_cents)",
+    )
+    .eq("id", orderId)
+    .single();
+
+  if (error || !data) {
+    console.error("could not load order for email", error);
+    return null;
+  }
+  return data as unknown as EmailOrder;
+}
+
+/**
+ * Fired after checkout — or, for a card order, once PayHere confirms the money
+ * (see src/lib/payhere/record.ts). Sends the customer their confirmation and
+ * the shop its alert. Never throws — the order is already placed and paid for by the time
  * this runs, so an email problem must not surface as a failed checkout.
  */
 export async function sendOrderPlacedEmails(
   order: EmailOrder,
   orderId: string,
   accessToken: string | null,
+  opts?: { paidAfterCancel?: boolean },
 ) {
   const cfg = config();
   if (!cfg) return { customer: false, admin: false };
 
-  const customerMail = templates.orderConfirmation(order, trackUrl(order, accessToken, cfg.siteUrl));
+  // The order was cancelled (its stock already back on the shelf) before the
+  // payment landed. Telling the customer "it is being prepared" would be false;
+  // the shop has to refund it, so only the shop hears about it.
+  if (opts?.paidAfterCancel) {
+    const adminMail = templates.orderAdminAlert(order, `${cfg.siteUrl}/admin/orders`, {
+      warning: "PAID AFTER CANCELLATION. This order was cancelled before the customer's card payment arrived. Refund the payment in PayHere (or from the order page) and let the customer know.",
+    });
+    const admin = await sendOnce({ orderId, kind: "order_admin_alert", to: cfg.adminTo, ...adminMail }).catch(() => null);
+    return { customer: false, admin: Boolean(admin?.sent) };
+  }
+
+  const { bankTransferDetails, phone, whatsapp } = await getSiteSettings();
+  const customerMail = templates.orderConfirmation(order, trackUrl(order, accessToken, cfg.siteUrl), {
+    bankDetails: bankTransferDetails,
+    contact: { phone, whatsapp },
+  });
   const adminMail = templates.orderAdminAlert(order, `${cfg.siteUrl}/admin/orders`);
 
   const [customer, admin] = await Promise.allSettled([
@@ -144,12 +187,14 @@ export async function sendOrderStatusEmail(
   const cfg = config();
   if (!cfg) return { sent: false, reason: "resend-not-configured" };
 
+  const { phone, whatsapp } = await getSiteSettings();
+  const contact = { phone, whatsapp };
   const mail =
     status === "shipped"
-      ? templates.orderShipped(order, trackUrl(order, extra?.accessToken ?? null, cfg.siteUrl))
+      ? templates.orderShipped(order, trackUrl(order, extra?.accessToken ?? null, cfg.siteUrl), contact)
       : status === "delivered"
-        ? templates.orderDelivered(order)
-        : templates.orderCancelled(order, extra?.reason);
+        ? templates.orderDelivered(order, contact)
+        : templates.orderCancelled(order, extra?.reason, contact);
 
   const kind: EmailKind =
     status === "shipped" ? "order_shipped" : status === "delivered" ? "order_delivered" : "order_cancelled";

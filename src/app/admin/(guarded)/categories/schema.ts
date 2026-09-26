@@ -1,9 +1,11 @@
 import { z } from "zod";
+import { RESERVED_SLUG_MESSAGE, isReservedCollectionSlug } from "@/lib/reserved-slugs";
 
 /**
  * Shared between the server actions and the client form so the admin sees the
  * same message the database would have raised, before it raises it.
- * Every rule here mirrors a constraint in 0003_catalog.sql / 0001_init_extensions.sql.
+ * Every rule here mirrors a constraint in 0003_catalog.sql / 0001_init_extensions.sql,
+ * except the reserved-slug rule, which mirrors the redirects in next.config.ts.
  */
 
 /** categories.slug CHECK: `^[a-z0-9]+(-[a-z0-9]+)*$`, length 2–64. */
@@ -16,7 +18,8 @@ export function isSafeAssetUrl(url: string): boolean {
   if (!value) return true;
   if (value.length > 2048) return false;
   if (/^[\s]*(javascript|data|vbscript):/i.test(value)) return false;
-  return /^(https:\/\/|\/|product-images\/|cms-media\/)/.test(value);
+  // "//host" and "/\host" point off-site; a root-relative path is "/" plus anything else.
+  return /^(https:\/\/|\/(?![/\\])|product-images\/|cms-media\/)/.test(value);
 }
 
 export const IMAGE_URL_HINT =
@@ -34,7 +37,8 @@ export const categoryInputSchema = z.object({
     .toLowerCase()
     .min(2, "The slug needs at least 2 characters")
     .max(64, "Keep the slug to 64 characters or fewer")
-    .regex(SLUG_RE, "Lowercase letters, numbers and single hyphens only — no spaces"),
+    .regex(SLUG_RE, "Lowercase letters, numbers and single hyphens only — no spaces")
+    .refine((slug) => !isReservedCollectionSlug(slug), RESERVED_SLUG_MESSAGE),
   description: z
     .string()
     .trim()

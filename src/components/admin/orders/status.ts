@@ -66,6 +66,30 @@ export function isOrderStatus(value: string): value is OrderStatus {
   return (ORDER_STATUSES as readonly string[]).includes(value);
 }
 
+/**
+ * Payment filters on the orders list. "awaiting" is the one that matters for
+ * card orders: placed, stock taken, but PayHere has not confirmed the money —
+ * they hold stock until paid or released.
+ */
+export const PAYMENT_VIEWS = ["awaiting", "unpaid", "paid", "refunded", "failed"] as const;
+export type PaymentView = (typeof PAYMENT_VIEWS)[number];
+
+export const PAYMENT_VIEW_LABEL: Record<PaymentView, string> = {
+  awaiting: "Awaiting card payment",
+  unpaid: "Unpaid",
+  paid: "Paid",
+  refunded: "Refunded",
+  failed: "Payment failed",
+};
+
+export function isPaymentView(value: string): value is PaymentView {
+  return (PAYMENT_VIEWS as readonly string[]).includes(value);
+}
+
+export function isPaymentMethod(value: string): value is PaymentMethod {
+  return (PAYMENT_METHODS as readonly string[]).includes(value);
+}
+
 /** The verb on the button that moves an order into a status. */
 export const ADVANCE_VERB: Record<OrderStatus, string> = {
   pending: "Reopen",

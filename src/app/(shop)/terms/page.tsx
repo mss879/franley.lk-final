@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/site/page-header";
 import { Prose } from "@/components/site/prose";
-import { SITE } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/settings";
+import { waLink } from "@/lib/settings/shipping";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -11,7 +12,8 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/terms",
 });
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const s = await getSiteSettings();
   return (
     <>
       <PageHeader
@@ -63,10 +65,10 @@ export default function TermsPage() {
 
           <h2>Contact</h2>
           <p>
-            Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            Email <a href={`mailto:${s.email}`}>{s.email}</a>
             <br />
             Phone / WhatsApp:{" "}
-            <a href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}>{SITE.phone}</a>
+            <a href={waLink(s.whatsapp)}>{s.phone}</a>
           </p>
         </Prose>
       </div>

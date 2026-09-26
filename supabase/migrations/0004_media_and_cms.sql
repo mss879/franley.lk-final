@@ -26,7 +26,7 @@
 --          A per-section table-per-type design was rejected for the opposite
 --          reason: every new band would be a migration, a new admin page and a
 --          new component, which is exactly the corner not to paint the client
---          into for a 29-SKU store.
+--          into for a 49-SKU store.
 --
 -- NO RICH TEXT / NO HTML COLUMN, ON PURPOSE. If any CMS field were ever
 --          rendered through dangerouslySetInnerHTML, an admin compromise would
@@ -41,7 +41,7 @@
 create table if not exists public.media_assets (
   id             uuid primary key default gen_random_uuid(),
   -- Exactly one source: an object inside a Supabase Storage bucket, or an
-  -- external/site-relative URL (this is how the 29 seeded /products/*.webp
+  -- external/site-relative URL (this is how the 49 seeded /products/*.webp
   -- files are represented without re-uploading them).
   bucket         text check (bucket is null or bucket in ('product-images', 'cms-media')),
   storage_path   text check (storage_path is null or length(storage_path) between 1 and 1024),
@@ -147,7 +147,8 @@ create table if not exists public.content_blocks (
                         and pg_column_size(payload) <= 32768),
   -- The FORM SCHEMA AS DATA: ordered array of
   -- {name,label,help,type,required,max_length,rows,options}. type is one of
-  -- text | textarea | url | link | image | media | boolean | number | select.
+  -- text | textarea | url | link | image | media | boolean | number | select |
+  -- string_list (a plain array of strings, used with the "$root" name).
   -- The admin renders labelled inputs from this; adding a field costs an
   -- UPDATE, not a migration.
   fields       jsonb not null default '[]'::jsonb

@@ -1,11 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import { checkoutSchema } from "@/lib/checkout/schema";
 import { isLive } from "@/lib/data";
-import { sendOrderPlacedEmails } from "@/lib/email/send";
-import type { EmailOrder } from "@/lib/email/templates";
+import { loadOrderForEmail, sendOrderPlacedEmails } from "@/lib/email/send";
+import { buildCheckout, payhereEnabled } from "@/lib/payhere";
 
 export const runtime = "nodejs";
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+// What the checkout form sends: a UUID, or a timestamp-random pair on old browsers.
+const IDEMPOTENCY_KEY = /^[A-Za-z0-9-]{8,64}$/;
 
 /**
  * Places an order.
@@ -21,6 +25,13 @@ export async function POST(request: NextRequest) {
       { error: "The store is not connected to its database yet. Add your Supabase keys to .env.local." },
       { status: 503 },
     );
+  }
+
+  // JSON only. Another website can make its visitors' browsers send a form or
+  // text/plain POST here without asking; an application/json request needs a
+  // CORS preflight this route never answers, so it cannot come cross-site.
+  if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) {
+    return NextResponse.json({ error: "Malformed request." }, { status: 415 });
   }
 
   let body: unknown;
@@ -44,10 +55,52 @@ export async function POST(request: NextRequest) {
   }
 
   const input = parsed.data;
-  const supabase = await createClient();
+  const payingByCard = input.paymentMethod === "card";
+
+  // Every product id in the database is a uuid. Anything else is a bag saved
+  // while the site ran on the bundled catalogue (ids like "seed-8"); sending it
+  // on would fail inside place_order with an error the shopper can do nothing
+  // about. Name the stale lines so the form can drop them from the bag.
+  const staleItems = input.items.map((i) => i.productId).filter((id) => !UUID.test(id));
+  if (staleItems.length) {
+    return NextResponse.json(
+      {
+        error: "Some pieces in your bag were saved from an older version of the shop, so we have removed them. Please check your bag and add them again.",
+        staleItems,
+      },
+      { status: 409 },
+    );
+  }
+
+  // Refuse BEFORE the order exists: place_order takes stock, and a card order
+  // nobody can pay for would hold it for nothing.
+  if (payingByCard && !payhereEnabled()) {
+    return NextResponse.json(
+      { error: "Card payment is not available right now. Please choose another payment method." },
+      { status: 422 },
+    );
+  }
+
+  // place_order is executable by the server alone (0016_security_hardening.sql):
+  // called straight from the browser with the publishable key, a script could
+  // pick its own address hint per call, slip past the throttle, and hold the
+  // whole catalogue as unpaid cash-on-delivery orders.
+  let supabase: ReturnType<typeof createServiceClient>;
+  try {
+    supabase = createServiceClient();
+  } catch {
+    console.error("checkout: SUPABASE_SERVICE_ROLE_KEY is not set, so no order can be placed");
+    return NextResponse.json(
+      { error: "Checkout is unavailable for a moment. Please try again shortly, or WhatsApp us to order." },
+      { status: 503 },
+    );
+  }
 
   // Lets a retried submission return the original order instead of a duplicate.
-  const idempotencyKey = request.headers.get("x-idempotency-key");
+  // Anything not shaped like a key the form makes is ignored rather than sent
+  // on to fail a length CHECK with a message about table internals.
+  const rawKey = request.headers.get("x-idempotency-key");
+  const idempotencyKey = rawKey && IDEMPOTENCY_KEY.test(rawKey) ? rawKey : null;
 
   const { data, error } = await supabase.rpc("place_order", {
     p_items: input.items.map((i) => ({ product_id: i.productId, quantity: i.quantity })),
@@ -67,9 +120,17 @@ export async function POST(request: NextRequest) {
   });
 
   if (error) {
+    // 53400 = the checkout throttle.
+    if (error.code === "53400") {
+      return NextResponse.json({ error: "Too many checkout attempts. Please try again in a little while." }, { status: 429 });
+    }
     // 23514 = a stock/quantity check the RPC raises deliberately; 22023 = bad
-    // input it validated itself. Both carry a message safe to show a shopper.
-    const shopperSafe = error.code === "23514" || error.code === "22023" || error.code === "P0001";
+    // input it validated itself. Both carry a message written for a shopper —
+    // but a table CHECK constraint fails with 23514 too, naming the table and
+    // constraint, and that text must never reach the page.
+    const shopperSafe =
+      (error.code === "23514" || error.code === "22023" || error.code === "P0001") &&
+      !/constraint|relation|column|violates/i.test(error.message);
     if (!shopperSafe) console.error("place_order failed", error);
 
     return NextResponse.json(
@@ -79,7 +140,17 @@ export async function POST(request: NextRequest) {
   }
 
   const result = data as
-    | { order_id?: string; order_number?: string; access_token?: string | null }
+    | {
+        order_id?: string;
+        order_number?: string;
+        access_token?: string | null;
+        currency?: string;
+        total_cents?: number;
+        duplicate?: boolean;
+        // Only on the duplicate branch, and only once 0014_customers.sql has run.
+        payment_method?: string;
+        payment_status?: string;
+      }
     | null;
 
   if (!result?.order_number) {
@@ -87,14 +158,35 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "We could not place your order. Please try again." }, { status: 500 });
   }
 
+  // A retry of a submission that already placed an order — typically the
+  // first response was lost to a flaky connection. The order exists and its
+  // emails are already on their way (or, for a card order, waiting on
+  // payment). The plaintext access token was handed out once and only its hash
+  // is stored, so it cannot be given again: no order-page link and no PayHere
+  // form, whose return URL would need it. The shopper is told what happened.
+  if (result.duplicate) {
+    // The STORED order's method decides, not this retry's: a shopper whose card
+    // submission timed out may have switched to cash on delivery before trying
+    // again, and the order that exists is still the unpaid card one.
+    const storedMethod = result.payment_method ?? input.paymentMethod;
+    return NextResponse.json({
+      orderNumber: result.order_number,
+      duplicate: true,
+      awaitingPayment: storedMethod === "card" && result.payment_status !== "paid",
+    });
+  }
+
   // Confirmation emails. Deliberately awaited but fully guarded: the order is
   // already committed, so nothing here may turn a successful checkout into an
   // error the shopper sees. Awaiting (rather than firing and forgetting) is
   // what makes it work on serverless, where the function can be frozen the
   // moment the response is returned.
-  if (result.order_id) {
+  //
+  // A card order is not confirmed until PayHere says it is paid, so its emails
+  // are sent from the payment notification instead — src/lib/payhere/record.ts.
+  if (result.order_id && !payingByCard) {
     try {
-      const summary = await loadOrderForEmail(supabase, result.order_id);
+      const summary = await loadOrderForEmail(result.order_id);
       if (summary) {
         await sendOrderPlacedEmails(summary, result.order_id, result.access_token ?? null);
       }
@@ -103,39 +195,27 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // The amount PayHere is asked for is the total place_order just computed and
+  // froze — never anything the browser sent.
+  const payhere =
+    payingByCard && typeof result.total_cents === "number" && result.access_token
+      ? buildCheckout({
+          orderNumber: result.order_number,
+          totalCents: result.total_cents,
+          currency: result.currency ?? "LKR",
+          customerName: input.fullName,
+          customerEmail: input.email,
+          customerPhone: input.phone,
+          addressLine1: input.addressLine1,
+          addressLine2: input.addressLine2 || null,
+          city: input.city,
+          accessToken: result.access_token ?? null,
+        })
+      : null;
+
   return NextResponse.json({
     orderNumber: result.order_number,
     accessToken: result.access_token ?? "",
+    ...(payhere ? { payhere } : {}),
   });
-}
-
-/**
- * Reads back the order the RPC just created, for the confirmation email.
- * Uses the service client because `anon` deliberately has no SELECT on orders —
- * see 0005_orders.sql. Nothing from this read is returned to the browser.
- */
-async function loadOrderForEmail(
-  _caller: Awaited<ReturnType<typeof createClient>>,
-  orderId: string,
-): Promise<EmailOrder | null> {
-  const { createServiceClient } = await import("@/lib/supabase/server");
-  const admin = createServiceClient();
-
-  const { data, error } = await admin
-    .from("orders")
-    .select(
-      "order_number, customer_name, customer_email, customer_phone, payment_method," +
-      "subtotal_cents, shipping_cents, discount_cents, total_cents," +
-      "shipping_line1, shipping_line2, shipping_city, shipping_district, shipping_postal_code," +
-      "customer_note, tracking_number," +
-      "items:order_items(product_title, variant_label, quantity, unit_price_cents)",
-    )
-    .eq("id", orderId)
-    .single();
-
-  if (error || !data) {
-    console.error("could not load order for email", error);
-    return null;
-  }
-  return data as unknown as EmailOrder;
 }

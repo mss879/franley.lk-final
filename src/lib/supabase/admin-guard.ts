@@ -29,7 +29,7 @@ export async function requireAdmin(): Promise<AdminIdentity> {
 
   if (error || !admin?.user_id) {
     await supabase.auth.signOut();
-    redirect("/admin/login?error=" + encodeURIComponent("That account does not have admin access."));
+    redirect("/admin/login?error=not-admin");
   }
 
   return {

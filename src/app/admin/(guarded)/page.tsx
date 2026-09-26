@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ReceiptText, Package, FolderTree, ImageIcon, AlertTriangle, ExternalLink } from "lucide-react";
+import { ReceiptText, Package, FolderTree, ImageIcon, AlertTriangle, ExternalLink, Users, Layers, Settings } from "lucide-react";
 import { AdminPageShell } from "@/components/admin/page-shell";
 import { requireAdmin } from "@/lib/supabase/admin-guard";
 import { createClient } from "@/lib/supabase/server";
@@ -10,9 +10,12 @@ export const dynamic = "force-dynamic";
 
 const SHORTCUTS = [
   { href: "/admin/orders", label: "Orders", body: "Fulfil, track and update customer orders.", Icon: ReceiptText },
+  { href: "/admin/customers", label: "Customers", body: "Everyone who has ordered, with their contact details.", Icon: Users },
   { href: "/admin/products", label: "Products", body: "Add pieces, set prices and manage stock.", Icon: Package },
-  { href: "/admin/categories", label: "Categories", body: "Organise the range and its collections.", Icon: FolderTree },
+  { href: "/admin/categories", label: "Categories", body: "The structure of the range: ties, stripes, cufflinks.", Icon: FolderTree },
+  { href: "/admin/collections", label: "Collections", body: "Curated edits you pick by hand — gifts, featured.", Icon: Layers },
   { href: "/admin/content", label: "Content & Banners", body: "Change the homepage copy and imagery.", Icon: ImageIcon },
+  { href: "/admin/settings", label: "Settings", body: "Contact details, delivery charges, bank details.", Icon: Settings },
 ];
 
 async function loadStats() {

@@ -7,26 +7,32 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { SITE, DELIVERY } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { ContactForm } from "@/components/site/contact-form";
+import { getSiteSettings, type SiteSettings } from "@/lib/settings";
+import { waLink } from "@/lib/settings/shipping";
 import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Contact Us",
-  description: `Reach Franley on WhatsApp at ${SITE.phoneLocal}, by email at ${SITE.email}, or visit us at ${SITE.address.line1}, ${SITE.address.city}.`,
-  canonical: "/contact",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const s = await getSiteSettings();
+  return buildMetadata({
+    title: "Contact Us",
+    description: `Reach Franley on WhatsApp at ${s.phone}, by email at ${s.email}, or visit us at ${SITE.address.line1}, ${SITE.address.city}.`,
+    canonical: "/contact",
+  });
+}
 
-const DETAILS = [
+/** Phone and email come from the admin's settings; address and hours are fixed copy. */
+const details = (s: SiteSettings) => [
   {
     Icon: Phone,
     label: "Phone & WhatsApp",
-    lines: [SITE.phoneLocal],
-    href: `tel:${SITE.whatsapp}`,
+    lines: [s.phone],
+    href: `tel:${s.whatsapp.replace(/[^\d+]/g, "")}`,
   },
   {
     Icon: Mail,
     label: "Email",
-    lines: [SITE.email],
-    href: `mailto:${SITE.email}`,
+    lines: [s.email],
+    href: `mailto:${s.email}`,
   },
   {
     Icon: MapPin,
@@ -67,7 +73,8 @@ const QUICK_ANSWERS = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const s = await getSiteSettings();
   return (
     <>
       <PageHeader
@@ -88,7 +95,7 @@ export default function ContactPage() {
             </p>
 
             <dl className="mt-10 space-y-8">
-              {DETAILS.map(({ Icon, label, lines, href }) => (
+              {details(s).map(({ Icon, label, lines, href }) => (
                 <div key={label} className="flex gap-4">
                   <Icon className="mt-0.5 h-5 w-5 shrink-0 text-wine-700" strokeWidth={1.5} aria-hidden />
                   <div>
@@ -124,7 +131,7 @@ export default function ContactPage() {
                 shirt you are matching and we will answer with what actually works.
               </p>
               <ButtonLink
-                href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}
+                href={waLink(s.whatsapp)}
                 size="lg"
                 className="mt-5 w-full"
               >

@@ -37,9 +37,9 @@ export function ProductGallery({ images, title }: { images: string[]; title: str
           <Image
             key={shots[active]}
             src={shots[active]}
-            alt={title}
+            alt={active === 0 ? title : `${title} — view ${active + 1}`}
             fill
-            priority
+            preload
             sizes="(max-width: 1024px) 100vw, (max-width: 1400px) 45vw, 600px"
             className="animate-fade-up object-contain p-6"
           />

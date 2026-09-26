@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/page-header";
 import { Prose } from "@/components/site/prose";
-import { SITE } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/settings";
+import { waLink } from "@/lib/settings/shipping";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -11,7 +12,8 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/privacy",
 });
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const s = await getSiteSettings();
   return (
     <>
       <PageHeader
@@ -31,10 +33,14 @@ export default function PrivacyPage() {
 
           <h2>Payments</h2>
           <p>
-            Orders are paid by cash on delivery or by bank transfer. We do not
-            accept card payments online, and no card or banking credentials are
-            ever collected, processed or stored by this website. If you choose
-            bank transfer, we email you our account details after your order is
+            Orders are paid online, by cash on delivery, or by bank transfer.
+            Online payments are handled by PayHere, a payment service licensed
+            in Sri Lanka: when you choose to pay online you are taken to
+            PayHere&rsquo;s secure page, and your card details are entered
+            there. No card or banking credentials are ever collected, processed
+            or stored by this website &mdash; we receive only confirmation that
+            the payment succeeded, and the type of card used. If you choose bank
+            transfer, we email you our account details after your order is
             placed, and you send the payment from your own bank.
           </p>
 
@@ -50,9 +56,10 @@ export default function PrivacyPage() {
           <h2>Sharing of information</h2>
           <p>
             We may share limited information with trusted service providers —
-            our delivery partners and the service that sends our order emails —
-            only as needed to complete your order. We do not use a payment
-            processor, and we do not sell or rent customer data.
+            our delivery partners, the service that sends our order emails, and
+            PayHere when you pay online (your name, contact details, delivery
+            address and order total) — only as needed to complete your order.
+            We do not sell or rent customer data.
           </p>
 
           <h2>Cookies</h2>
@@ -69,10 +76,10 @@ export default function PrivacyPage() {
 
           <h2>Contact us</h2>
           <p>
-            Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            Email <a href={`mailto:${s.email}`}>{s.email}</a>
             <br />
             Phone / WhatsApp:{" "}
-            <a href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}>{SITE.phone}</a>
+            <a href={waLink(s.whatsapp)}>{s.phone}</a>
           </p>
         </Prose>
       </div>

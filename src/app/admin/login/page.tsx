@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/**
+ * The only messages ?error= can put on this page. The URL carries a code, never
+ * text — otherwise anyone could send the owner a link to the real sign-in page
+ * with words of their choosing on it.
+ */
+const ERRORS: Record<string, string> = {
+  "not-admin": "That account does not have admin access.",
+  "not-configured": "Supabase is not configured yet. Add your keys to .env.local.",
+};
+
 export default async function AdminLoginPage({
   searchParams,
 }: {
@@ -23,7 +33,7 @@ export default async function AdminLoginPage({
             alt="Franley"
             width={200}
             height={40}
-            priority
+            preload
             className="mx-auto h-8 w-auto brightness-0 invert"
           />
           <p className="eyebrow mt-6 text-champagne-300">Store administration</p>
@@ -34,7 +44,7 @@ export default async function AdminLoginPage({
           <p className="mt-2 text-sm text-ink-600">
             Use the account created for you in Supabase.
           </p>
-          <LoginForm nextPath={next} initialError={error} />
+          <LoginForm nextPath={next} initialError={error ? ERRORS[error] : undefined} />
         </div>
 
         <p className="mt-6 text-center text-xs text-cream-100/60">

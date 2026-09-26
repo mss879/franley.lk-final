@@ -1,5 +1,7 @@
+import "server-only";
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
+import { sessionCookieOptions } from "./cookie-options";
 
 /**
  * Server client bound to the request cookie jar, so the admin session is
@@ -13,6 +15,7 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: sessionCookieOptions,
       cookies: {
         getAll() {
           return cookieStore.getAll();
@@ -29,6 +32,20 @@ export async function createClient() {
         },
       },
     },
+  );
+}
+
+/**
+ * Anon-key client with no cookie jar, for public reads that must not depend on
+ * who is asking — site settings, say. Not calling cookies() keeps the pages
+ * that use it statically renderable; RLS still applies exactly as for a
+ * signed-out shopper.
+ */
+export function createAnonClient() {
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { cookies: { getAll: () => [], setAll: () => {} } },
   );
 }
 

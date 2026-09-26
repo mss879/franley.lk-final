@@ -38,15 +38,20 @@ export function button(href: string, label: string) {
   </table>`;
 }
 
+/** The shop's phone and WhatsApp as set in /admin/settings; the constants stand in without them. */
+export type EmailContact = { phone: string; whatsapp: string };
+
 export function shell({
   preheader,
   heading,
   body,
+  contact = { phone: SITE.phone, whatsapp: SITE.whatsapp },
 }: {
   /** The grey line shown after the subject in an inbox list. */
   preheader: string;
   heading: string;
   body: string;
+  contact?: EmailContact;
 }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? SITE.url;
 
@@ -78,7 +83,7 @@ export function shell({
       <tr><td bgcolor="${BRAND.creamPanel}" style="padding:26px 32px;border:1px solid ${BRAND.hairline};border-radius:0 0 16px 16px;">
         <p style="margin:0 0 10px;font-family:${SANS};font-size:12px;line-height:1.7;color:${BRAND.inkMuted};">
           Questions? Reply to this email, or message us on WhatsApp at
-          <a href="https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}" style="color:${BRAND.wine};">${SITE.phone}</a>.
+          <a href="https://wa.me/${contact.whatsapp.replace(/\D/g, "")}" style="color:${BRAND.wine};">${escapeHtml(contact.phone)}</a>.
         </p>
         <p style="margin:0 0 10px;font-family:${SANS};font-size:12px;line-height:1.7;color:${BRAND.inkMuted};">
           ${SITE.address.line1}, ${SITE.address.city}, ${SITE.address.country}<br>

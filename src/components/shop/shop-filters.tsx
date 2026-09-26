@@ -33,7 +33,8 @@ export function ShopFilters({
     const next = new URLSearchParams(params.toString());
     if (value === null || value === "") next.delete(key);
     else next.set(key, value);
-    router.push(`${pathname}?${next.toString()}`, { scroll: false });
+    const query = next.toString();
+    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false });
   };
 
   const toggleColor = (color: string) => {

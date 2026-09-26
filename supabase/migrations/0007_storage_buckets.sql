@@ -51,14 +51,19 @@ $$;
 do $$
 begin
   execute 'drop policy if exists franley_public_read_media on storage.objects';
+  execute 'drop policy if exists franley_admin_read_media on storage.objects';
   execute 'drop policy if exists franley_admin_insert_media on storage.objects';
   execute 'drop policy if exists franley_admin_update_media on storage.objects';
   execute 'drop policy if exists franley_admin_delete_media on storage.objects';
 
+  -- Admin only. Shoppers need no read policy: a public bucket serves
+  -- /storage/v1/object/public/... without consulting RLS, while a public read
+  -- policy would let anyone LIST the buckets, unreleased products included.
+  -- Removing an object needs SELECT as well as DELETE, hence this policy.
   execute $p$
-    create policy franley_public_read_media on storage.objects
-      for select to anon, authenticated
-      using (bucket_id in ('product-images', 'cms-media'))
+    create policy franley_admin_read_media on storage.objects
+      for select to authenticated
+      using (bucket_id in ('product-images', 'cms-media') and (select public.is_admin()))
   $p$;
 
   execute $p$
@@ -91,7 +96,7 @@ begin
   $p$;
 exception
   when insufficient_privilege then
-    raise warning 'Could not create storage.objects policies (insufficient privilege). Add them from Dashboard -> Storage -> Policies: public SELECT on both buckets, and INSERT/UPDATE/DELETE restricted to public.is_admin().';
+    raise warning 'Could not create storage.objects policies (insufficient privilege). Add them from Dashboard -> Storage -> Policies: SELECT/INSERT/UPDATE/DELETE on both buckets restricted to public.is_admin().';
   when undefined_table then
     raise warning 'storage.objects not found — skipping. This is expected outside Supabase.';
 end

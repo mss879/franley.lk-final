@@ -17,6 +17,8 @@ import { OrderCancelForm } from "@/components/admin/orders/order-cancel-form";
 import { AdminNoteForm, TrackingForm } from "@/components/admin/orders/order-annotations";
 import { OrderTimeline, type OrderEvent } from "@/components/admin/orders/order-timeline";
 import { formatDateTime, whatsappHref } from "@/components/admin/orders/format";
+import { RefundForm } from "@/components/admin/orders/refund-form";
+import { payhereRefundEnabled } from "@/lib/payhere";
 import {
   CANCELLABLE_STATUSES,
   NEXT_STATUSES,
@@ -91,7 +93,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
   if (!UUID.test(id)) notFound();
 
   const supabase = await createClient();
-  const [orderResult, itemsResult, eventsResult, emailResult] = await Promise.all([
+  const [orderResult, itemsResult, eventsResult, emailResult, gatewayResult, customerResult] = await Promise.all([
     supabase
       .from("orders")
       .select(
@@ -122,7 +124,27 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
       .select("id, kind, recipient, subject, status, sent_at, created_at, error")
       .eq("order_id", id)
       .order("created_at", { ascending: true }),
+    // The gateway columns arrive with 0012; same tolerance, and the reason this
+    // is its own query rather than four more names in the select above.
+    supabase
+      .from("orders")
+      .select("payment_gateway, payment_reference, payment_method_detail, paid_at")
+      .eq("id", id)
+      .maybeSingle(),
+    // customer_id arrives with 0014; tolerated the same way.
+    supabase.from("orders").select("customer_id").eq("id", id).maybeSingle(),
   ]);
+
+  const customerId = customerResult.error
+    ? null
+    : ((customerResult.data as { customer_id: string | null } | null)?.customer_id ?? null);
+
+  const gateway = (gatewayResult.error ? null : gatewayResult.data) as {
+    payment_gateway: string | null;
+    payment_reference: string | null;
+    payment_method_detail: string | null;
+    paid_at: string | null;
+  } | null;
 
   const emails = (emailResult.error ? [] : (emailResult.data ?? [])) as EmailLogRow[];
 
@@ -133,6 +155,9 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
   const events = (eventsResult.data ?? []) as unknown as OrderEvent[];
   const unitCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const nextStatuses = NEXT_STATUSES[order.status];
+  // The latest refund reference, from the history (events are newest first).
+  const refundNote =
+    events.find((e) => e.note && /PayHere( refund| shows payment|: refunded)/i.test(e.note))?.note ?? null;
   const canCancel = CANCELLABLE_STATUSES.includes(order.status);
 
   const waText = `Hello ${order.customer_name.split(" ")[0]}, this is Franley about your order ${order.order_number}.`;
@@ -293,15 +318,85 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
           </Card>
 
           <Card title="Payment">
+            {order.payment_method === "card" && order.payment_status === "paid" && gateway?.payment_gateway === "payhere" && (
+              <p className="mb-4 rounded-2xl bg-wine-700/[0.06] px-4 py-3 text-xs leading-relaxed text-wine-800">
+                Marking this payment refunded below only records it — no money moves. To give the
+                money back, use <strong>Refund via PayHere</strong> further down, or refund in the
+                PayHere dashboard first.
+              </p>
+            )}
             <PaymentStatusControls
               orderId={order.id}
               paymentStatus={order.payment_status}
               paymentMethod={order.payment_method}
             />
+            {gateway?.payment_reference && (
+              <dl className="mt-4 space-y-1.5 border-t border-cream-300 pt-4 text-xs text-ink-600">
+                <div className="flex justify-between gap-3">
+                  <dt>PayHere payment ID</dt>
+                  <dd className="font-mono text-ink-900">{gateway.payment_reference}</dd>
+                </div>
+                {gateway.payment_method_detail && (
+                  <div className="flex justify-between gap-3">
+                    <dt>Paid with</dt>
+                    <dd className="text-ink-900">{gateway.payment_method_detail}</dd>
+                  </div>
+                )}
+                {gateway.paid_at && (
+                  <div className="flex justify-between gap-3">
+                    <dt>Paid at</dt>
+                    <dd className="text-ink-900">
+                      {new Date(gateway.paid_at).toLocaleString("en-LK", { timeZone: "Asia/Colombo" })}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            )}
+            {order.payment_method === "card" && order.payment_status !== "paid" && order.payment_status !== "refunded" && (
+              <p className="mt-4 border-t border-cream-300 pt-4 text-xs leading-relaxed text-ink-600">
+                A card order marks itself paid when PayHere confirms the payment. Until then the
+                customer has not been charged — do not dispatch it.
+              </p>
+            )}
+            {order.payment_method === "card" &&
+              order.payment_status === "paid" &&
+              gateway?.payment_gateway === "payhere" &&
+              gateway.payment_reference && (
+                <RefundForm
+                  orderId={order.id}
+                  orderNumber={order.order_number}
+                  totalCents={order.total_cents}
+                  canCancel={canCancel}
+                  shipped={order.status === "shipped"}
+                  enabled={payhereRefundEnabled()}
+                />
+              )}
+            {order.payment_method === "card" && order.payment_status === "refunded" && (
+              <p className="mt-4 border-t border-cream-300 pt-4 text-xs leading-relaxed text-ink-600">
+                {refundNote ? (
+                  <>
+                    <span className="text-ink-900">{refundNote}</span>
+                    <br />
+                  </>
+                ) : null}
+                A chargeback reported by PayHere also lands here automatically — if the order has not
+                shipped, cancel it with restock.
+              </p>
+            )}
           </Card>
 
           <Card title="Customer">
-            <p className="text-sm text-ink-900">{order.customer_name}</p>
+            {customerId ? (
+              <Link
+                href={`/admin/customers/${customerId}`}
+                className="text-sm text-ink-900 underline-offset-4 transition-colors hover:text-wine-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              >
+                {order.customer_name}
+                <span className="ml-1.5 text-xs text-ink-600">— all their orders</span>
+              </Link>
+            ) : (
+              <p className="text-sm text-ink-900">{order.customer_name}</p>
+            )}
             <div className="mt-3 space-y-2 text-sm">
               <a
                 href={`mailto:${order.customer_email}`}

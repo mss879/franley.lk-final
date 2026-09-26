@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import { SITE } from "@/lib/constants";
 import { reportEnv } from "@/lib/env";
-import { HTML_LANG, JsonLd, OG_FALLBACK, OG_LOCALE, SITE_ORIGIN, siteJsonLd } from "@/lib/seo";
+import { HTML_LANG, OG_FALLBACK_IMAGE, OG_LOCALE, SITE_ORIGIN } from "@/lib/seo";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -21,7 +21,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
+    default: SITE.seoTitle,
     template: `%s · ${SITE.name}`,
   },
   description: SITE.description,
@@ -32,25 +32,24 @@ export const metadata: Metadata = {
     url: SITE_ORIGIN,
     siteName: SITE.name,
     locale: OG_LOCALE,
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: SITE.seoTitle,
     description: SITE.description,
-    images: [OG_FALLBACK],
+    images: [OG_FALLBACK_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: SITE.seoTitle,
     description: SITE.description,
-    images: [OG_FALLBACK],
+    images: [OG_FALLBACK_IMAGE],
   },
-  // /favicon.ico is not in the build; Google renders the favicon beside the
-  // SERP result, so these point at the icons that are actually there.
-  icons: {
-    icon: [
-      { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: { url: "/icon-180.png", sizes: "180x180", type: "image/png" },
-  },
+  // Icons come from the file conventions beside this layout — favicon.ico
+  // (16/32/48), icon.png (512) and apple-icon.png (180) — and the manifest
+  // from manifest.ts. Setting `icons` here would switch those files off.
+};
+
+/** The maroon the browser paints its own chrome in on mobile. */
+export const viewport: Viewport = {
+  themeColor: "#711625",
 };
 
 reportEnv();
@@ -66,7 +65,6 @@ export default function RootLayout({
     // the guaranteed-invalid value and every heading fell back to the UA sans.
     <html lang={HTML_LANG} className={`${playfair.variable} ${inter.variable}`}>
       <body className="antialiased">
-        <JsonLd data={siteJsonLd()} />
         {children}
       </body>
     </html>

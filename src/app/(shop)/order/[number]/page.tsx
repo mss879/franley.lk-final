@@ -10,8 +10,12 @@ import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { createClient } from "@/lib/supabase/server";
 import { isLive } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
-import { SITE } from "@/lib/constants";
 import { buildMetadata } from "@/lib/seo";
+import { OrderPayment } from "@/components/shop/order-payment";
+import { payhereEnabled } from "@/lib/payhere";
+import { reconcilePayment } from "@/lib/payhere/record";
+import { getSiteSettings } from "@/lib/settings";
+import { waLink } from "@/lib/settings/shipping";
 
 export async function generateMetadata({
   params,
@@ -43,6 +47,7 @@ type Order = {
   status: string;
   payment_status: string;
   payment_method: string;
+  currency: string;
   subtotal_cents: number;
   shipping_cents: number;
   discount_cents: number;
@@ -54,6 +59,8 @@ type Order = {
   shipping_city: string;
   shipping_district: string | null;
   tracking_number: string | null;
+  /** From 0015_ops_and_fixes.sql on; absent on an older database. */
+  payment_method_detail?: string | null;
   items: OrderItem[];
 };
 
@@ -74,9 +81,9 @@ export default async function OrderPage({
   searchParams,
 }: {
   params: Promise<{ number: string }>;
-  searchParams: Promise<{ token?: string }>;
+  searchParams: Promise<{ token?: string; payment?: string }>;
 }) {
-  const [{ number }, { token }] = await Promise.all([params, searchParams]);
+  const [{ number }, { token, payment }, settings] = await Promise.all([params, searchParams, getSiteSettings()]);
 
   // /order/<anything> used to render a full "Order <anything> is placed"
   // confirmation for any path segment at all. Only a well-formed order number
@@ -93,12 +100,34 @@ export default async function OrderPage({
     const { data, error } = await supabase.rpc("get_order_by_token", { p_token: token });
     if (error) console.error("order lookup failed", error.message);
     else if (data) order = data as Order;
+
+    // Back from PayHere, and the notification has not landed (it cannot, on
+    // localhost). `payment=return` is only a hint to go and ASK PayHere — it is
+    // never taken as proof of anything.
+    if (
+      order &&
+      payment === "return" &&
+      order.payment_method === "card" &&
+      !["paid", "refunded"].includes(order.payment_status) &&
+      (await reconcilePayment({
+        orderNumber: order.order_number,
+        totalCents: order.total_cents,
+        currency: order.currency,
+        accessToken: token,
+      }))
+    ) {
+      const fresh = await supabase.rpc("get_order_by_token", { p_token: token });
+      if (fresh.data) order = fresh.data as Order;
+    }
   }
 
   // indexOf() returns -1 for cancelled/refunded, which made every stage read as
   // not-done and left the page claiming the order was on its way.
   const terminal = order ? TERMINAL[order.status] ?? null : null;
   const reached = order && !terminal ? ORDER_OF.indexOf(order.status) : -1;
+  // A card order that has not been paid is held, not confirmed.
+  const awaitingPayment =
+    !!order && !terminal && order.payment_method === "card" && !["paid", "refunded"].includes(order.payment_status);
 
   return (
     <>
@@ -108,7 +137,9 @@ export default async function OrderPage({
           order
             ? terminal
               ? `Order ${order.order_number} was ${terminal}`
-              : `Order ${order.order_number} is placed`
+              : awaitingPayment
+                ? `Order ${order.order_number} is awaiting payment`
+                : `Order ${order.order_number} is placed`
             : "We could not open that order"
         }
         lede={
@@ -117,7 +148,9 @@ export default async function OrderPage({
               ? "This order was refunded. The amount goes back the way it was paid — message us if you need the details."
               : terminal === "cancelled"
                 ? "This order was cancelled, so nothing is on its way. Message us if that is a surprise."
-                : "We have your order. You will hear from us on WhatsApp as soon as it is on its way."
+                : awaitingPayment
+                  ? "Your pieces are held for you. The order is confirmed as soon as your payment comes through."
+                  : "We have your order. You will hear from us on WhatsApp as soon as it is on its way."
             : "This link did not open an order. It may have expired, or been mistyped."
         }
       />
@@ -218,11 +251,36 @@ export default async function OrderPage({
                 </div>
               </dl>
 
-              <p className="mt-5 rounded-2xl bg-cream-200 px-4 py-3 text-xs leading-relaxed text-ink-600">
-                {order.payment_method === "cod"
-                  ? "Pay the courier in cash when your order arrives."
-                  : "We will send bank transfer details to your email shortly. Your order ships once payment clears."}
-              </p>
+              {awaitingPayment && token && payhereEnabled() ? (
+                <OrderPayment
+                  orderNumber={order.order_number}
+                  token={token}
+                  returning={payment === "return"}
+                  failed={order.payment_status === "failed"}
+                  processing={order.payment_status === "pending"}
+                />
+              ) : (
+                <p className="mt-5 rounded-2xl bg-cream-200 px-4 py-3 text-xs leading-relaxed text-ink-600">
+                  {order.payment_method === "cod"
+                    ? "Pay the courier in cash when your order arrives."
+                    : order.payment_method === "card"
+                      ? order.payment_status === "paid"
+                        ? `Paid online through PayHere${order.payment_method_detail ? ` with ${order.payment_method_detail}` : ""}. Thank you — your payment has been received.`
+                        : order.payment_status === "refunded"
+                          ? "This payment was refunded to the original payment method."
+                          : "This order has not been paid. Message us and we will help you complete it."
+                      : settings.bankTransferDetails
+                        ? "Transfer the total to the account below and send us the slip on WhatsApp. Your order ships once payment clears."
+                        : "We will send bank transfer details to your email shortly. Your order ships once payment clears."}
+                  {order.payment_method === "bank_transfer" &&
+                    order.payment_status !== "paid" &&
+                    settings.bankTransferDetails && (
+                      <span className="mt-3 block whitespace-pre-line rounded-xl bg-cream-50 px-4 py-3 text-ink-800">
+                        {settings.bankTransferDetails}
+                      </span>
+                    )}
+                </p>
+              )}
 
               {order.tracking_number && (
                 <p className="mt-4 text-xs text-ink-600">
@@ -231,7 +289,7 @@ export default async function OrderPage({
               )}
 
               <ButtonLink
-                href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(`Hi Franley, about order ${order.order_number}`)}`}
+                href={waLink(settings.whatsapp, `Hi Franley, about order ${order.order_number}`)}
                 variant="outline"
                 className="mt-6 w-full"
               >
@@ -252,7 +310,7 @@ export default async function OrderPage({
               with your order number and we will pull it up.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <ButtonLink href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}>
+              <ButtonLink href={waLink(settings.whatsapp)}>
                 <WhatsAppIcon className="h-4 w-4" />
                 Message us
               </ButtonLink>

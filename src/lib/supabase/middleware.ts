@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { sessionCookieOptions } from "./cookie-options";
 
 /**
  * Refreshes the auth cookie on every request and gates /admin.
@@ -20,7 +21,7 @@ export async function updateSession(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith("/admin") && request.nextUrl.pathname !== "/admin/login") {
       const url = request.nextUrl.clone();
       url.pathname = "/admin/login";
-      url.searchParams.set("error", "Supabase is not configured yet. Add your keys to .env.local.");
+      url.searchParams.set("error", "not-configured");
       return NextResponse.redirect(url);
     }
     return response;
@@ -30,6 +31,7 @@ export async function updateSession(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: sessionCookieOptions,
       cookies: {
         getAll() {
           return request.cookies.getAll();

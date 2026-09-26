@@ -9,7 +9,8 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { getProductBySlug, getProducts, getAllProductSlugs } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
-import { DELIVERY, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/constants";
+import { DELIVERY } from "@/lib/constants";
+import { getSiteSettings } from "@/lib/settings";
 import {
   JsonLd,
   ProductOpenGraph,
@@ -41,6 +42,7 @@ export async function generateMetadata({
     description: productSeoDescription(product),
     canonical: `/products/${product.slug}`,
     images: product.images,
+    imageAlt: product.title,
     ogType: "none",
   });
 }
@@ -49,8 +51,8 @@ export async function generateMetadata({
 // silently drift from /shipping and /returns. The policy is a RETURN within
 // DELIVERY.returnsWindow days; exchanges are conditional on stock (see
 // src/app/(shop)/returns/page.tsx), so the copy says returns.
-const PROMISES = [
-  { Icon: Truck, text: `Islandwide delivery, free over ${formatPrice(FREE_SHIPPING_THRESHOLD_CENTS)}` },
+const promises = (freeThresholdCents: number) => [
+  { Icon: Truck, text: `Islandwide delivery, free over ${formatPrice(freeThresholdCents)}` },
   { Icon: RefreshCw, text: `${DELIVERY.returnsWindow}-day returns on unused pieces` },
   { Icon: MessageCircle, text: "WhatsApp support before and after you buy" },
 ];
@@ -66,7 +68,7 @@ const DEFAULT_CARE = "Dry clean only";
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const [product, settings] = await Promise.all([getProductBySlug(slug), getSiteSettings()]);
   if (!product) notFound();
 
   const { products: related } = await getProducts({
@@ -90,7 +92,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <ProductOpenGraph product={product} />
-      <JsonLd data={productJsonLd(product, path)} />
+      <JsonLd data={productJsonLd(product, path, settings)} />
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
 
       <div className="mx-auto max-w-[1400px] px-5 py-10 md:px-10 md:py-14">
@@ -175,7 +177,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
 
             <ul className="mt-8 space-y-3">
-              {PROMISES.map(({ Icon, text }) => (
+              {promises(settings.freeThresholdCents).map(({ Icon, text }) => (
                 <li key={text} className="flex items-center gap-3 text-sm text-ink-600">
                   <Icon className="h-4 w-4 shrink-0 text-wine-700" strokeWidth={1.5} aria-hidden />
                   {text}

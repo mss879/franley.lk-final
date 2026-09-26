@@ -1,7 +1,7 @@
 -- =============================================================================
 -- 0010_guardrails.sql
 -- FEATURE: No new objects. This file ASSERTS the security properties the other
---          nine migrations are supposed to have, and fails loudly if any of
+--          migrations are supposed to have, and fails loudly if any of
 --          them is missing. Run it after every future schema change — it is
 --          the cheapest possible regression test for "did we just open a hole".
 --
@@ -25,6 +25,8 @@
 --      the RLS policy hides the row, and the public accessors re-apply the same
 --      filter — but a SECURITY DEFINER reader granted to anon would walk past
 --      both, which is exactly the hole this pair of checks exists to catch.
+--   8. place_order, record_gateway_payment and throttle_take are executable by
+--      service_role only — the server calls them on the shopper's behalf.
 -- =============================================================================
 
 do $$
@@ -90,8 +92,15 @@ begin
   ----------------------------------------------------------------------------
   -- 5. anon must hold nothing on the PII tables.
   ----------------------------------------------------------------------------
+  -- email_log (0011) and customers (0014) are created AFTER this file on a
+  -- fresh install, and has_table_privilege() raises on a relation that does
+  -- not exist, so a table that is not there yet is skipped rather than
+  -- asserted. Re-run this file last, as DEPLOY.md says, and they are checked.
   for r in
-    select unnest(array['orders','order_items','order_events','checkout_throttle','admin_users']) as t
+    select t
+      from unnest(array['orders','order_items','order_events','checkout_throttle','admin_users',
+                        'email_log','customers']) as t
+     where to_regclass('public.' || t) is not null
   loop
     if has_table_privilege('anon', 'public.' || r.t, 'select')
        or has_table_privilege('anon', 'public.' || r.t, 'insert')
@@ -138,6 +147,24 @@ begin
     v_bad := v_bad || format(
       E'\n  - % row(s) in site_settings.group_key = ''integrations'' are is_public = true and are being served to anon.', v_count);
   end if;
+
+  ----------------------------------------------------------------------------
+  -- 8. Server-only entry points (0012, 0016). Skipped when the function does
+  --     not exist yet on a fresh install — re-run this file last.
+  ----------------------------------------------------------------------------
+  for r in
+    select f
+      from unnest(array['public.place_order(jsonb, jsonb, jsonb, public.payment_method, text, text, text)',
+                        'public.record_gateway_payment(text, text, public.payment_status, integer, text, text, text, text)',
+                        'public.throttle_take(text, text, integer, integer)']) as f
+     where to_regprocedure(f) is not null
+  loop
+    if has_function_privilege('anon', r.f, 'execute')
+       or has_function_privilege('authenticated', r.f, 'execute') then
+      v_bad := v_bad || format(
+        E'\n  - %s is executable by an application role. Only the server (service_role) may call it; run 0016_security_hardening.sql.', r.f);
+    end if;
+  end loop;
 
   if v_bad <> '' then
     raise exception E'Franley schema guardrails FAILED:%', v_bad;

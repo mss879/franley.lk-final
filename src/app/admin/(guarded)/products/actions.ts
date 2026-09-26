@@ -330,7 +330,7 @@ const imageInputSchema = z.object({
     .string()
     .trim()
     .max(2048)
-    .refine((u) => u.startsWith("https://") || u.startsWith("/") || u.startsWith(`${PRODUCT_IMAGE_BUCKET}/`), {
+    .refine((u) => u.startsWith("https://") || /^\/(?![/\\])/.test(u) || u.startsWith(`${PRODUCT_IMAGE_BUCKET}/`), {
       message: "Image URL must be an https URL, a site path, or a product-images key.",
     }),
   alt: z.string().trim().min(1, "Alt text is required.").max(300),

@@ -1,4 +1,4 @@
-import { shell, button, escapeHtml, P, LABEL, BRAND, SANS, FONT } from "./layout";
+import { shell, button, escapeHtml, P, LABEL, BRAND, SANS, FONT, type EmailContact } from "./layout";
 import { formatPrice } from "@/lib/utils";
 import { SITE } from "@/lib/constants";
 
@@ -90,14 +90,29 @@ const PAYMENT_NOTE: Record<EmailOrder["payment_method"], string> = {
   card: "Your card payment has been received.",
 };
 
+/** The bank-transfer note carries the account details once the owner has filled them in at /admin/settings. */
+function paymentNote(order: EmailOrder, bankDetails: string | null | undefined) {
+  if (order.payment_method !== "bank_transfer" || !bankDetails) return P(PAYMENT_NOTE[order.payment_method]);
+  return `${P("Please transfer the total to the account below and send us the slip on WhatsApp, quoting your order number. Your order is packed and dispatched once the transfer clears.")}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 18px;background:${BRAND.creamPanel};border-radius:12px;">
+      <tr><td style="padding:18px 20px;font-family:${SANS};font-size:13px;line-height:1.7;color:${BRAND.ink};">
+        ${bankDetails.split("\n").map(escapeHtml).join("<br>")}
+      </td></tr>
+    </table>`;
+}
+
 /** To the customer, immediately after checkout. */
-export function orderConfirmation(order: EmailOrder, trackUrl: string) {
+export function orderConfirmation(
+  order: EmailOrder,
+  trackUrl: string,
+  opts?: { bankDetails?: string | null; contact?: EmailContact },
+) {
   const body = `
     ${P(`Thank you, ${firstName(order.customer_name)}. We have your order and it is being prepared.`)}
     ${P(`Your order number is <strong style="color:${BRAND.ink};">${escapeHtml(order.order_number)}</strong>. Quote it if you need to reach us.`)}
     ${itemsTable(order)}
     ${addressBlock(order)}
-    ${P(PAYMENT_NOTE[order.payment_method])}
+    ${paymentNote(order, opts?.bankDetails)}
     ${button(trackUrl, "Track your order")}
     ${P(`Orders are processed within 1&ndash;2 business days. Colombo and suburbs usually arrive in 1&ndash;3 working days, other areas in 2&ndash;5.`)}
   `;
@@ -108,13 +123,15 @@ export function orderConfirmation(order: EmailOrder, trackUrl: string) {
       preheader: `We have your order. Total ${formatPrice(order.total_cents)}.`,
       heading: "Your order is confirmed",
       body,
+      contact: opts?.contact,
     }),
   };
 }
 
 /** To the shop, immediately after checkout. Terse and scannable on a phone. */
-export function orderAdminAlert(order: EmailOrder, adminUrl: string) {
+export function orderAdminAlert(order: EmailOrder, adminUrl: string, opts?: { warning?: string }) {
   const body = `
+    ${opts?.warning ? P(`<strong style="color:${BRAND.wine};">${escapeHtml(opts.warning)}</strong>`) : ""}
     ${P(`<strong style="color:${BRAND.ink};">${formatPrice(order.total_cents)}</strong> &middot; ${order.items.reduce((n, i) => n + i.quantity, 0)} item(s) &middot; ${order.payment_method === "cod" ? "Cash on delivery" : order.payment_method === "bank_transfer" ? "Bank transfer" : "Card"}`)}
     ${itemsTable(order)}
     ${addressBlock(order)}
@@ -126,7 +143,7 @@ export function orderAdminAlert(order: EmailOrder, adminUrl: string) {
   `;
 
   return {
-    subject: `New order ${order.order_number} — ${formatPrice(order.total_cents)}`,
+    subject: `${opts?.warning ? "ACTION NEEDED — " : ""}New order ${order.order_number} — ${formatPrice(order.total_cents)}`,
     html: shell({
       preheader: `${order.customer_name} · ${order.shipping_city} · ${formatPrice(order.total_cents)}`,
       heading: `New order ${order.order_number}`,
@@ -136,7 +153,7 @@ export function orderAdminAlert(order: EmailOrder, adminUrl: string) {
 }
 
 /** To the customer, when the admin marks the order shipped. */
-export function orderShipped(order: EmailOrder, trackUrl: string) {
+export function orderShipped(order: EmailOrder, trackUrl: string, contact?: EmailContact) {
   const body = `
     ${P(`Good news, ${firstName(order.customer_name)} — order <strong style="color:${BRAND.ink};">${escapeHtml(order.order_number)}</strong> is on its way.`)}
     ${order.tracking_number
@@ -153,12 +170,13 @@ export function orderShipped(order: EmailOrder, trackUrl: string) {
       preheader: "Your Franley order has been dispatched.",
       heading: "Your order has shipped",
       body,
+      contact,
     }),
   };
 }
 
 /** To the customer, when the admin marks the order delivered. */
-export function orderDelivered(order: EmailOrder) {
+export function orderDelivered(order: EmailOrder, contact?: EmailContact) {
   const body = `
     ${P(`Order <strong style="color:${BRAND.ink};">${escapeHtml(order.order_number)}</strong> has been marked delivered. We hope it is exactly what you wanted.`)}
     ${P("If anything is not right, you have 7 days from delivery to arrange a return or exchange. Just reply to this email or message us on WhatsApp.")}
@@ -172,12 +190,13 @@ export function orderDelivered(order: EmailOrder) {
       preheader: "Thank you for shopping with Franley.",
       heading: "Delivered",
       body,
+      contact,
     }),
   };
 }
 
 /** To the customer, when the admin cancels the order. */
-export function orderCancelled(order: EmailOrder, reason?: string | null) {
+export function orderCancelled(order: EmailOrder, reason?: string | null, contact?: EmailContact) {
   const body = `
     ${P(`Order <strong style="color:${BRAND.ink};">${escapeHtml(order.order_number)}</strong> has been cancelled.`)}
     ${reason ? P(`Reason: ${escapeHtml(reason)}`) : ""}
@@ -194,6 +213,7 @@ export function orderCancelled(order: EmailOrder, reason?: string | null) {
       preheader: "Your Franley order has been cancelled.",
       heading: "Order cancelled",
       body,
+      contact,
     }),
   };
 }
