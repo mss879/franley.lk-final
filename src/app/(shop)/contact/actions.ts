@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { z } from "zod";
+import { clientIp } from "@/lib/client-ip";
 import { isLive } from "@/lib/data";
 import { sendContactEnquiry, emailEnabled } from "@/lib/email/send";
 import { getSiteSettings } from "@/lib/settings";
@@ -32,8 +33,7 @@ const schema = z.object({
 async function withinContactLimits(): Promise<boolean> {
   if (!isLive()) return true;
   try {
-    const h = await headers();
-    const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
+    const ip = clientIp(await headers()) ?? "unknown";
     const supabase = createServiceClient();
     const limits = [
       { p_key: `ip|${ip}`, p_limit: 5, p_window_seconds: 60 * 60 },

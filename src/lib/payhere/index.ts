@@ -13,13 +13,17 @@ import { siteUrl } from "@/lib/env";
  *
  * Reference: https://support.payhere.lk/api-&-mobile-sdk/checkout-api
  *
+ * LIVE ONLY. This store has no sandbox account, so there is no mode switch:
+ * every request goes to PayHere's live system.
+ *
  * Going live (see DEPLOY.md §2b):
  *   1. franley.lk added under Integrations in the LIVE account and approved;
  *      PAYHERE_MERCHANT_SECRET is the secret shown against that domain.
- *   2. PAYHERE_MODE=live and NEXT_PUBLIC_SITE_URL=https://franley.lk — the
- *      return, cancel and notify URLs are built from it. PAYHERE_NOTIFY_URL unset.
+ *   2. NEXT_PUBLIC_SITE_URL=https://franley.lk (or unset — it falls back to
+ *      that): the return, cancel and notify URLs are built from it.
+ *      PAYHERE_NOTIFY_URL unset.
  *   3. /api/payments/payhere/notify reachable from the internet (the proxy
- *      matcher skips api/payments/; the CSP form-action allows both hosts).
+ *      matcher skips api/payments/; the CSP form-action allows www.payhere.lk).
  *   4. SUPABASE_SERVICE_ROLE_KEY set — recording a payment needs it.
  *   5. Optional Merchant API (lookup + refunds): PAYHERE_APP_ID/SECRET from the
  *      LIVE account, and this server's outbound IP whitelisted by
@@ -29,16 +33,12 @@ import { siteUrl } from "@/lib/env";
  *   6. Migration 0012 applied. Place one small real order, then refund it.
  */
 
-const HOSTS = {
-  // The live host needs the `www` — without it PayHere answers PH-0022.
-  live: "https://www.payhere.lk",
-  sandbox: "https://sandbox.payhere.lk",
-} as const;
+/** PayHere's live system. The `www` is required — without it PayHere answers PH-0022. */
+const PAYHERE_HOST = "https://www.payhere.lk";
 
 type Config = {
   merchantId: string;
   merchantSecret: string;
-  mode: keyof typeof HOSTS;
   host: string;
   appId: string | null;
   appSecret: string | null;
@@ -49,14 +49,10 @@ function config(): Config | null {
   const merchantSecret = process.env.PAYHERE_MERCHANT_SECRET?.trim();
   if (!merchantId || !merchantSecret) return null;
 
-  // Anything other than an explicit "live" is the sandbox, so a half-configured
-  // deploy can never take real money by accident.
-  const mode = process.env.PAYHERE_MODE?.trim().toLowerCase() === "live" ? "live" : "sandbox";
   return {
     merchantId,
     merchantSecret,
-    mode,
-    host: HOSTS[mode],
+    host: PAYHERE_HOST,
     appId: process.env.PAYHERE_APP_ID?.trim() || null,
     appSecret: process.env.PAYHERE_APP_SECRET?.trim() || null,
   };
@@ -132,7 +128,7 @@ export function buildCheckout(order: PayableOrder): PayHereCheckout | null {
       return_url: orderUrl("return"),
       cancel_url: orderUrl("cancelled"),
       // Must be reachable from the internet. PAYHERE_NOTIFY_URL lets a tunnel
-      // (ngrok, cloudflared) stand in for localhost during sandbox testing.
+      // (ngrok, cloudflared) stand in for localhost when testing locally.
       notify_url: process.env.PAYHERE_NOTIFY_URL?.trim() || `${site}/api/payments/payhere/notify`,
       order_id: order.orderNumber,
       items: `Franley order ${order.orderNumber}`,

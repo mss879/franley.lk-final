@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import { checkoutSchema } from "@/lib/checkout/schema";
+import { clientIp } from "@/lib/client-ip";
 import { isLive } from "@/lib/data";
 import { loadOrderForEmail, sendOrderPlacedEmails } from "@/lib/email/send";
 import { buildCheckout, payhereEnabled } from "@/lib/payhere";
@@ -116,7 +117,7 @@ export async function POST(request: NextRequest) {
     p_payment_method: input.paymentMethod,
     p_note: input.notes || null,
     p_idempotency_key: idempotencyKey,
-    p_ip_hint: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null,
+    p_ip_hint: clientIp(request.headers),
   });
 
   if (error) {

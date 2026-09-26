@@ -36,26 +36,26 @@ have returned an id, and **Allow new users to sign up** must be **OFF**.
 
 Skip this and checkout offers cash on delivery and bank transfer only.
 
-1. **Test first.** Create a free account at <https://sandbox.payhere.lk>. In
-   **Integrations**, note the **Merchant ID**, click **Add Domain/App**, enter
-   your domain (`localhost` is fine for a local test) and copy the **Merchant
-   Secret**. Put both in your environment with `PAYHERE_MODE=sandbox`.
-2. Place an order with **Pay online** and the test card `4916217501611292`
-   (any name, CVV and future expiry). Any other card number is declined, which
-   is how you test a failed payment.
-3. **Go live.** Apply for a live merchant account at <https://www.payhere.lk>.
-   The sandbox and live systems share nothing — once approved, repeat step 1 in
-   the live account for `franley.lk`. Domain approval takes up to 24 hours.
-   Set the live Merchant ID and Secret and `PAYHERE_MODE=live`.
-4. The migration `0012_payhere.sql` must have been run (section 1), and
+The store uses PayHere's **live** system only — there is no sandbox mode. Every
+card payment is real money.
+
+1. In the live account at <https://www.payhere.lk>, open **Integrations**, note
+   the **Merchant ID**, click **Add Domain/App**, enter `franley.lk` and wait for
+   approval (up to 24 hours). Copy the **Merchant Secret** shown against it.
+2. Set `PAYHERE_MERCHANT_ID` and `PAYHERE_MERCHANT_SECRET` on your host.
+3. The migration `0012_payhere.sql` must have been run (section 1), and
    `SUPABASE_SERVICE_ROLE_KEY` must be set — it is what records a payment.
+
+Card payment only works from the approved domain. Checkout from `localhost` or a
+Netlify preview address is refused by PayHere (PH-0013) — that is expected.
 
 ### Go-live checklist (live PayHere account)
 
 - [ ] `franley.lk` added under **Integrations** in the **live** account and shown
       as approved. `PAYHERE_MERCHANT_SECRET` is the secret shown against it.
-- [ ] `PAYHERE_MODE=live` and `NEXT_PUBLIC_SITE_URL=https://franley.lk`. The
-      return, cancel and notify addresses PayHere is given are built from it.
+- [ ] `NEXT_PUBLIC_SITE_URL=https://franley.lk` (or unset — it falls back to
+      that). The return, cancel and notify addresses PayHere is given are
+      built from it.
 - [ ] `PAYHERE_NOTIFY_URL` is **not** set. It is for local tunnel testing only.
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` is set. Without it, PayHere takes the money
       and the order is never marked paid.
@@ -63,7 +63,7 @@ Skip this and checkout offers cash on delivery and bank transfer only.
       in the **live** account (Settings → API Keys, tick "Automated Charging
       API", allowed domain `franley.lk`) and set `PAYHERE_APP_ID` /
       `PAYHERE_APP_SECRET`. PayHere also requires the server's outbound IP
-      address to be whitelisted: email it to support@payhere.lk. Vercel has no
+      address to be whitelisted: email it to support@payhere.lk. Netlify has no
       fixed outbound IP unless you set one up, so until then those two features
       are refused by PayHere — nothing else is affected, and you refund in the
       PayHere dashboard instead.
@@ -74,10 +74,9 @@ How it works: the customer is sent to PayHere's own page to pay, so no card
 details ever reach this site. PayHere then calls
 `https://franley.lk/api/payments/payhere/notify` to say the payment succeeded;
 the site checks that message's signature against your Merchant Secret and only
-then marks the order **paid** and sends the confirmation emails. That call
-cannot reach `localhost` — for local testing either set the optional App ID and
-App Secret (the site then asks PayHere directly when the customer returns) or
-use a tunnel with `PAYHERE_NOTIFY_URL`; see `.env.example`.
+then marks the order **paid** and sends the confirmation emails. If that call is
+ever missed, the optional App ID and App Secret let the site ask PayHere
+directly when the customer returns.
 
 > **The Merchant Secret is as sensitive as the service-role key.** Anyone who
 > has it can forge a "payment received" message. Server-side only, never in a
@@ -99,8 +98,13 @@ the hours you choose.
 
 ## 3. Environment variables
 
-Set these on your host (Vercel: Project → Settings → Environment Variables).
+Set these on your host (Netlify: Site configuration → Environment variables).
 Everything in `.env.example` is documented there too.
+
+Tick **Contains secret values** on `SUPABASE_SERVICE_ROLE_KEY`,
+`PAYHERE_MERCHANT_SECRET`, `PAYHERE_APP_SECRET` and `RESEND_API_KEY`. Netlify
+then scans every build and refuses to deploy one that would publish a secret.
+Changing a variable only takes effect on the next deploy.
 
 | Variable | Value | Required |
 |---|---|---|
@@ -114,7 +118,6 @@ Everything in `.env.example` is documented there too.
 | `ORDER_NOTIFICATION_EMAIL` | who gets the new-order alert | optional |
 | `PAYHERE_MERCHANT_ID` | PayHere → Integrations | for card payments |
 | `PAYHERE_MERCHANT_SECRET` | the secret shown against your approved domain | for card payments |
-| `PAYHERE_MODE` | `live` in production, `sandbox` while testing | for card payments |
 | `PAYHERE_APP_ID` / `PAYHERE_APP_SECRET` | PayHere → Settings → API Keys | optional: refunds + payment lookup |
 | `PAYHERE_NOTIFY_URL` | a tunnel URL | local testing only — never in production |
 

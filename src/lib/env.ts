@@ -68,12 +68,6 @@ export function checkEnv(): Check[] {
       hint: "Server-only. PayHere → Integrations → the Merchant Secret shown against your approved domain.",
     },
     {
-      key: "PAYHERE_MODE",
-      ok: ["", "sandbox", "live"].includes(process.env.PAYHERE_MODE?.trim().toLowerCase() ?? ""),
-      required: false,
-      hint: "sandbox or live. Anything else is treated as sandbox — set live in production.",
-    },
-    {
       key: "PAYHERE_APP_ID / PAYHERE_APP_SECRET",
       ok: Boolean(process.env.PAYHERE_APP_ID?.trim() && process.env.PAYHERE_APP_SECRET?.trim()),
       required: false,
@@ -123,9 +117,6 @@ export function reportEnv() {
   const payhere = Boolean(process.env.PAYHERE_MERCHANT_ID?.trim() && process.env.PAYHERE_MERCHANT_SECRET?.trim());
   if (payhere && isPlaceholder(process.env.SUPABASE_SERVICE_ROLE_KEY)) {
     console.error("[franley] PayHere is configured but SUPABASE_SERVICE_ROLE_KEY is not — card payments will be taken but never recorded.");
-  }
-  if (isProd && payhere && process.env.PAYHERE_MODE?.trim().toLowerCase() !== "live") {
-    console.error("[franley] PayHere is in SANDBOX mode in production. Set PAYHERE_MODE=live to take real payments.");
   }
   if (isProd && process.env.PAYHERE_NOTIFY_URL?.trim()) {
     console.error("[franley] PAYHERE_NOTIFY_URL is set in production. It is for local tunnel testing only — remove it.");

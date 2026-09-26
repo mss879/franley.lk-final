@@ -38,9 +38,9 @@ const csp = [
   "media-src 'self'",
   // Supabase for data and auth (no realtime); Resend is called server-side only.
   `connect-src 'self' ${supabaseSource}`,
-  // Card checkout is a form POST to PayHere's hosted payment page — see
-  // src/lib/payhere/redirect.ts. Without these two hosts the browser drops it.
-  "form-action 'self' https://www.payhere.lk https://sandbox.payhere.lk",
+  // Card checkout is a form POST to PayHere's live payment page — see
+  // src/lib/payhere/redirect.ts. Without this host the browser drops it.
+  "form-action 'self' https://www.payhere.lk",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "object-src 'none'",
@@ -71,6 +71,16 @@ const nextConfig: NextConfig = {
   compress: true,
   // A trailing-slash mismatch is a duplicate-content bug; be explicit.
   trailingSlash: false,
+
+  experimental: {
+    // Turbopack's build cache (.next/cache/turbopack, on by default since Next
+    // 16.3) stores a snapshot of the environment it compiled with — the PayHere
+    // merchant secret and the Supabase service key included. Hosts keep
+    // .next/cache between builds, and Netlify's secret scan fails the deploy
+    // when it finds them there. Builds start cold instead; `next dev` keeps its
+    // own cache under .next/dev, which never leaves this machine.
+    turbopackFileSystemCacheForBuild: false,
+  },
 
   images: {
     // AVIF first — roughly 20% smaller than WebP at the same quality, and the
@@ -154,17 +164,19 @@ const nextConfig: NextConfig = {
 /**
  * NEXT_PUBLIC_SITE_URL is inlined at BUILD time: every canonical URL, the
  * sitemap, the JSON-LD and the return/notify addresses sent to PayHere are
- * built from it. A production deploy built with localhost (the value in
- * .env.local) would ship all of those pointing at nobody's machine, so it is
- * refused outright on Vercel's production builds and flagged everywhere else.
+ * built from it. Unset, it falls back to https://franley.lk (src/lib/env.ts).
+ * Set to localhost (the value in .env.local) or plain http, a production deploy
+ * would ship all of those pointing at nobody's machine — so that is refused on
+ * production builds (Netlify's CONTEXT, Vercel's VERCEL_ENV) and flagged
+ * everywhere else.
  */
 export default function config(phase: string): NextConfig {
   if (phase === PHASE_PRODUCTION_BUILD) {
-    const url = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/$/, "");
+    const url = (process.env.NEXT_PUBLIC_SITE_URL ?? "").trim().replace(/\/$/, "");
     const publicHttps = /^https:\/\/[^/]+$/.test(url) && !/localhost|127\.0\.0\.1/.test(url);
-    if (!publicHttps) {
-      const message = `NEXT_PUBLIC_SITE_URL is "${url || "unset"}". Production must be built with the live address, e.g. https://franley.lk.`;
-      if (process.env.VERCEL_ENV === "production") throw new Error(message);
+    if (url && !publicHttps) {
+      const message = `NEXT_PUBLIC_SITE_URL is "${url}". Production must be built with the live address, e.g. https://franley.lk.`;
+      if (process.env.CONTEXT === "production" || process.env.VERCEL_ENV === "production") throw new Error(message);
       console.warn(`\n⚠  ${message} Fine for a local test build; never deploy this build.\n`);
     }
   }
