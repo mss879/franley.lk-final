@@ -52,8 +52,8 @@ export function SectionHeading({
             "eyebrow group shrink-0 border-b pb-1 transition-colors duration-300 ease-[--ease-lux]",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4",
             light
-              ? "focus-on-wine border-cream-100/30 text-cream-100 hover:border-cream-100 ring-offset-wine-800"
-              : "border-ink-900/25 text-ink-900 hover:border-wine-700 hover:text-wine-700 ring-offset-cream-50",
+              ? "focus-on-dark border-cream-100/30 text-cream-100 hover:border-cream-100 ring-offset-ink-900"
+              : "border-ink-900/25 text-ink-900 hover:border-ink-900 ring-offset-cream-50",
           )}
         >
           {action.label}

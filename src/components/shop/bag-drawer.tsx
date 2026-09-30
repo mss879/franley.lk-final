@@ -63,7 +63,7 @@ export function BagDrawer() {
 
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-5 px-8 text-center">
-            <span className="grid h-16 w-16 place-items-center rounded-full bg-cream-200 text-wine-700">
+            <span className="grid h-16 w-16 place-items-center rounded-full bg-cream-200 text-champagne-700">
               <ShoppingBag className="h-6 w-6" strokeWidth={1.25} aria-hidden />
             </span>
             <p className="font-display text-2xl">Your bag is empty</p>
@@ -77,13 +77,13 @@ export function BagDrawer() {
             <div className="border-b border-cream-300 px-6 py-4">
               {remaining > 0 ? (
                 <p className="text-xs text-ink-600">
-                  You&rsquo;re <strong className="text-wine-700">{formatPrice(remaining)}</strong> away from free islandwide delivery.
+                  You&rsquo;re <strong className="font-medium text-ink-900">{formatPrice(remaining)}</strong> away from free islandwide delivery.
                 </p>
               ) : (
-                <p className="text-xs text-wine-700">Free islandwide delivery unlocked.</p>
+                <p className="text-xs text-champagne-700">Free islandwide delivery unlocked.</p>
               )}
               <div className="mt-2 h-1 overflow-hidden rounded-full bg-cream-300">
-                <div className="h-full rounded-full bg-wine-700 transition-[width] duration-500 ease-[--ease-lux]" style={{ width: `${pct}%` }} />
+                <div className="h-full rounded-full bg-ink-900 transition-[width] duration-500 ease-[--ease-lux]" style={{ width: `${pct}%` }} />
               </div>
             </div>
 

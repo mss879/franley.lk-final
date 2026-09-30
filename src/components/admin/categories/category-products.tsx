@@ -125,7 +125,7 @@ export function CategoryProducts({
                           onChange={(e) =>
                             setChoice((prev) => ({ ...prev, [product.id]: e.target.value }))
                           }
-                          className="h-9 w-48 appearance-none rounded-full border border-cream-300 bg-white pl-4 pr-9 text-xs text-ink-800 focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+                          className="h-9 w-48 appearance-none rounded-full border border-cream-300 bg-white pl-4 pr-9 text-xs text-ink-800 focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                         >
                           <option value="">Choose a category…</option>
                           {destinations.map((destination) => (

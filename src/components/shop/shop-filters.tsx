@@ -52,7 +52,7 @@ export function ShopFilters({
           className={cn(
             "rounded-full border px-4 py-2 text-xs transition-colors duration-300",
             !activeCategory
-              ? "border-wine-700 bg-wine-700 text-cream-50"
+              ? "border-ink-900 bg-ink-900 text-cream-50"
               : "border-cream-300 text-ink-600 hover:border-wine-700 hover:text-wine-700",
           )}
         >
@@ -67,7 +67,7 @@ export function ShopFilters({
               className={cn(
                 "rounded-full border px-4 py-2 text-xs transition-colors duration-300",
                 activeCategory === c.slug
-                  ? "border-wine-700 bg-wine-700 text-cream-50"
+                  ? "border-ink-900 bg-ink-900 text-cream-50"
                   : "border-cream-300 text-ink-600 hover:border-wine-700 hover:text-wine-700",
               )}
             >
@@ -91,7 +91,7 @@ export function ShopFilters({
                   "rounded-full border px-3 py-1.5 text-xs transition-colors duration-300",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2",
                   on
-                    ? "border-wine-700 bg-wine-700/10 text-wine-700"
+                    ? "border-ink-900 bg-ink-900/5 text-ink-900"
                     : "border-cream-300 text-ink-600 hover:border-ink-400",
                 )}
               >

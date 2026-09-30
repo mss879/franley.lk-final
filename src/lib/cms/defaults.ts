@@ -19,8 +19,8 @@ export type HomeContent = {
 export const DEFAULT_HOME: HomeContent = {
   heroSlides: [
     {
-      image: "/banners/banner-ties.webp",
-      imageAlt: "Silk neckties in burgundy, olive, black and gold laid across dark polished walnut",
+      image: "/banners/hero-collection.webp",
+      imageAlt: "Rolled silk neckties in blue, red, purple and charcoal beside wooden bow ties, cufflinks and a Franley presentation box on dark walnut",
       eyebrow: "The Art of Modern Man",
       title: "Woven silk, cut to a modern blade",
       lede: "Neckties chosen for how they hold a knot and how they fall. Delivered islandwide, usually within three days.",
@@ -42,16 +42,16 @@ export const DEFAULT_HOME: HomeContent = {
     cards: [
       {
         href: "/collections/neckties",
-        image: "/editorial/cat-neckties.webp",
-        imageAlt: "A burgundy silk necktie rolled on a dark wooden surface",
+        image: "/editorial/category-neckties.webp",
+        imageAlt: "Four rolled silk neckties in blue floral, navy, purple and charcoal on a dark walnut table",
         kicker: "Curated elegance",
         name: "Neckties",
         accent: "wine",
       },
       {
         href: "/collections/cufflinks",
-        image: "/editorial/cat-cufflinks.webp",
-        imageAlt: "Ornate gold cufflinks resting on dark navy cloth",
+        image: "/editorial/category-cufflinks.webp",
+        imageAlt: "Silver and onyx cufflinks with a matching tie clip in a walnut presentation box",
         kicker: "Bespoke details",
         name: "Cufflinks",
         accent: "champagne",
@@ -89,3 +89,28 @@ export const DEFAULT_HOME: HomeContent = {
     lede: "The latest additions to the range — worth a look before they move.",
   },
 };
+
+/**
+ * Stock photographs the site has retired. The CMS rows were seeded with a copy
+ * of the defaults above, so a row still holding one of these paths means the
+ * owner never chose an image of their own — it follows the current default
+ * rather than pinning the old photograph. An image picked in the admin is left
+ * alone.
+ */
+const RETIRED_STOCK_IMAGES = new Set([
+  "/banners/banner-ties.webp",
+  "/editorial/cat-neckties.webp",
+  "/editorial/cat-cufflinks.webp",
+]);
+
+/**
+ * Blanks a retired stock image (and the description that went with it) in a
+ * banner or showcase-card payload. The merge onto the defaults skips empty values, so the
+ * current default shows through.
+ */
+export function withoutRetiredImage(payload: unknown): unknown {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return payload;
+  const row = payload as Record<string, unknown>;
+  if (typeof row.image !== "string" || !RETIRED_STOCK_IMAGES.has(row.image)) return payload;
+  return { ...row, image: "", imageAlt: "" };
+}

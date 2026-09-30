@@ -370,7 +370,7 @@ export function ProductForm({
                   name="featured"
                   checked={values.featured}
                   onChange={(e) => set("featured", e.target.checked)}
-                  className="h-4 w-4 shrink-0 rounded border-cream-300 accent-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                  className="h-4 w-4 shrink-0 rounded border-cream-300 accent-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 />
                 <span className="text-sm text-ink-800">
                   Featured

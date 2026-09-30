@@ -46,7 +46,7 @@ function Field({ row, error, typed }: { row: SettingRow; error?: string; typed?:
             type="checkbox"
             defaultChecked={typed !== undefined ? typed === "on" : row.value === true}
             disabled={readOnly}
-            className="h-4 w-4 accent-[#711625]"
+            className="h-4 w-4 accent-ink-900"
           />
           {row.label}
         </label>

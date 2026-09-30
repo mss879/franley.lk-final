@@ -17,7 +17,7 @@ export type ProductCardData = {
 
 /**
  * Product shots are photographed on pure white, so the frame is always a light
- * surface — never burgundy, or the cut-out shows as a white box.
+ * surface — never a dark one, or the cut-out shows as a white box.
  */
 export function ProductCard({
   product,
@@ -39,7 +39,7 @@ export function ProductCard({
         className,
       )}
     >
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-cream-300 bg-white transition-shadow duration-500 ease-[--ease-lux] group-hover:shadow-[0_18px_40px_-24px_rgba(64,11,22,0.45)]">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-cream-300 bg-white transition-shadow duration-500 ease-[--ease-lux] group-hover:shadow-[0_18px_40px_-24px_rgba(23,21,20,0.45)]">
         {product.image ? (
           <>
             <Image
@@ -91,7 +91,7 @@ export function ProductCard({
           {product.categoryName && (
             <p className="eyebrow text-ink-600">{product.categoryName}</p>
           )}
-          <h3 className="font-display mt-1 text-base leading-snug text-ink-900 transition-colors duration-300 group-hover:text-wine-700">
+          <h3 className="font-display mt-1 text-base leading-snug text-ink-900 decoration-ink-900/30 underline-offset-4 group-hover:underline">
             {product.title}
           </h3>
         </div>

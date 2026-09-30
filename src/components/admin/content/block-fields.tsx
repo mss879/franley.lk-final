@@ -41,7 +41,7 @@ export function BlockFieldControl({
             type="checkbox"
             checked={on}
             onChange={(e) => onChange(e.target.checked)}
-            className={cn("mt-0.5 h-4 w-4 shrink-0 accent-wine-700", focusRing)}
+            className={cn("mt-0.5 h-4 w-4 shrink-0 accent-ink-900", focusRing)}
           />
           <label htmlFor={id} className="text-sm font-medium text-ink-800">
             {field.label}

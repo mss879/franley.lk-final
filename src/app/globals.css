@@ -2,10 +2,11 @@
 
 /* ============================================================
    FRANLEY — Design tokens
-   Brand maroon #711625 sampled from the official logo mark.
+   The house palette is ink, cream and champagne. Brand maroon
+   #711625 (sampled from the logo mark) is an accent — see DESIGN.md §2.
    ============================================================ */
 @theme {
-  /* --- Wine / burgundy scale (brand) --- */
+  /* --- Wine / burgundy scale (brand accent, used sparingly) --- */
   --color-wine-50:  #FCF4F5;
   --color-wine-100: #F8E4E7;
   --color-wine-200: #F0C7CD;
@@ -25,6 +26,7 @@
   --color-champagne-400: #CBAE73;
   --color-champagne-500: #B8955A;
   --color-champagne-600: #9A7A45;
+  --color-champagne-700: #7A6030; /* bronze: the only champagne that passes AA as text on cream */
 
   /* --- Warm neutrals (product shots sit on white, so cards go cream) --- */
   --color-cream-50:  #FDFBF7;
@@ -33,8 +35,10 @@
   --color-cream-300: #E6DBCA;
   --color-ink-400: #8C8279;
   --color-ink-600: #55504A;
+  --color-ink-700: #3B3733;
   --color-ink-800: #2B2825;
-  --color-ink-900: #171514;
+  --color-ink-900: #171514; /* dark bands, solid buttons */
+  --color-ink-950: #0E0D0C; /* footer, photo scrims */
 
   /* --- Typography --- */
   --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
@@ -53,14 +57,13 @@
   --page-fg: var(--color-ink-900);
   color-scheme: light;
 
-  /* Focus-indicator colour. DESIGN.md §7 mandates a champagne-400 ring, but
-     champagne-400 (#CBAE73) is only 2.06:1 against cream-50 and 2.13:1 against
-     white — it fails WCAG SC 1.4.11 Non-text Contrast (3:1) on every light
-     surface in the site. wine-700 is 11.02:1 there. On burgundy the ordering
-     reverses (champagne-400 is 5.34:1 on wine-700, 7.70:1 on wine-900), so the
-     ring colour is carried in this property and any burgundy container flips it
-     for everything inside by adding `focus-on-wine`. */
-  --focus-ring: var(--color-wine-700);
+  /* Focus-indicator colour. champagne-400 (#CBAE73) is only 2.06:1 against
+     cream-50 and 2.13:1 against white — it fails WCAG SC 1.4.11 Non-text
+     Contrast (3:1) on every light surface in the site. ink-900 is 17.61:1
+     there. On the dark bands the ordering reverses (champagne-400 is 8.53:1 on
+     ink-900), so the ring colour is carried in this property and any dark
+     container flips it for everything inside by adding `focus-on-dark`. */
+  --focus-ring: var(--color-ink-900);
 }
 
 @layer base {
@@ -75,7 +78,7 @@
     font-family: var(--font-sans);
   }
   ::selection {
-    background: var(--color-wine-700);
+    background: var(--color-ink-900);
     color: var(--color-cream-50);
   }
   /* Display type wants tight, optical tracking */
@@ -86,10 +89,10 @@
 }
 
 @layer utilities {
-  /* Burgundy surfaces flip the focus ring back to champagne — see --focus-ring
-     in :root. Custom properties inherit, so setting this on a container covers
+  /* Dark surfaces flip the focus ring to champagne — see --focus-ring in
+     :root. Custom properties inherit, so setting this on a container covers
      every focusable element inside it. */
-  .focus-on-wine {
+  .focus-on-dark {
     --focus-ring: var(--color-champagne-400);
   }
 
@@ -109,7 +112,7 @@
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
 
-  /* Subtle woven-silk texture for burgundy panels */
+  /* Subtle woven-silk texture for the dark ink panels */
   .silk-texture {
     background-image:
       repeating-linear-gradient(45deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 3px),

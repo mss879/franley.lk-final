@@ -54,7 +54,7 @@ export function LoginForm({
           autoComplete="username"
           required
           autoFocus
-          className="mt-2 h-12 w-full rounded-full border border-cream-300 bg-white px-5 text-sm focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+          className="mt-2 h-12 w-full rounded-full border border-cream-300 bg-white px-5 text-sm focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
         />
       </div>
 
@@ -67,7 +67,7 @@ export function LoginForm({
             type={showPassword ? "text" : "password"}
             autoComplete="current-password"
             required
-            className="h-12 w-full rounded-full border border-cream-300 bg-white pl-5 pr-12 text-sm focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            className="h-12 w-full rounded-full border border-cream-300 bg-white pl-5 pr-12 text-sm focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
           />
           <button
             type="button"
@@ -91,7 +91,7 @@ export function LoginForm({
       <button
         type="submit"
         disabled={busy}
-        className="grid h-12 w-full place-items-center rounded-full bg-wine-700 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+        className="grid h-12 w-full place-items-center rounded-full bg-ink-900 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
       >
         {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : "Sign in"}
       </button>

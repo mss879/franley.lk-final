@@ -81,15 +81,15 @@ export function OrderPayment({
   if (waiting) {
     return (
       <div role="status" className="mt-5 flex items-start gap-3 rounded-2xl bg-cream-200 px-4 py-3 text-xs leading-relaxed text-ink-600">
-        <Loader2 className="mt-0.5 h-4 w-4 shrink-0 animate-spin text-wine-700" aria-hidden />
+        <Loader2 className="mt-0.5 h-4 w-4 shrink-0 animate-spin text-ink-600" aria-hidden />
         <span>Confirming your payment with PayHere. This usually takes a few seconds — you do not need to do anything.</span>
       </div>
     );
   }
 
   return (
-    <div className="mt-5 rounded-2xl border border-wine-700/25 bg-wine-50 px-4 py-4">
-      <p className="text-sm font-medium text-wine-800">
+    <div className="mt-5 rounded-2xl border border-champagne-300 bg-champagne-100/60 px-4 py-4">
+      <p className="text-sm font-medium text-ink-900">
         {returning ? "We have not received your payment yet" : failed ? "Your payment did not go through" : "This order is not paid yet"}
       </p>
       <p className="mt-1.5 text-xs leading-relaxed text-ink-600">
@@ -104,7 +104,7 @@ export function OrderPayment({
         type="button"
         onClick={payNow}
         disabled={busy}
-        className="mt-4 grid h-12 w-full place-items-center rounded-full bg-wine-700 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+        className="mt-4 grid h-12 w-full place-items-center rounded-full bg-ink-900 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
       >
         {busy ? (
           <span className="flex items-center gap-2">

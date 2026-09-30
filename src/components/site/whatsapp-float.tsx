@@ -36,8 +36,8 @@ export function WhatsAppFloat() {
       rel="noreferrer noopener"
       aria-label="Chat with Franley on WhatsApp"
       className={cn(
-        "group fixed bottom-5 right-5 z-40 flex items-center gap-3 rounded-full bg-wine-700 py-3 pl-4 pr-5 text-cream-50 shadow-[0_12px_32px_-12px_rgba(64,11,22,0.7)]",
-        "transition-all duration-500 ease-[--ease-lux] hover:bg-wine-600",
+        "group fixed bottom-5 right-5 z-40 flex items-center gap-3 rounded-full bg-ink-900 py-3 pl-4 pr-5 text-cream-50 shadow-[0_12px_32px_-12px_rgba(23,21,20,0.7)]",
+        "transition-all duration-500 ease-[--ease-lux] hover:bg-wine-700",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
       )}

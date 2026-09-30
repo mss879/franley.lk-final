@@ -17,14 +17,14 @@ export function Eyebrow({
     <span
       className={cn(
         "eyebrow inline-flex items-center gap-3",
-        tone === "dark" ? "text-wine-700" : "text-champagne-300",
+        tone === "dark" ? "text-champagne-700" : "text-champagne-300",
         className,
       )}
     >
       {rule && (
         <span
           aria-hidden
-          className={cn("h-px w-8", tone === "dark" ? "bg-wine-700/40" : "bg-champagne-300/50")}
+          className={cn("h-px w-8", tone === "dark" ? "bg-champagne-500/60" : "bg-champagne-300/50")}
         />
       )}
       {children}

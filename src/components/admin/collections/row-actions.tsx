@@ -126,7 +126,7 @@ export function CollectionRowActions({
             )
           }
           disabled={pending}
-          className="h-8 rounded-full bg-wine-700 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-600 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 ring-offset-cream-50"
+          className="h-8 rounded-full bg-ink-900 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 ring-offset-cream-50"
         >
           {pending ? "Deleting…" : "Delete"}
         </button>

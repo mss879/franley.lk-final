@@ -31,7 +31,7 @@ function EmptyState() {
       </p>
       <Link
         href="/admin/categories/new"
-        className="mt-7 inline-flex h-11 items-center justify-center rounded-full bg-wine-700 px-7 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+        className="mt-7 inline-flex h-11 items-center justify-center rounded-full bg-ink-900 px-7 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
       >
         Create the first category
       </Link>

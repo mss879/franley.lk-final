@@ -1,20 +1,19 @@
 import { Skeleton, SkeletonText } from "./skeleton";
 
-/** Mirrors `<PageHeader>` — the burgundy band that opens every interior page. */
+/** Mirrors `<PageHeader>` — the tinted cream band that opens every interior page. */
 export function PageHeaderSkeleton({ lede = true }: { lede?: boolean }) {
   return (
-    <section className="silk-texture -mt-20 bg-wine-700 pt-20 text-cream-100">
-      <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24">
+    <section className="-mt-20 border-b border-cream-300 bg-cream-100 pt-20">
+      <div className="mx-auto max-w-[1400px] px-5 py-14 md:px-10 md:py-20">
         <div className="flex h-4 items-center gap-3">
-          <Skeleton tone="light" className="h-px w-8" />
-          <Skeleton tone="light" className="h-2.5 w-28" />
+          <Skeleton className="h-px w-8" />
+          <Skeleton className="h-2.5 w-28" />
         </div>
-        <div className="mt-5 flex h-[clamp(2.45rem,6.4vw,4.41rem)] items-center">
-          <Skeleton tone="light" className="h-[clamp(1.5rem,3.6vw,2.5rem)] w-[min(30rem,72%)]" />
+        <div className="mt-5 flex h-[clamp(2.5rem,6vw,4.25rem)] items-center">
+          <Skeleton className="h-[clamp(1.5rem,3.6vw,2.5rem)] w-[min(30rem,72%)]" />
         </div>
         {lede && (
           <SkeletonText
-            tone="light"
             lines={2}
             lineClassName="h-[1.42rem] md:h-[1.63rem]"
             className="mt-5 max-w-xl"

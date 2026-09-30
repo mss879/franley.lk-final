@@ -61,7 +61,7 @@ export default async function ContentIndexPage() {
             <Link
               href="/admin/content/media"
               className={cn(
-                "inline-flex h-11 items-center gap-2 rounded-full bg-wine-700 px-6 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600",
+                "inline-flex h-11 items-center gap-2 rounded-full bg-ink-900 px-6 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700",
                 focusRing,
               )}
             >
@@ -140,7 +140,7 @@ export default async function ContentIndexPage() {
                             <Link
                               href={`/admin/content/${block.id}`}
                               className={cn(
-                                "inline-flex h-9 items-center gap-1.5 rounded-full bg-wine-700 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-600",
+                                "inline-flex h-9 items-center gap-1.5 rounded-full bg-ink-900 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-700",
                                 focusRing,
                               )}
                             >

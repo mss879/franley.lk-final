@@ -22,6 +22,12 @@ export const SITE = {
   },
 } as const;
 
+/** The studio that designed and built the site: footer credit and author metadata. */
+export const AGENCY = {
+  name: "ARC AI",
+  url: "https://www.arcai.agency",
+} as const;
+
 export const FREE_SHIPPING_THRESHOLD_CENTS = 500_000; // Rs 5,000.00
 export const FLAT_SHIPPING_CENTS = 35_000; // Rs 350.00
 

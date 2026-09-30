@@ -19,16 +19,16 @@ export type EditorialContent = {
 };
 
 /**
- * Board 2's editorial band: champagne serif display on a dark burgundy
+ * Board 2's editorial band: champagne serif display on a dark ink
  * vignette, wide-tracked small-caps subtitle, and an offset image pair where
  * the smaller frame overlaps the larger one's corner.
  */
 export function EditorialBand({ content }: { content: EditorialContent }) {
   return (
-    <section className="silk-texture relative overflow-hidden bg-wine-900 py-20 text-cream-100 md:py-28">
+    <section className="silk-texture focus-on-dark relative overflow-hidden bg-ink-900 py-20 text-cream-100 md:py-28">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_50%,rgba(113,22,37,0.55)_0%,transparent_70%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(203,174,115,0.10)_0%,transparent_70%)]"
       />
 
       <div className="relative mx-auto max-w-[1400px] px-5 md:px-10">
@@ -56,7 +56,7 @@ export function EditorialBand({ content }: { content: EditorialContent }) {
                 className="aspect-[4/3] w-full rounded-2xl"
               />
             ) : (
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-wine-950">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink-950">
                 <Image
                   src={content.imageLarge}
                   alt={content.imageLargeAlt}
@@ -66,7 +66,7 @@ export function EditorialBand({ content }: { content: EditorialContent }) {
                 />
               </div>
             )}
-            <div className="absolute bottom-0 right-0 aspect-[4/3] w-[52%] overflow-hidden rounded-2xl border-4 border-wine-900 bg-wine-950">
+            <div className="absolute bottom-0 right-0 aspect-[4/3] w-[52%] overflow-hidden rounded-2xl border-4 border-ink-900 bg-ink-950">
               <Image
                 src={content.imageSmall}
                 alt={content.imageSmallAlt}

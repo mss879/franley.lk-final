@@ -20,8 +20,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 /**
- * Same card as the homepage showcase: editorial image, burgundy gradient,
- * name and kicker in the corner. Without an image it is a plain wine panel,
+ * Same card as the homepage showcase: editorial image, dark gradient,
+ * name and kicker in the corner. Without an image it is a plain ink panel,
  * which reads as part of the house rather than as a missing picture.
  */
 function CollectionCard({ collection, priority }: { collection: Collection; priority: boolean }) {
@@ -29,7 +29,7 @@ function CollectionCard({ collection, priority }: { collection: Collection; prio
   return (
     <Link
       href={`/collections/${collection.slug}`}
-      className="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-3xl bg-wine-800 p-7 text-cream-50 transition-shadow duration-500 ease-[--ease-lux] hover:shadow-[0_28px_60px_-32px_rgba(64,11,22,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50 md:aspect-[4/4.4] md:p-9"
+      className="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-3xl bg-ink-900 p-7 text-cream-50 transition-shadow duration-500 ease-[--ease-lux] hover:shadow-[0_28px_60px_-32px_rgba(23,21,20,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4 focus-visible:ring-offset-cream-50 md:aspect-[4/4.4] md:p-9"
     >
       {collection.imageUrl ? (
         <>
@@ -42,7 +42,7 @@ function CollectionCard({ collection, priority }: { collection: Collection; prio
           />
           <span
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-wine-950/92 via-wine-950/35 to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/20 to-transparent"
           />
         </>
       ) : (
@@ -64,7 +64,7 @@ function CollectionCard({ collection, priority }: { collection: Collection; prio
           </p>
         </div>
 
-        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-cream-100/40 transition-colors duration-300 group-hover:border-cream-100 group-hover:bg-cream-100 group-hover:text-wine-800">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-cream-100/40 transition-colors duration-300 group-hover:border-cream-100 group-hover:bg-cream-100 group-hover:text-ink-900">
           <ArrowUpRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />
         </span>
       </div>

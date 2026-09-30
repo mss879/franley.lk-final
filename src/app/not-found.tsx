@@ -6,19 +6,19 @@ import Link from "next/link";
 export const metadata: Metadata = { title: "Page not found" };
 
 const linkClass =
-  "text-sm text-wine-700 underline underline-offset-4 hover:text-wine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]";
+  "text-sm text-ink-900 underline underline-offset-4 hover:text-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]";
 
 /** Root-level fallback for paths outside the storefront layout, e.g. /admin/*. */
 export default function RootNotFound() {
   return (
     <main className="grid min-h-dvh place-items-center bg-cream-50 px-5 text-center">
       <div>
-        <p className="eyebrow text-wine-700">Error 404</p>
+        <p className="eyebrow text-champagne-700">Error 404</p>
         <h1 className="font-display mt-4 text-4xl">Page not found</h1>
         <p className="mt-4 text-sm text-ink-600">The page you were after has moved or never existed.</p>
         <Link
           href="/"
-          className="mt-8 inline-flex h-12 items-center rounded-full bg-wine-700 px-7 text-sm text-cream-50 transition-colors hover:bg-wine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+          className="mt-8 inline-flex h-12 items-center rounded-full bg-ink-900 px-7 text-sm text-cream-50 transition-colors hover:bg-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
         >
           Back to Franley
         </Link>

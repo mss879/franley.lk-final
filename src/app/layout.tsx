@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
-import { SITE } from "@/lib/constants";
+import { AGENCY, SITE } from "@/lib/constants";
 import { reportEnv } from "@/lib/env";
 import { HTML_LANG, OG_FALLBACK_IMAGE, OG_LOCALE, SITE_ORIGIN } from "@/lib/seo";
 import "./globals.css";
@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     template: `%s · ${SITE.name}`,
   },
   description: SITE.description,
+  // Who made the site, as <meta name="author"> with its link, and "creator".
+  authors: [{ name: AGENCY.name, url: AGENCY.url }],
+  creator: AGENCY.name,
   // No canonical here: `alternates` is inherited, and a root-level one would
   // point every page that forgot to set its own at the home page.
   openGraph: {
@@ -47,9 +50,9 @@ export const metadata: Metadata = {
   // from manifest.ts. Setting `icons` here would switch those files off.
 };
 
-/** The maroon the browser paints its own chrome in on mobile. */
+/** The ink the browser paints its own chrome in on mobile. */
 export const viewport: Viewport = {
-  themeColor: "#711625",
+  themeColor: "#171514",
 };
 
 reportEnv();

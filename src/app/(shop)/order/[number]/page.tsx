@@ -161,8 +161,8 @@ export default async function OrderPage({
             <div>
               {/* Progress */}
               {terminal ? (
-                <div role="status" className="rounded-2xl border border-wine-700/25 bg-wine-50 p-6">
-                  <p className="font-display text-xl text-wine-800">
+                <div role="status" className="rounded-2xl border border-champagne-300 bg-champagne-100/60 p-6">
+                  <p className="font-display text-xl text-ink-900">
                     This order was {terminal}
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-ink-600">
@@ -179,7 +179,7 @@ export default async function OrderPage({
                       <span
                         className={
                           done
-                            ? "grid h-11 w-11 place-items-center rounded-full bg-wine-700 text-cream-50"
+                            ? "grid h-11 w-11 place-items-center rounded-full bg-ink-900 text-cream-50"
                             : "grid h-11 w-11 place-items-center rounded-full border border-cream-300 text-ink-400"
                         }
                       >

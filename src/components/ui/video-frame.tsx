@@ -46,7 +46,7 @@ export function VideoFrame({
   }, []);
 
   return (
-    <div ref={ref} className={cn("relative overflow-hidden bg-wine-950", className)}>
+    <div ref={ref} className={cn("relative overflow-hidden bg-ink-950", className)}>
       {play ? (
         <video
           src={src}

@@ -179,7 +179,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <ul className="mt-8 space-y-3">
               {promises(settings.freeThresholdCents).map(({ Icon, text }) => (
                 <li key={text} className="flex items-center gap-3 text-sm text-ink-600">
-                  <Icon className="h-4 w-4 shrink-0 text-wine-700" strokeWidth={1.5} aria-hidden />
+                  <Icon className="h-4 w-4 shrink-0 text-champagne-700" strokeWidth={1.5} aria-hidden />
                   {text}
                 </li>
               ))}

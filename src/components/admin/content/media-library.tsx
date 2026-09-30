@@ -109,7 +109,7 @@ export function MediaLibrary({
               className={cn(
                 "inline-flex h-9 items-center rounded-full border px-4 text-xs font-medium transition-colors",
                 folder === f.value
-                  ? "border-wine-700 bg-wine-700 text-cream-50"
+                  ? "border-ink-900 bg-ink-900 text-cream-50"
                   : "border-cream-300 text-ink-600 hover:border-wine-700 hover:text-wine-700",
                 focusRing,
               )}
@@ -228,7 +228,7 @@ function UploadPanel({ action, defaultFolder }: { action: Action; defaultFolder:
       onSubmit={onSubmit}
       className="rounded-[--radius-card] border border-cream-300 bg-white p-6"
     >
-      <h2 className="eyebrow text-wine-700">Add an image</h2>
+      <h2 className="eyebrow text-champagne-700">Add an image</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-600">
         JPG, PNG, WebP or AVIF, up to 5 MB. The size is read from the file so pages never jump
         while the image loads.
@@ -301,7 +301,7 @@ function UploadPanel({ action, defaultFolder }: { action: Action; defaultFolder:
                 type="checkbox"
                 checked={decorative}
                 onChange={(e) => setDecorative(e.target.checked)}
-                className={cn("mt-0.5 h-4 w-4 accent-wine-700", focusRing)}
+                className={cn("mt-0.5 h-4 w-4 accent-ink-900", focusRing)}
               />
               <label htmlFor="upload-decorative" className="text-xs leading-relaxed text-ink-600">
                 This image is decorative — it carries no information of its own, so screen readers
@@ -348,7 +348,7 @@ function UploadPanel({ action, defaultFolder }: { action: Action; defaultFolder:
               type="submit"
               disabled={!file || busy}
               className={cn(
-                "inline-flex h-11 items-center gap-2 rounded-full bg-wine-700 px-6 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600 disabled:pointer-events-none disabled:opacity-50",
+                "inline-flex h-11 items-center gap-2 rounded-full bg-ink-900 px-6 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700 disabled:pointer-events-none disabled:opacity-50",
                 focusRing,
               )}
             >
@@ -614,7 +614,7 @@ function MediaDetailsForm({
           type="checkbox"
           checked={decorative}
           onChange={(e) => setDecorative(e.target.checked)}
-          className={cn("mt-0.5 h-4 w-4 accent-wine-700", focusRing)}
+          className={cn("mt-0.5 h-4 w-4 accent-ink-900", focusRing)}
         />
         <label htmlFor={ids.decorative} className="text-xs leading-relaxed text-ink-600">
           Decorative — no description needed
@@ -658,7 +658,7 @@ function MediaDetailsForm({
           type="submit"
           disabled={pending}
           className={cn(
-            "inline-flex h-9 items-center gap-2 rounded-full bg-wine-700 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-600 disabled:opacity-50",
+            "inline-flex h-9 items-center gap-2 rounded-full bg-ink-900 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-700 disabled:opacity-50",
             focusRing,
           )}
         >

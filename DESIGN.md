@@ -5,10 +5,14 @@ Franley logo. Every agent building UI must follow this document.
 
 ## 1. The feeling
 
-Old-world tailoring house, rendered digitally. Deep wine burgundy, warm cream,
-champagne gold. High-contrast serif display type against small, wide-tracked
-sans-serif labels. Generous negative space. Nothing bouncy, nothing playful,
-no purple-blue SaaS gradients, no emoji, no drop shadows with colour.
+Old-world tailoring house, rendered digitally. Warm cream, deep ink, champagne
+gold — with the brand maroon held back as an accent. High-contrast serif display
+type against small, wide-tracked sans-serif labels. Generous negative space.
+Nothing bouncy, nothing playful, no purple-blue SaaS gradients, no emoji, no
+drop shadows with colour.
+
+The reference boards below are burgundy-led. The client asked for far less
+maroon, so the boards now govern **layout and type only**; colour follows §2.
 
 Reference anchors:
 - **Board 1 (tailoring landing page)** — a full-bleed deep burgundy canvas.
@@ -39,25 +43,33 @@ never raw hex in components.
 
 | Role | Token | Hex |
 |---|---|---|
-| Brand maroon (from logo) | `wine-700` | `#711625` |
-| Deeper panel / footer | `wine-800` / `wine-900` | `#5C1220` / `#400B16` |
-| Darkest vignette | `wine-950` | `#26060D` |
-| Hover / lifted burgundy | `wine-600` | `#8E2239` |
-| Accent, prices, badges | `champagne-300/400` | `#DCC79B` / `#CBAE73` |
 | Page background | `cream-50` | `#FDFBF7` |
-| Card on burgundy | `cream-100` | `#F9F5EE` |
+| Tinted band, page header | `cream-100` | `#F9F5EE` |
 | Hairlines on cream | `cream-300` | `#E6DBCA` |
+| Dark band, solid button | `ink-900` | `#171514` |
+| Footer, photo scrims | `ink-950` | `#0E0D0C` |
 | Body copy | `ink-800` | `#2B2825` |
 | Muted copy | `ink-400`/`ink-600` | — |
+| Accent on dark (eyebrows, rules) | `champagne-300/400` | `#DCC79B` / `#CBAE73` |
+| Accent on cream (eyebrows, icons) | `champagne-700` | `#7A6030` |
+| Brand maroon (from logo) | `wine-700` | `#711625` |
 
 Rules:
-- On burgundy: text is `cream-100`; secondary text `cream-100/70`; hairlines
-  `cream-100/15`. Accent/price text is `champagne-300`.
+- **Maroon is an accent, never a surface.** It appears as the hover state of
+  buttons and links, the sale flag, and error messages — nowhere else. No
+  maroon bands, panels, page headers or solid buttons.
+- The site is light-first (cream page). Dark ink is used for *bands*, and
+  sparingly: the home banner, one editorial band per page, the thin marquee
+  ribbon, the footer, the admin sidebar. Never stack two dark bands.
+- On ink: text is `cream-100`; secondary text `cream-100/70`; hairlines
+  `cream-100/15`. Accent text is `champagne-300`.
+- On cream: headings `ink-900`, accents `champagne-700` (the lighter
+  champagnes fail contrast as text on cream).
+- Scrims over photographs are neutral (`ink-950`), never tinted, so the
+  product keeps its own colour.
 - **Product photography is shot on pure white.** Never place a product image
-  directly on burgundy — it will show a white box. Product images always sit
-  in a `cream-100`/white rounded container. This is non-negotiable.
-- The site is light-first (cream page). Burgundy is used for *bands*: the
-  header on the home hero, feature sections, the footer, admin sidebar.
+  directly on a dark band — it will show a white box. Product images always
+  sit in a `cream-100`/white rounded container. This is non-negotiable.
 - Do **not** implement a dark-mode toggle. One committed look.
 
 ## 2b. Imagery
@@ -66,7 +78,7 @@ Two sources, and they are used differently:
 
 * **Product cut-outs** (`public/products/*.webp`) come from the live Shopify
   store. Shot on pure white, so they always sit in a white or cream frame with
-  `object-contain` and padding. Never `object-cover`, never on burgundy.
+  `object-contain` and padding. Never `object-cover`, never on a dark band.
 * **Editorial photography** (`public/editorial/*.webp`) and the two ambient
   clips (`public/video/*.mp4`) are the client's own brand assets. Warm,
   low-key, gold-lit interiors. These are `object-cover` and fill their frame.
@@ -76,9 +88,17 @@ until the frame scrolls into view and shows the poster still instead of
 autoplaying for anyone with `prefers-reduced-motion`. There is deliberately
 **no hero video** — the client rejected it.
 
+The home banner (`public/banners/hero-collection.webp`) is the client's
+supplied photograph, and the client wants it shown as one whole image filling
+the first screen: no slider, no slow zoom, no split panel. The copy sits at the
+foot over the dark tabletop. On a window wider than the 3:2 photograph it is
+drawn whole at full height with feathered sides rather than cropped to fill
+the width. The two category cards (`public/editorial/category-*.webp`) were
+generated to match it: same walnut tabletop, same warm low-key light.
+
 The brand mark (`public/brand/mark.png`, the tie glyph) is the favicon source.
 The full wordmark (`public/brand/logo-dark.png`) is black, and is inverted with
-`brightness-0 invert` wherever it sits on burgundy.
+`brightness-0 invert` wherever it sits on a dark band.
 
 ## 3. Type
 
@@ -98,9 +118,9 @@ The full wordmark (`public/brand/logo-dark.png`) is black, and is inverted with
   Buttons and inputs are **pills** (`rounded-full`). Product image frames
   `rounded-2xl`.
 - Borders: 1px hairlines only. `border-cream-300` on light,
-  `border-cream-100/15` on burgundy.
+  `border-cream-100/15` on ink.
 - Shadow: almost none. A card may use `shadow-[0_1px_2px_rgba(0,0,0,0.04)]`
-  and lift to `shadow-[0_18px_40px_-24px_rgba(64,11,22,0.45)]` on hover.
+  and lift to `shadow-[0_18px_40px_-24px_rgba(23,21,20,0.45)]` on hover.
   Never coloured glows.
 - Motion: 300–500ms with `ease-[--ease-lux]`. Images scale to 1.03 on card
   hover behind `overflow-hidden`. Respect `prefers-reduced-motion` (the
@@ -131,8 +151,10 @@ title case in nav.
 ## 7. Accessibility (hard requirements)
 
 - Every interactive element reachable by keyboard with a visible focus ring:
-  `focus-visible:ring-2 focus-visible:ring-champagne-400 focus-visible:ring-offset-2`.
-- Cream on `wine-700` and `ink-800` on `cream-50` both clear AA. Never place
-  `champagne-400` on cream as body text — accent use only, or `champagne-600`.
+  `focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2`.
+  The ring is `ink-900` on cream; a dark container adds `focus-on-dark` to
+  flip it to `champagne-400` for everything inside.
+- Cream on `ink-900` and `ink-800` on `cream-50` both clear AA. Never place
+  `champagne-400` on cream as text — use `champagne-700`.
 - All images need real `alt`. Decorative ones get `alt=""`.
 - Carousels and fanned rows need real prev/next buttons, not drag-only.

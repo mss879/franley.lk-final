@@ -91,7 +91,7 @@ export function ScheduleFields({
             setLive(e.target.checked);
             onDirty?.();
           }}
-          className={cn("mt-0.5 h-4 w-4 shrink-0 accent-wine-700", focusRing)}
+          className={cn("mt-0.5 h-4 w-4 shrink-0 accent-ink-900", focusRing)}
         />
         <div>
           <label htmlFor="published" className="text-sm font-medium text-ink-800">

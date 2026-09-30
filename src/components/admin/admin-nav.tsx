@@ -94,7 +94,7 @@ export function AdminNav({ email }: { email: string }) {
   return (
     <>
       {/* Mobile bar */}
-      <div className="focus-on-wine sticky top-0 z-40 flex h-16 items-center justify-between border-b border-cream-100/12 bg-wine-900 px-4 lg:hidden">
+      <div className="focus-on-dark sticky top-0 z-40 flex h-16 items-center justify-between border-b border-cream-100/12 bg-ink-950 px-4 lg:hidden">
         <Image src="/brand/logo-dark.png" alt="Franley admin" width={120} height={24} className="h-5 w-auto brightness-0 invert" />
         <button
           type="button"
@@ -113,14 +113,14 @@ export function AdminNav({ email }: { email: string }) {
         role="dialog"
         aria-modal="true"
         aria-label="Admin menu"
-        className="focus-on-wine fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col bg-wine-900 p-4 lg:hidden"
+        className="focus-on-dark fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col bg-ink-950 p-4 lg:hidden"
       >
         {nav}
         {footer}
       </div>
 
       {/* Desktop sidebar */}
-      <aside className="focus-on-wine sticky top-0 hidden h-dvh w-64 shrink-0 flex-col bg-wine-900 p-4 lg:flex">
+      <aside className="focus-on-dark sticky top-0 hidden h-dvh w-64 shrink-0 flex-col bg-ink-950 p-4 lg:flex">
         <div className="px-4 py-6">
           <Image src="/brand/logo-dark.png" alt="Franley admin" width={140} height={28} className="h-6 w-auto brightness-0 invert" />
           <p className="eyebrow mt-3 text-champagne-300">Admin</p>

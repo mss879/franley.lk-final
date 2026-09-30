@@ -53,7 +53,7 @@ export function OrderCancelForm({ orderId }: { orderId: string }) {
               name="restock"
               type="checkbox"
               defaultChecked
-              className="mt-0.5 h-4 w-4 shrink-0 rounded border-cream-300 accent-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-cream-300 accent-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
             />
             <label htmlFor="cancel-restock" className="text-xs leading-relaxed text-ink-600">
               <span className="text-sm text-ink-800">Return the stock</span>

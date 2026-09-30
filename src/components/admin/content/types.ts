@@ -218,7 +218,7 @@ export function pageLabel(page: string) {
 
 /** Where on the storefront a block shows up, in words the client can act on. */
 const BLOCK_LOCATIONS: Record<string, string> = {
-  "home:hero": "The big burgundy band at the top of the home page",
+  "home:hero": "The big banner at the top of the home page",
   "home:editorial": "The story band with the two overlapping photographs",
   "home:marquee": "The scrolling strip of short phrases under the hero",
   "home:collection": "The heading above the featured product grid",

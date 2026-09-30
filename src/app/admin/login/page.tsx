@@ -25,7 +25,7 @@ export default async function AdminLoginPage({
   const { next, error } = await searchParams;
 
   return (
-    <main className="focus-on-wine silk-texture grid min-h-dvh place-items-center bg-wine-800 px-5 py-12">
+    <main className="focus-on-dark silk-texture grid min-h-dvh place-items-center bg-ink-900 px-5 py-12">
       <div className="w-full max-w-sm">
         <div className="text-center">
           <Image

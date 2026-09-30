@@ -1,5 +1,5 @@
 import "server-only";
-import { DEFAULT_HOME, type HomeContent } from "./defaults";
+import { DEFAULT_HOME, withoutRetiredImage, type HomeContent } from "./defaults";
 import { isLive } from "@/lib/data";
 import type { HeroSlide } from "@/components/site/hero-slider";
 import type { ShowcaseCard } from "@/components/site/category-showcase";
@@ -33,7 +33,7 @@ function deepMerge<T>(base: T, override: unknown): T {
 const BANNER_KEYS = ["banner_1", "banner_2"] as const;
 
 function toSlide(payload: unknown, fallback: HeroSlide): HeroSlide {
-  return deepMerge(fallback, payload);
+  return deepMerge(fallback, withoutRetiredImage(payload));
 }
 
 function toShowcaseCards(
@@ -44,7 +44,7 @@ function toShowcaseCards(
   if (!showcase) return fallback;
 
   const cards = fallback.map((card, i) =>
-    deepMerge(card, showcase[`card${i + 1}`]),
+    deepMerge(card, withoutRetiredImage(showcase[`card${i + 1}`])),
   );
   return cards.filter((c) => c.image && c.name);
 }

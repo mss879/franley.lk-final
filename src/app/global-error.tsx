@@ -11,7 +11,7 @@ const CSS = `
   :root { color-scheme: light; }
   body {
     margin: 0;
-    background: #711625;
+    background: #171514;
     color: #F9F5EE;
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -71,7 +71,7 @@ const CSS = `
     text-decoration: none;
     transition: background-color 0.3s, border-color 0.3s;
   }
-  .btn-solid { background: #F9F5EE; color: #5C1220; }
+  .btn-solid { background: #F9F5EE; color: #171514; }
   .btn-solid:hover { background: #FDFBF7; }
   .btn-outline { background: transparent; color: #F9F5EE; border-color: rgba(249, 245, 238, 0.3); }
   .btn-outline:hover { border-color: rgba(249, 245, 238, 0.7); }

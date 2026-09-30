@@ -25,7 +25,7 @@ export function CircularBadge({
       aria-label={label}
       className={cn(
         "group relative grid place-items-center rounded-full",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4 focus-on-wine focus-visible:ring-offset-wine-700",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4 focus-on-dark focus-visible:ring-offset-ink-900",
         className,
       )}
       style={{ width: size, height: size }}
@@ -50,7 +50,7 @@ export function CircularBadge({
 
       <span
         className={cn(
-          "relative grid h-[42%] w-[42%] place-items-center rounded-full bg-cream-100 text-wine-800",
+          "relative grid h-[42%] w-[42%] place-items-center rounded-full bg-cream-100 text-ink-900",
           "transition-transform duration-500 ease-[--ease-lux] group-hover:scale-110",
         )}
       >

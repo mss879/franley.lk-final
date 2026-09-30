@@ -164,7 +164,7 @@ export function AssetImageField({
             spellCheck={false}
             aria-describedby={helpId}
             aria-invalid={error ? true : undefined}
-            className="h-11 w-full rounded-full border border-cream-300 bg-white px-5 text-sm text-ink-800 placeholder:text-ink-600 focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            className="h-11 w-full rounded-full border border-cream-300 bg-white px-5 text-sm text-ink-800 placeholder:text-ink-600 focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
           />
 
           <div className="mt-3 flex flex-wrap items-center gap-2">

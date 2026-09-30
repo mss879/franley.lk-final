@@ -162,7 +162,7 @@ export default async function CollectionPage({
         />
 
         {collection.imageUrl && (
-          // Pulled up into the burgundy band, the way the reference boards
+          // Pulled up into the header band, the way the reference boards
           // overlap an editorial image with the panel above it.
           <div className="mx-auto max-w-[1400px] px-5 md:px-10">
             <div className="relative -mt-8 aspect-[4/3] overflow-hidden rounded-3xl bg-ink-900 md:-mt-12 md:aspect-[21/9]">

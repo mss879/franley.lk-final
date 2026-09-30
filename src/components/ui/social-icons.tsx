@@ -6,7 +6,7 @@
  * mark rendered as an unrecognisable squiggle at 20px — brand glyphs are
  * recognised by silhouette, and redrawing one loosely destroys the silhouette.
  * All three are filled for consistency, on a 24x24 grid, and inherit
- * currentColor so they work on both burgundy and cream.
+ * currentColor so they work on both ink and cream.
  */
 type IconProps = React.SVGProps<SVGSVGElement>;
 

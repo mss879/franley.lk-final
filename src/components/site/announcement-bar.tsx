@@ -15,13 +15,13 @@ export function AnnouncementBar({ content }: { content: AnnouncementContent | nu
   if (!content?.text) return null;
 
   return (
-    <div className="bg-wine-900 text-cream-100">
+    <div className="bg-ink-950 text-cream-100">
       <div className="mx-auto flex max-w-[1400px] items-center justify-center gap-3 px-5 py-2.5 text-center md:px-10">
         <p className="text-xs leading-snug">{content.text}</p>
         {content.href && content.linkLabel && (
           <Link
             href={content.href}
-            className="shrink-0 border-b border-champagne-400/60 pb-0.5 text-xs text-champagne-300 transition-colors hover:border-champagne-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-wine focus-visible:ring-offset-wine-900"
+            className="shrink-0 border-b border-champagne-400/60 pb-0.5 text-xs text-champagne-300 transition-colors hover:border-champagne-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-dark focus-visible:ring-offset-ink-950"
           >
             {content.linkLabel}
           </Link>

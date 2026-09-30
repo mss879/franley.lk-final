@@ -66,11 +66,11 @@ export default async function HomePage() {
 
       <EditorialBand content={content.editorial} />
 
-      {/* ---- New arrivals: cream cards on burgundy, echoing the hero ---- */}
-      <section className="silk-texture bg-wine-800 py-20 text-cream-100 md:py-28">
+      {/* ---- New arrivals: white cards on a tinted band. The editorial band
+          above is the page's one dark passage; a second would crowd it. ---- */}
+      <section className="border-t border-cream-300 bg-cream-100 py-20 md:py-28">
         <div className="mx-auto max-w-[1400px] px-5 md:px-10">
           <SectionHeading
-            tone="light"
             eyebrow={content.lookbook.eyebrow}
             title={content.lookbook.title}
             lede={content.lookbook.lede}

@@ -79,7 +79,7 @@ export function CollectionFilters({
                   "rounded-full border px-3 py-1.5 text-xs transition-colors duration-300",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2",
                   on
-                    ? "border-wine-700 bg-wine-700/10 text-wine-700"
+                    ? "border-ink-900 bg-ink-900/5 text-ink-900"
                     : "border-cream-300 text-ink-600 hover:border-ink-400",
                 )}
               >

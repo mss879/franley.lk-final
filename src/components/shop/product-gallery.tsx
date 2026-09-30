@@ -22,7 +22,7 @@ export function ProductGallery({ images, title }: { images: string[]; title: str
                 className={cn(
                   "relative h-20 w-16 shrink-0 overflow-hidden rounded-lg border bg-white transition-colors duration-300",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2",
-                  i === active ? "border-wine-700" : "border-cream-300 hover:border-ink-400",
+                  i === active ? "border-ink-900" : "border-cream-300 hover:border-ink-400",
                 )}
               >
                 <Image src={src} alt="" fill sizes="64px" className="object-contain p-1" />

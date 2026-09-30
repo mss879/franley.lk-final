@@ -97,7 +97,7 @@ export default function AboutPage() {
             <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-cream-300 pt-10 sm:grid-cols-4">
               {NUMBERS.map((n) => (
                 <div key={n.label}>
-                  <dt className="font-display text-3xl text-wine-700">{n.value}</dt>
+                  <dt className="font-display text-3xl text-ink-900">{n.value}</dt>
                   <dd className="mt-1.5 text-xs leading-snug text-ink-600">{n.label}</dd>
                 </div>
               ))}
@@ -107,7 +107,7 @@ export default function AboutPage() {
       </section>
 
       {/* ---- Craft ---- */}
-      <section className="silk-texture bg-wine-800 py-20 text-cream-100 md:py-28">
+      <section className="silk-texture bg-ink-900 py-20 text-cream-100 md:py-28">
         <div className="mx-auto max-w-[1400px] px-5 md:px-10">
           <SectionHeading
             tone="light"

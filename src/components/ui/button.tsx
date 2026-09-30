@@ -11,12 +11,13 @@ const base =
   "disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  // Solid wine — the default CTA on cream surfaces
-  primary: "bg-wine-700 text-cream-50 hover:bg-wine-600 active:bg-wine-800 ring-offset-cream-50",
-  // Solid cream — the CTA on wine surfaces (Board 1's nested pill button)
-  cream: "bg-cream-100 text-wine-800 hover:bg-white active:bg-cream-200 ring-offset-wine-700 focus-on-wine",
-  outline: "border border-ink-800/20 text-ink-800 hover:border-wine-700 hover:text-wine-700 ring-offset-cream-50",
-  outlineLight: "border border-cream-100/30 text-cream-100 hover:border-cream-100/70 hover:bg-cream-100/5 ring-offset-wine-700 focus-on-wine",
+  // Solid ink — the default CTA on cream surfaces. Brand maroon is the hover
+  // state, so the colour shows up as a response rather than as a slab.
+  primary: "bg-ink-900 text-cream-50 hover:bg-wine-700 active:bg-wine-800 ring-offset-cream-50",
+  // Solid cream — the CTA on dark surfaces (Board 1's nested pill button)
+  cream: "bg-cream-100 text-ink-900 hover:bg-white active:bg-cream-200 ring-offset-ink-900 focus-on-dark",
+  outline: "border border-ink-800/20 text-ink-800 hover:border-ink-900 hover:text-ink-900 ring-offset-cream-50",
+  outlineLight: "border border-cream-100/30 text-cream-100 hover:border-cream-100/70 hover:bg-cream-100/5 ring-offset-ink-900 focus-on-dark",
   ghost: "text-ink-800 hover:bg-ink-800/5 ring-offset-cream-50",
   link: "text-ink-800 underline-offset-4 hover:text-wine-700 rounded-none px-0",
 };

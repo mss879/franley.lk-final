@@ -97,7 +97,7 @@ export default async function ContactPage() {
             <dl className="mt-10 space-y-8">
               {details(s).map(({ Icon, label, lines, href }) => (
                 <div key={label} className="flex gap-4">
-                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-wine-700" strokeWidth={1.5} aria-hidden />
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-champagne-700" strokeWidth={1.5} aria-hidden />
                   <div>
                     <dt className="eyebrow text-ink-600">{label}</dt>
                     <dd className="mt-1.5 space-y-0.5 text-sm leading-relaxed">
@@ -152,7 +152,7 @@ export default async function ContactPage() {
           <div className="mt-10 grid gap-8 md:grid-cols-3">
             {QUICK_ANSWERS.map(({ Icon, q, a, href, hrefLabel }) => (
               <div key={q} className="border-t border-cream-300 pt-6">
-                <Icon className="h-5 w-5 text-wine-700" strokeWidth={1.5} aria-hidden />
+                <Icon className="h-5 w-5 text-champagne-700" strokeWidth={1.5} aria-hidden />
                 <h3 className="font-display mt-4 text-lg leading-snug">{q}</h3>
                 <p className="mt-2.5 text-sm leading-relaxed text-ink-600 text-pretty">{a}</p>
                 {href && hrefLabel && (

@@ -11,7 +11,7 @@ export function Skeleton({
   tone = "dark",
 }: {
   className?: string;
-  /** `light` for bars sitting on a burgundy band. */
+  /** `light` for bars sitting on a dark band. */
   tone?: Tone;
 }) {
   return (

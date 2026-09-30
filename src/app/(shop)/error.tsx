@@ -20,7 +20,7 @@ export default function ShopError({
   const wa = `https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`;
 
   return (
-    <section className="silk-texture -mt-20 grid min-h-dvh place-items-center bg-wine-700 px-5 pt-20 text-center text-cream-100">
+    <section className="silk-texture -mt-20 grid min-h-dvh place-items-center bg-ink-900 px-5 pt-20 text-center text-cream-100">
       <div className="max-w-xl" role="alert">
         <Eyebrow tone="light">Something went wrong</Eyebrow>
         <h1 className="font-display mt-5 text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.98] text-balance">
@@ -48,14 +48,14 @@ export default function ShopError({
             href={wa}
             target="_blank"
             rel="noreferrer noopener"
-            className="inline-flex items-center gap-2 rounded-full text-champagne-300 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-wine focus-visible:ring-offset-wine-700"
+            className="inline-flex items-center gap-2 rounded-full text-champagne-300 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-dark focus-visible:ring-offset-ink-900"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp {SITE.phoneLocal}
           </a>
           <a
             href={`mailto:${SITE.email}`}
-            className="rounded-full text-champagne-300 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-wine focus-visible:ring-offset-wine-700"
+            className="rounded-full text-champagne-300 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-dark focus-visible:ring-offset-ink-900"
           >
             {SITE.email}
           </a>

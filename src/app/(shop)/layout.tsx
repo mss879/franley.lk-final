@@ -37,7 +37,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
       <div className="flex min-h-dvh flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-wine-700 focus:px-5 focus:py-3 focus:text-sm focus:text-cream-50"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink-900 focus:px-5 focus:py-3 focus:text-sm focus:text-cream-50"
         >
           Skip to content
         </a>

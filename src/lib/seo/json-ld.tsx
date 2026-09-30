@@ -1,4 +1,4 @@
-import { DELIVERY, FLAT_SHIPPING_CENTS, FREE_SHIPPING_THRESHOLD_CENTS, SITE } from "@/lib/constants";
+import { AGENCY, DELIVERY, FLAT_SHIPPING_CENTS, FREE_SHIPPING_THRESHOLD_CENTS, SITE } from "@/lib/constants";
 import { shippingFor } from "@/lib/settings/shipping";
 import type { Product } from "@/types/domain";
 import { HTML_LANG, OG_FALLBACK, SITE_ORIGIN, absoluteUrl, schemaPrice } from "./config";
@@ -92,6 +92,8 @@ export function siteJsonLd(options: SiteGraphOptions = {}) {
         description: SITE.description,
         inLanguage: HTML_LANG,
         publisher: { "@id": ORG_ID },
+        // Franley publishes the site; the studio that built it is its creator.
+        creator: { "@type": "Organization", name: AGENCY.name, url: AGENCY.url },
         potentialAction: {
           "@type": "SearchAction",
           target: {

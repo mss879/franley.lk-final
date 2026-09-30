@@ -16,7 +16,7 @@ export function Marquee({
       className={cn(
         "group relative flex overflow-hidden border-y",
         tone === "light"
-          ? "border-cream-100/15 bg-wine-800 text-cream-100"
+          ? "border-ink-900 bg-ink-900 text-cream-100/85"
           : "border-cream-300 bg-cream-100 text-ink-800",
         className,
       )}

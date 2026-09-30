@@ -76,7 +76,7 @@ export function RefundForm({
       </div>
       {canCancel && (
         <label className="flex items-center gap-2 text-xs text-ink-600">
-          <input type="checkbox" name="cancelAndRestock" defaultChecked={!shipped} className="h-4 w-4 accent-[#711625]" />
+          <input type="checkbox" name="cancelAndRestock" defaultChecked={!shipped} className="h-4 w-4 accent-ink-900" />
           {shipped
             ? "Also cancel the order and return its stock — only once the parcel is back"
             : "Also cancel the order and return its stock"}

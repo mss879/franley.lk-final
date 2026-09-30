@@ -24,7 +24,7 @@ export function AdminPageShell({
         {action && (
           <Link
             href={action.href}
-            className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-wine-700 px-6 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+            className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-ink-900 px-6 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
           >
             {action.label}
           </Link>

@@ -325,7 +325,7 @@ function AddProducts({
 
   return (
     <form onSubmit={submit} className="rounded-3xl border border-cream-300 bg-white p-6 md:p-7">
-      <h3 className="eyebrow text-wine-700">Add products</h3>
+      <h3 className="eyebrow text-champagne-700">Add products</h3>
       <p className="mt-2 max-w-2xl text-xs leading-relaxed text-ink-600">
         Tick what belongs here and add it in one go. New pieces land at the end of the list; nudge
         them up with the arrows afterwards.
@@ -348,7 +348,7 @@ function AddProducts({
           placeholder="Search by name or slug"
           autoComplete="off"
           aria-controls={listId}
-          className="h-11 w-full rounded-full border border-cream-300 bg-white pl-11 pr-5 text-sm text-ink-800 placeholder:text-ink-600 focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+          className="h-11 w-full rounded-full border border-cream-300 bg-white pl-11 pr-5 text-sm text-ink-800 placeholder:text-ink-600 focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
         />
       </div>
 
@@ -378,7 +378,7 @@ function AddProducts({
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggle(product.id)}
-                  className="h-4 w-4 shrink-0 rounded border-cream-300 accent-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+                  className="h-4 w-4 shrink-0 rounded border-cream-300 accent-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
                 />
                 <Thumbnail url={product.image} size="h-9 w-9" />
                 <span className="min-w-0 flex-1">
@@ -398,7 +398,7 @@ function AddProducts({
         <button
           type="submit"
           disabled={pending || selected.size === 0}
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-wine-700 px-7 text-sm font-medium text-cream-50 transition-colors duration-300 hover:bg-wine-600 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 ring-offset-cream-50"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink-900 px-7 text-sm font-medium text-cream-50 transition-colors duration-300 hover:bg-wine-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 ring-offset-cream-50"
         >
           {pending ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />

@@ -127,8 +127,8 @@ export function ProductImages({
           <label
             htmlFor="product-image-upload"
             className={cn(
-              "inline-flex h-11 cursor-pointer items-center gap-2 rounded-full bg-wine-700 px-6 text-sm font-medium text-cream-50",
-              "transition-colors duration-300 hover:bg-wine-600",
+              "inline-flex h-11 cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-6 text-sm font-medium text-cream-50",
+              "transition-colors duration-300 hover:bg-wine-700",
               "focus-within:ring-2 focus-within:ring-[var(--focus-ring)] focus-within:ring-offset-2",
               uploading && "pointer-events-none opacity-60",
             )}
@@ -196,7 +196,7 @@ export function ProductImages({
                   className="object-contain p-1"
                 />
                 {index === 0 && (
-                  <span className="absolute inset-x-0 bottom-0 bg-wine-700 py-0.5 text-center text-[9px] font-medium uppercase tracking-wider text-cream-50">
+                  <span className="absolute inset-x-0 bottom-0 bg-ink-900 py-0.5 text-center text-[9px] font-medium uppercase tracking-wider text-cream-50">
                     Main
                   </span>
                 )}
@@ -338,7 +338,7 @@ function DeleteImageButton({
         type="button"
         disabled={disabled}
         onClick={onDelete}
-        className="inline-flex h-9 items-center rounded-full bg-wine-700 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 disabled:opacity-50"
+        className="inline-flex h-9 items-center rounded-full bg-ink-900 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 disabled:opacity-50"
       >
         Delete image {position}
       </button>

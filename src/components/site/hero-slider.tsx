@@ -19,9 +19,28 @@ export type HeroSlide = {
 const INTERVAL = 7000;
 
 /**
- * The banner slider that opens the home page. Three quarters of the viewport
- * tall, so the section beneath is always visible and the page reads as a shop
- * rather than a poster.
+ * The box the photograph is drawn in. It fills the banner, except on a window
+ * wider than the 3:2 photograph, where it becomes a centred 3:2 box the height
+ * of the banner with feathered sides.
+ */
+const FRAME =
+  "absolute inset-0 " +
+  "[@media(min-aspect-ratio:3/2)]:left-1/2 [@media(min-aspect-ratio:3/2)]:right-auto " +
+  "[@media(min-aspect-ratio:3/2)]:aspect-[3/2] [@media(min-aspect-ratio:3/2)]:-translate-x-1/2 " +
+  "[@media(min-aspect-ratio:3/2)]:[mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]";
+
+/**
+ * The banner that opens the home page: one photograph filling the first
+ * screen, with the copy at the foot, over the dark tabletop, rather than across
+ * the product.
+ *
+ * The supplied banner is 3:2 and a browser window is usually wider than that.
+ * Filling the width would crop a quarter of the picture away, so on a window
+ * wider than 3:2 the photograph is shown whole at full height instead, and its
+ * left and right edges fade into the ink behind it.
+ *
+ * One published banner renders as a still image. A second one turns the same
+ * frame into a slider.
  *
  * Advances on its own, but stops the moment anyone interacts — hover, focus,
  * or a control — and never advances at all for `prefers-reduced-motion`.
@@ -60,7 +79,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
         if (e.key === "ArrowRight") go(index + 1);
         if (e.key === "ArrowLeft") go(index - 1);
       }}
-      className="relative -mt-20 h-[75dvh] min-h-[520px] overflow-hidden bg-wine-950 pt-20 text-cream-100"
+      className="focus-on-dark relative -mt-20 h-dvh min-h-[560px] overflow-hidden bg-ink-950 pt-20 text-cream-100"
     >
       {slides.map((slide, i) => (
         <div
@@ -71,51 +90,51 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             i === index ? "opacity-100" : "opacity-0",
           )}
         >
-          <Image
-            src={slide.image}
-            alt={i === index ? slide.imageAlt : ""}
-            fill
-            preload={i === 0}
-            sizes="100vw"
-            className={cn(
-              "object-cover transition-transform duration-[8000ms] ease-linear",
-              i === index ? "scale-105" : "scale-100",
-            )}
-          />
-          {/* Just enough wash to hold the headline on the left. The banners are
-              shot with the left side already in shadow, so the right stays open
-              and the photography actually reads. */}
+          <div className={FRAME}>
+            <Image
+              src={slide.image}
+              alt={i === index ? slide.imageAlt : ""}
+              fill
+              preload={i === 0}
+              sizes="100vw"
+              // Narrow screens crop to a vertical slice; the subject sits right
+              // of centre, so the slice is taken from there.
+              className="object-cover object-[62%_center] md:object-center"
+            />
+          </div>
+          {/* Neutral washes only — a tinted one would recolour the product.
+              The foot darkens to carry the copy; the corner wash keeps the
+              headline legible where it runs past the tabletop. */}
           <span
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-r from-wine-950/85 via-wine-950/30 to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 via-45% to-ink-950/10 md:from-ink-950/95 md:via-ink-950/35 md:via-40% md:to-transparent"
           />
           <span
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-wine-950/70 via-transparent to-transparent"
+            className="absolute inset-0 hidden bg-[radial-gradient(60%_70%_at_0%_100%,rgba(14,13,12,0.8)_0%,transparent_70%)] md:block"
+          />
+          {/* Holds the floating header. */}
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ink-950/90 via-ink-950/50 to-transparent"
           />
         </div>
       ))}
 
-      <div className="relative mx-auto flex h-full max-w-[1400px] flex-col justify-center px-5 pb-20 md:px-10">
+      <div
+        className={cn(
+          "relative mx-auto flex h-full max-w-[1400px] flex-col justify-end px-5 md:px-10",
+          // Room for the slide controls when there is more than one banner.
+          slides.length > 1 ? "pb-24" : "pb-12 md:pb-16",
+        )}
+      >
         <div key={index} className="max-w-xl animate-fade-up">
-          {/* The wordmark rides on the banner itself rather than being baked
-              into the photograph, so it stays crisp at every viewport and the
-              same two images can carry different campaigns. */}
-          <Image
-            src="/brand/logo-dark.png"
-            alt="Franley"
-            width={200}
-            height={40}
-            loading="eager"
-            className="h-6 w-auto brightness-0 invert md:h-7"
-          />
-          <div className="mt-5">
-            <Eyebrow tone="light" rule>{active.eyebrow}</Eyebrow>
-          </div>
-          <h1 className="font-display mt-4 text-[clamp(2.2rem,4.8vw,4.25rem)] leading-[0.96] text-balance">
+          <Eyebrow tone="light" rule>{active.eyebrow}</Eyebrow>
+          <h1 className="font-display mt-5 text-[clamp(2.25rem,4.4vw,3.75rem)] leading-[1.02] text-balance">
             {active.title}
           </h1>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-cream-100/75 text-pretty md:text-base">
+          <span aria-hidden className="mt-6 block h-px w-14 bg-champagne-400/60" />
+          <p className="mt-6 max-w-md text-sm leading-relaxed text-cream-100/75 text-pretty md:text-base">
             {active.lede}
           </p>
           <ButtonLink href={active.cta.href} variant="cream" size="lg" className="mt-8">
@@ -139,7 +158,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                   onClick={() => setIndex(i)}
                   className={cn(
                     "h-1 rounded-full transition-all duration-500 ease-[--ease-lux]",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4 focus-on-wine focus-visible:ring-offset-wine-950",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4 focus-visible:ring-offset-ink-950",
                     i === index ? "w-12 bg-champagne-400" : "w-6 bg-cream-100/35 hover:bg-cream-100/60",
                   )}
                 />
@@ -157,7 +176,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                     type="button"
                     aria-label={label}
                     onClick={() => go(index + dir)}
-                    className="grid h-11 w-11 place-items-center rounded-full border border-cream-100/30 transition-colors duration-300 hover:border-cream-100 hover:bg-cream-100/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-on-wine focus-visible:ring-offset-wine-950"
+                    className="grid h-11 w-11 place-items-center rounded-full border border-cream-100/30 transition-colors duration-300 hover:border-cream-100 hover:bg-cream-100/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950"
                   >
                     <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden />
                   </button>

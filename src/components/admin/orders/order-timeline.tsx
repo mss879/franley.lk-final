@@ -38,7 +38,7 @@ export function OrderTimeline({ events }: { events: OrderEvent[] }) {
             aria-hidden
             className={
               i === 0
-                ? "absolute -left-[1.9375rem] top-1 h-2.5 w-2.5 rounded-full bg-wine-700 ring-4 ring-cream-50"
+                ? "absolute -left-[1.9375rem] top-1 h-2.5 w-2.5 rounded-full bg-ink-900 ring-4 ring-cream-50"
                 : "absolute -left-[1.8125rem] top-[0.4375rem] h-1.5 w-1.5 rounded-full bg-cream-300 ring-4 ring-cream-50"
             }
           />

@@ -8,7 +8,7 @@ import { EditorialBand } from "@/components/site/editorial-band";
 import { Marquee } from "@/components/ui/marquee";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { AnnouncementBar, type AnnouncementContent } from "@/components/site/announcement-bar";
-import { DEFAULT_HOME, type HomeContent } from "@/lib/cms/defaults";
+import { DEFAULT_HOME, withoutRetiredImage, type HomeContent } from "@/lib/cms/defaults";
 import { cn } from "@/lib/utils";
 import { focusRing } from "./ui";
 
@@ -33,7 +33,7 @@ function deepMerge<T>(base: T, override: unknown): T {
 }
 
 type PreviewSpec = {
-  /** Burgundy bands need a dark backdrop behind the scaled frame. */
+  /** Dark bands need a dark backdrop behind the scaled frame. */
   dark: boolean;
   render: (payload: unknown) => React.ReactNode;
 };
@@ -43,23 +43,19 @@ function bannerPreview(index: number): PreviewSpec {
     dark: true,
     render: (payload) => {
       const fallback = DEFAULT_HOME.heroSlides[index] ?? DEFAULT_HOME.heroSlides[0];
-      return <HeroSlider slides={[deepMerge(fallback, payload)]} />;
+      return <HeroSlider slides={[deepMerge(fallback, withoutRetiredImage(payload))]} />;
     },
   };
 }
 
-function headingPreview(
-  slot: "collection" | "lookbook",
-  tone: "dark" | "light",
-): PreviewSpec {
+function headingPreview(slot: "collection" | "lookbook"): PreviewSpec {
   return {
-    dark: tone === "light",
+    dark: false,
     render: (payload) => {
       const c = deepMerge(DEFAULT_HOME[slot], payload) as HomeContent["collection"];
       return (
-        <div className={cn("px-10 py-16", tone === "light" ? "bg-wine-800" : "bg-cream-50")}>
+        <div className={cn("px-10 py-16", slot === "lookbook" ? "bg-cream-100" : "bg-cream-50")}>
           <SectionHeading
-            tone={tone}
             eyebrow={c.eyebrow}
             title={c.title}
             lede={c.lede}
@@ -89,8 +85,8 @@ const PREVIEWS: Record<string, PreviewSpec> = {
       <Marquee items={(deepMerge(DEFAULT_HOME.marquee, payload) as string[]) ?? []} tone="light" />
     ),
   },
-  "home:collection": headingPreview("collection", "dark"),
-  "home:lookbook": headingPreview("lookbook", "light"),
+  "home:collection": headingPreview("collection"),
+  "home:lookbook": headingPreview("lookbook"),
   "global:announcement": {
     dark: true,
     render: (payload) => {
@@ -153,7 +149,7 @@ export function BlockPreview({
     <section aria-labelledby="preview-heading" className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h2 id="preview-heading" className="eyebrow text-wine-700">
+          <h2 id="preview-heading" className="eyebrow text-champagne-700">
             Live preview
           </h2>
           <p className="mt-1 text-xs text-ink-600">
@@ -175,7 +171,7 @@ export function BlockPreview({
                 aria-pressed={device === d}
                 className={cn(
                   "inline-flex h-8 items-center gap-2 rounded-full px-3 text-xs capitalize transition-colors",
-                  device === d ? "bg-wine-700 text-cream-50" : "text-ink-600 hover:text-wine-700",
+                  device === d ? "bg-ink-900 text-cream-50" : "text-ink-600 hover:text-wine-700",
                   focusRing,
                 )}
               >
@@ -191,7 +187,7 @@ export function BlockPreview({
         ref={outerRef}
         className={cn(
           "overflow-hidden rounded-[--radius-card] border border-cream-300",
-          spec.dark ? "bg-wine-900" : "bg-cream-50",
+          spec.dark ? "bg-ink-950" : "bg-cream-50",
         )}
       >
         <div style={{ height }} className="relative">

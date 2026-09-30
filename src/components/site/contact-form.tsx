@@ -15,7 +15,7 @@ const FIELDS = [
 
 const inputClass =
   "mt-2 h-12 w-full rounded-full border border-cream-300 bg-cream-50 px-5 text-sm " +
-  "focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 " +
+  "focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 " +
   "focus-visible:ring-[--focus-ring] focus-visible:ring-offset-2";
 
 function Submit() {
@@ -24,7 +24,7 @@ function Submit() {
     <button
       type="submit"
       disabled={pending}
-      className="mt-7 grid h-14 w-full place-items-center rounded-full bg-wine-700 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--focus-ring] focus-visible:ring-offset-2"
+      className="mt-7 grid h-14 w-full place-items-center rounded-full bg-ink-900 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--focus-ring] focus-visible:ring-offset-2"
     >
       {pending ? (
         <span className="flex items-center gap-2">
@@ -87,7 +87,7 @@ export function ContactForm() {
             rows={5}
             required
             maxLength={2000}
-            className="mt-2 w-full rounded-2xl border border-cream-300 bg-cream-50 px-5 py-4 text-sm focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--focus-ring] focus-visible:ring-offset-2"
+            className="mt-2 w-full rounded-2xl border border-cream-300 bg-cream-50 px-5 py-4 text-sm focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--focus-ring] focus-visible:ring-offset-2"
           />
         </div>
 
@@ -105,7 +105,7 @@ export function ContactForm() {
           aria-live="polite"
           className={cn(
             "mt-6 rounded-2xl px-4 py-3 text-sm",
-            state.ok ? "bg-wine-700/8 text-wine-800" : "bg-wine-700/12 text-wine-800",
+            state.ok ? "bg-champagne-100 text-ink-900" : "bg-wine-700/10 text-wine-800",
           )}
         >
           {state.message}

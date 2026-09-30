@@ -39,13 +39,13 @@ function readPending(): PendingPayment | null {
 function PendingPaymentNotice({ pending, compact = false }: { pending: PendingPayment; compact?: boolean }) {
   const href = `/order/${encodeURIComponent(pending.orderNumber)}?token=${encodeURIComponent(pending.token)}`;
   return (
-    <div role="status" className={cn("rounded-2xl border border-wine-700/25 bg-wine-50 px-5 py-4 text-left", compact ? "mb-8" : "mx-auto mb-8 max-w-md")}>
-      <p className="text-sm font-medium text-wine-800">You started paying for order {pending.orderNumber}</p>
+    <div role="status" className={cn("rounded-2xl border border-champagne-300 bg-champagne-100/60 px-5 py-4 text-left", compact ? "mb-8" : "mx-auto mb-8 max-w-md")}>
+      <p className="text-sm font-medium text-ink-900">You started paying for order {pending.orderNumber}</p>
       <p className="mt-1.5 text-xs leading-relaxed text-ink-600">
         If that payment did not go through, finish it on the order page rather than ordering again — the pieces are
         held for you.
       </p>
-      <Link href={href} className="mt-3 inline-block text-xs font-medium text-wine-700 underline underline-offset-4 hover:text-wine-600">
+      <Link href={href} className="mt-3 inline-block text-xs font-medium text-ink-900 underline underline-offset-4 hover:text-wine-700">
         Go to order {pending.orderNumber}
       </Link>
     </div>
@@ -243,7 +243,7 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
     cn(
       "mt-2 h-12 w-full rounded-full border bg-cream-50 px-5 text-sm transition-colors",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]",
-      errors[id] ? "border-wine-600" : "border-cream-300 focus-visible:border-wine-700",
+      errors[id] ? "border-wine-600" : "border-cream-300 focus-visible:border-ink-900",
     );
 
   return (
@@ -311,7 +311,7 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
                 key={value}
                 className={cn(
                   "flex cursor-pointer items-start gap-4 rounded-2xl border p-5 transition-colors",
-                  payment === value ? "border-wine-700 bg-wine-700/[0.04]" : "border-cream-300 hover:border-ink-400",
+                  payment === value ? "border-ink-900 bg-ink-900/[0.03]" : "border-cream-300 hover:border-ink-400",
                 )}
               >
                 <input
@@ -320,9 +320,9 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
                   value={value}
                   checked={payment === value}
                   onChange={() => setPayment(value)}
-                  className="mt-1 h-4 w-4 accent-[#711625] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+                  className="mt-1 h-4 w-4 accent-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                 />
-                <Icon className="mt-0.5 h-5 w-5 shrink-0 text-wine-700" strokeWidth={1.5} aria-hidden />
+                <Icon className="mt-0.5 h-5 w-5 shrink-0 text-champagne-700" strokeWidth={1.5} aria-hidden />
                 <span>
                   <span className="block text-sm font-medium">{label}</span>
                   <span className="mt-1 block text-xs text-ink-600">{note}</span>
@@ -338,7 +338,7 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
 
           <div className="mt-6">
             <label htmlFor="notes" className="eyebrow block text-ink-600">Order notes (optional)</label>
-            <textarea id="notes" name="notes" rows={3} className="mt-2 w-full rounded-2xl border border-cream-300 bg-cream-50 px-5 py-4 text-sm focus-visible:border-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]" />
+            <textarea id="notes" name="notes" rows={3} className="mt-2 w-full rounded-2xl border border-cream-300 bg-cream-50 px-5 py-4 text-sm focus-visible:border-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]" />
           </div>
         </fieldset>
       </div>
@@ -352,7 +352,7 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
             <li key={l.productId} className="flex gap-4">
               <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-lg border border-cream-300 bg-white">
                 {l.image && <Image src={l.image} alt="" fill sizes="56px" className="object-contain p-1" />}
-                <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-wine-700 px-1 text-[10px] text-cream-50">
+                <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-ink-900 px-1 text-[10px] text-cream-50">
                   {l.quantity}
                 </span>
               </div>
@@ -388,7 +388,7 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
         <button
           type="submit"
           disabled={submitting}
-          className="mt-6 grid h-14 w-full place-items-center rounded-full bg-wine-700 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-600 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+          className="mt-6 grid h-14 w-full place-items-center rounded-full bg-ink-900 text-sm font-medium text-cream-50 transition-colors hover:bg-wine-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
         >
           {submitting ? (
             <span className="flex items-center gap-2">

@@ -12,8 +12,7 @@ import { useFocusTrap } from "@/lib/a11y/use-focus-trap";
 
 const NAV = [
   { href: "/shop", label: "Shop All" },
-  { href: "/collections/plain-ties", label: "Plain" },
-  { href: "/collections/striped-ties", label: "Stripes" },
+  { href: "/collections/neckties", label: "Neckties" },
   { href: "/collections/cufflinks", label: "Cufflinks" },
   { href: "/about", label: "About" },
 ];
@@ -26,8 +25,8 @@ export function Header() {
   const sheetRef = useRef<HTMLDivElement>(null);
   const sheetCloseRef = useRef<HTMLButtonElement>(null);
 
-  // The home hero is a full-bleed burgundy band, so the header floats over it
-  // in light-on-dark until the user scrolls past it.
+  // The home hero is a full-bleed dark band, so the header floats over it in
+  // light-on-dark until the user scrolls past it.
   const overHero = pathname === "/" && !scrolled;
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export function Header() {
       className={cn(
         "sticky top-0 z-50 transition-colors duration-500 ease-[--ease-lux]",
         overHero
-          ? "focus-on-wine bg-transparent text-cream-100"
+          ? "focus-on-dark bg-transparent text-cream-100"
           : "border-b border-cream-300 bg-cream-50/90 text-ink-900 backdrop-blur-md",
       )}
     >
@@ -74,10 +73,8 @@ export function Header() {
             sizes="132px"
             className={cn(
               "object-contain object-left transition-all duration-500",
-              // The supplied wordmark is black; invert it to read on burgundy.
-              // Over the home banner the slide carries its own lockup, so the
-              // header mark fades out rather than printing the name twice.
-              overHero && "brightness-0 invert opacity-0",
+              // The supplied wordmark is black; invert it to read on the banner.
+              overHero && "brightness-0 invert",
             )}
           />
         </Link>
@@ -90,7 +87,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative text-sm transition-opacity duration-300 hover:opacity-100",
+                  "relative text-xs uppercase tracking-[0.18em] transition-opacity duration-300 hover:opacity-100",
                   "after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-current after:transition-all after:duration-300 after:ease-[--ease-lux]",
                   active ? "opacity-100 after:w-full" : "opacity-70 after:w-0 hover:after:w-full",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-4",
@@ -120,13 +117,13 @@ export function Header() {
               "relative grid h-11 w-11 place-items-center rounded-full border transition-colors duration-300",
               overHero
                 ? "border-cream-100/30 hover:border-cream-100/70 hover:bg-cream-100/10"
-                : "border-ink-900/15 hover:border-wine-700 hover:text-wine-700",
+                : "border-ink-900/15 hover:border-ink-900",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2",
             )}
           >
             <ShoppingBag className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden />
             {ready && count > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-champagne-400 px-1 text-[10px] font-semibold text-wine-900">
+              <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-champagne-400 px-1 text-[10px] font-semibold text-ink-900">
                 {count > 99 ? "99+" : count}
               </span>
             )}
@@ -158,7 +155,7 @@ export function Header() {
       <div
         ref={sheetRef}
         hidden={!menuOpen}
-        className="focus-on-wine fixed inset-0 z-50 bg-wine-800 text-cream-100 lg:hidden"
+        className="focus-on-dark fixed inset-0 z-50 bg-ink-900 text-cream-100 lg:hidden"
         role="dialog"
         aria-modal="true"
         aria-label="Menu"

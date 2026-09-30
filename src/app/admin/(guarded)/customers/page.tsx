@@ -151,7 +151,7 @@ export default async function CustomersPage({
               className={cn(
                 pill,
                 sort === value
-                  ? "border-wine-700 bg-wine-700 text-cream-50"
+                  ? "border-ink-900 bg-ink-900 text-cream-50"
                   : "border-cream-300 text-ink-600 hover:border-wine-700 hover:text-wine-700",
               )}
             >

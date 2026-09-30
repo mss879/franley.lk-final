@@ -106,7 +106,7 @@ export default function TieGuidePage() {
               <ol className="space-y-4">
                 {knot.steps.map((step, n) => (
                   <li key={step} className="flex gap-4 rounded-2xl border border-cream-300 bg-cream-100 p-5">
-                    <span className="font-display shrink-0 text-lg text-wine-700">{n + 1}</span>
+                    <span className="font-display shrink-0 text-lg text-champagne-700">{n + 1}</span>
                     <span className="text-sm leading-relaxed text-ink-600">{step}</span>
                   </li>
                 ))}
@@ -115,7 +115,7 @@ export default function TieGuidePage() {
           ))}
         </ol>
 
-        <div className="mt-20 rounded-3xl bg-wine-800 px-7 py-12 text-center text-cream-100 md:px-14 md:py-16">
+        <div className="mt-20 rounded-3xl bg-ink-900 px-7 py-12 text-center text-cream-100 md:px-14 md:py-16">
           <h2 className="font-display text-3xl text-balance md:text-4xl">
             One last rule
           </h2>
