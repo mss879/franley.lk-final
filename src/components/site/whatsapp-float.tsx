@@ -36,14 +36,15 @@ export function WhatsAppFloat() {
       rel="noreferrer noopener"
       aria-label="Chat with Franley on WhatsApp"
       className={cn(
-        "group fixed bottom-5 right-5 z-40 flex items-center gap-3 rounded-full bg-ink-900 py-3 pl-4 pr-5 text-cream-50 shadow-[0_12px_32px_-12px_rgba(23,21,20,0.7)]",
-        "transition-all duration-500 ease-[--ease-lux] hover:bg-wine-700",
+        // WhatsApp's own green and white, not the Franley palette: the client
+        // wants the button to read as WhatsApp at a glance.
+        "group fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_32px_-12px_rgba(23,21,20,0.7)]",
+        "transition-all duration-500 ease-[--ease-lux] hover:scale-105 hover:bg-[#1EBE5A]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
       )}
     >
-      <WhatsAppIcon className="h-5 w-5 shrink-0" />
-      <span className="hidden text-sm font-medium sm:inline">Chat with us</span>
+      <WhatsAppIcon className="h-7 w-7 shrink-0" />
     </a>
   );
 }
