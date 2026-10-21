@@ -74,6 +74,12 @@ export function checkEnv(): Check[] {
       hint: "Optional. PayHere → Settings → API Keys. Lets the store look up a payment whose notification was missed, and refund from the admin. On live, PayHere must whitelist this server's IP (support@payhere.lk).",
     },
     {
+      key: "VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY",
+      ok: Boolean(process.env.VAPID_PUBLIC_KEY?.trim() && process.env.VAPID_PRIVATE_KEY?.trim()),
+      required: false,
+      hint: "Optional. New-order alerts on the admin's phone (Admin → Settings → Order alerts). Make a pair with `npm run vapid-keys`.",
+    },
+    {
       key: "RESEND_REPLY_TO / ORDER_NOTIFICATION_EMAIL",
       ok: Boolean(process.env.RESEND_REPLY_TO && process.env.ORDER_NOTIFICATION_EMAIL),
       required: false,

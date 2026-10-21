@@ -112,6 +112,12 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }],
       },
       {
+        // The admin's order-alert service worker (public/push-sw.js). Browsers
+        // check it for updates on their own; it must never be served stale.
+        source: "/push-sw.js",
+        headers: [{ key: "Cache-Control", value: "no-cache, max-age=0, must-revalidate" }],
+      },
+      {
         // Nothing under the admin should ever be cached or indexed.
         source: "/admin/:path*",
         headers: [

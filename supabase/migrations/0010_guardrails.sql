@@ -27,6 +27,7 @@
 --      both, which is exactly the hole this pair of checks exists to catch.
 --   8. place_order, record_gateway_payment and throttle_take are executable by
 --      service_role only — the server calls them on the shopper's behalf.
+--   9. save_push_subscription (0017) is not executable by anon.
 -- =============================================================================
 
 do $$
@@ -92,14 +93,14 @@ begin
   ----------------------------------------------------------------------------
   -- 5. anon must hold nothing on the PII tables.
   ----------------------------------------------------------------------------
-  -- email_log (0011) and customers (0014) are created AFTER this file on a
-  -- fresh install, and has_table_privilege() raises on a relation that does
-  -- not exist, so a table that is not there yet is skipped rather than
-  -- asserted. Re-run this file last, as DEPLOY.md says, and they are checked.
+  -- email_log (0011), customers (0014) and the push tables (0017) are created
+  -- AFTER this file on a fresh install, and has_table_privilege() raises on a
+  -- relation that does not exist, so a table that is not there yet is skipped
+  -- rather than asserted. Re-run this file last, as DEPLOY.md says, and they are checked.
   for r in
     select t
       from unnest(array['orders','order_items','order_events','checkout_throttle','admin_users',
-                        'email_log','customers']) as t
+                        'email_log','customers','admin_push_subscriptions','admin_push_log']) as t
      where to_regclass('public.' || t) is not null
   loop
     if has_table_privilege('anon', 'public.' || r.t, 'select')
@@ -165,6 +166,14 @@ begin
         E'\n  - %s is executable by an application role. Only the server (service_role) may call it; run 0016_security_hardening.sql.', r.f);
     end if;
   end loop;
+
+  ----------------------------------------------------------------------------
+  -- 9. Only a signed-in admin may register a device for order alerts (0017).
+  ----------------------------------------------------------------------------
+  if to_regprocedure('public.save_push_subscription(text, text, text, text)') is not null
+     and has_function_privilege('anon', 'public.save_push_subscription(text, text, text, text)', 'execute') then
+    v_bad := v_bad || E'\n  - role anon can execute public.save_push_subscription(); only authenticated admins may.';
+  end if;
 
   if v_bad <> '' then
     raise exception E'Franley schema guardrails FAILED:%', v_bad;

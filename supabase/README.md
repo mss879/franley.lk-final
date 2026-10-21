@@ -4,7 +4,7 @@ This folder holds the database for **franley.lk**: the products, the categories,
 the orders, and the content you can edit from the admin panel.
 
 It is written for someone who has never used a database before. You do not need
-to understand the SQL. You need to **paste sixteen files, in order, into one box on
+to understand the SQL. You need to **paste seventeen files, in order, into one box on
 a website**, run the safety check once more at the end, and then create your admin
 login. That is the whole job. It takes about twenty minutes.
 
@@ -29,10 +29,10 @@ You need:
 
 ---
 
-## Step 2 — Run the sixteen migration files, in order
+## Step 2 — Run the seventeen migration files, in order
 
-Everything the database needs is in `supabase/migrations/`. There are sixteen files.
-**Run them in number order — 0001 first, 0016 last — then run `0010_guardrails.sql`
+Everything the database needs is in `supabase/migrations/`. There are seventeen files.
+**Run them in number order — 0001 first, 0017 last — then run `0010_guardrails.sql`
 one more time.** Each one builds on the one before it, and the final re-run of 0010
 checks the files that came after it the first time round.
 
@@ -44,7 +44,7 @@ checks the files that came after it the first time round.
 5. You should see **Success. No rows returned**, or a short green notice. That
    is what success looks like.
 6. Clear the box, and repeat steps 3–5 for `0002`, then `0003`, and so on,
-   all the way to `0016`.
+   all the way to `0017`.
 7. Finally, run `0010_guardrails.sql` once more.
 
 Some of the files print a friendly summary when they finish:
@@ -65,7 +65,7 @@ If you see those lines, the database is correct.
 
 ### If you prefer the command line
 
-If you have the Supabase CLI installed, the same sixteen files run with:
+If you have the Supabase CLI installed, the same seventeen files run with:
 
 ```bash
 supabase link --project-ref <your-project-ref>
@@ -186,6 +186,7 @@ The database cannot do these for you.
 | `0014_customers.sql` | A customer list built from orders: everyone who has ordered, with their totals. Existing orders are added to it automatically. |
 | `0015_ops_and_fixes.sql` | Releasing abandoned card orders, real contact details in the settings, and a few small fixes. |
 | `0016_security_hardening.sql` | Security fixes: only the website's server can place an order, order pages can no longer be locked out, uploaded images cannot be listed, and admin rights need a confirmed account. |
+| `0017_push_notifications.sql` | New-order alerts on your phone: the devices that have alerts turned on, and a record so each order rings only once. |
 
 ---
 

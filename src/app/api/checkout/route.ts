@@ -5,6 +5,7 @@ import { clientIp } from "@/lib/client-ip";
 import { isLive } from "@/lib/data";
 import { loadOrderForEmail, sendOrderPlacedEmails } from "@/lib/email/send";
 import { buildCheckout, payhereEnabled } from "@/lib/payhere";
+import { sendNewOrderPush } from "@/lib/push";
 
 export const runtime = "nodejs";
 
@@ -177,19 +178,23 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // Confirmation emails. Deliberately awaited but fully guarded: the order is
-  // already committed, so nothing here may turn a successful checkout into an
-  // error the shopper sees. Awaiting (rather than firing and forgetting) is
-  // what makes it work on serverless, where the function can be frozen the
-  // moment the response is returned.
+  // Confirmation emails and the admin's phone alert. Deliberately awaited but
+  // fully guarded: the order is already committed, so nothing here may turn a
+  // successful checkout into an error the shopper sees. Awaiting (rather than
+  // firing and forgetting) is what makes it work on serverless, where the
+  // function can be frozen the moment the response is returned.
   //
   // A card order is not confirmed until PayHere says it is paid, so its emails
-  // are sent from the payment notification instead — src/lib/payhere/record.ts.
+  // and alert are sent from the payment notification instead —
+  // src/lib/payhere/record.ts.
   if (result.order_id && !payingByCard) {
     try {
       const summary = await loadOrderForEmail(result.order_id);
       if (summary) {
-        await sendOrderPlacedEmails(summary, result.order_id, result.access_token ?? null);
+        await Promise.allSettled([
+          sendOrderPlacedEmails(summary, result.order_id, result.access_token ?? null),
+          sendNewOrderPush(summary, result.order_id),
+        ]);
       }
     } catch (err) {
       console.error("order emails failed", err);

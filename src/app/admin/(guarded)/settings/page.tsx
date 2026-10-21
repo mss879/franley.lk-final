@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { AdminPageShell } from "@/components/admin/page-shell";
 import { SettingsGroupForm } from "@/components/admin/settings/settings-group-form";
+import { PushAlerts, type PushDevice } from "@/components/admin/settings/push-alerts";
+import { pushPublicKey } from "@/lib/push";
 import { requireAdmin } from "@/lib/supabase/admin-guard";
 import { createClient } from "@/lib/supabase/server";
 import { EDITABLE_GROUPS, GROUP_COPY, HIDDEN_KEYS, type SettingRow } from "./shared";
@@ -26,11 +28,29 @@ export default async function SettingsPage() {
 
   const rows = ((data ?? []) as SettingRow[]).filter((r) => !HIDDEN_KEYS.includes(r.key));
 
+  // This admin's own devices with order alerts on (RLS shows no one else's).
+  const { data: devices, error: devicesError } = await supabase
+    .from("admin_push_subscriptions")
+    .select("id, endpoint, device_label, created_at, last_success_at, last_error")
+    .order("created_at");
+  const publicKey = pushPublicKey();
+  const pushProblem = !publicKey
+    ? "Order alerts are not set up on the server yet. Add VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY to the site's environment variables (see DEPLOY.md), then redeploy."
+    : devicesError
+      ? devicesError.code === "42P01" || devicesError.code === "PGRST205"
+        ? "The database is missing order alerts. Run supabase/migrations/0017_push_notifications.sql in the Supabase SQL Editor."
+        : `Could not load your devices: ${devicesError.message}`
+      : null;
+
   return (
     <AdminPageShell
       title="Settings"
-      description="Contact details, delivery charges, bank transfer instructions and the checkout switch. Changes reach the storefront as soon as you save."
+      description="Order alerts on your phone, contact details, delivery charges, bank transfer instructions and the checkout switch. Changes reach the storefront as soon as you save."
     >
+      <div className="mb-6">
+        <PushAlerts publicKey={publicKey} devices={(devices ?? []) as PushDevice[]} setupProblem={pushProblem} />
+      </div>
+
       {error ? (
         <p role="alert" className="rounded-2xl bg-wine-700/10 px-4 py-3 text-sm text-wine-800">
           Could not load settings: {error.message}

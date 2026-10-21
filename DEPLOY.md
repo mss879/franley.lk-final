@@ -8,7 +8,7 @@ steps 4–6 can follow the same day.
 ## 1. Supabase — the database
 
 Follow **[supabase/README.md](supabase/README.md)** end to end. It covers
-creating the project, running the sixteen migration files in order (then
+creating the project, running the seventeen migration files in order (then
 `0010_guardrails.sql` once more), creating your admin login by hand, and the two
 dashboard settings that must be changed.
 
@@ -102,7 +102,8 @@ Set these on your host (Netlify: Site configuration → Environment variables).
 Everything in `.env.example` is documented there too.
 
 Tick **Contains secret values** on `SUPABASE_SERVICE_ROLE_KEY`,
-`PAYHERE_MERCHANT_SECRET`, `PAYHERE_APP_SECRET` and `RESEND_API_KEY`. Netlify
+`PAYHERE_MERCHANT_SECRET`, `PAYHERE_APP_SECRET`, `RESEND_API_KEY` and
+`VAPID_PRIVATE_KEY`. Netlify
 then scans every build and refuses to deploy one that would publish a secret.
 Changing a variable only takes effect on the next deploy.
 
@@ -120,6 +121,8 @@ Changing a variable only takes effect on the next deploy.
 | `PAYHERE_MERCHANT_SECRET` | the secret shown against your approved domain | for card payments |
 | `PAYHERE_APP_ID` / `PAYHERE_APP_SECRET` | PayHere → Settings → API Keys | optional: refunds + payment lookup |
 | `PAYHERE_NOTIFY_URL` | a tunnel URL | local testing only — never in production |
+| `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | from `npm run vapid-keys` (section 3b) | for order alerts on your phone |
+| `VAPID_SUBJECT` | `mailto:support@franley.lk` | optional |
 
 **`SUPABASE_SERVICE_ROLE_KEY` bypasses every security rule in the database.**
 It must never appear in a `NEXT_PUBLIC_` variable, in the browser, or in a
@@ -128,6 +131,35 @@ screenshot. If it leaks, reset it in Supabase immediately.
 The site boots without any of these and serves the bundled seed catalogue, so a
 missing variable never takes the shop down — but `/admin` stays locked and no
 emails are sent. Missing variables are logged at startup.
+
+---
+
+## 3b. Order alerts on your phone
+
+A notification on your phone for every new order, like an app would give you.
+
+1. Run the migration `0017_push_notifications.sql` (section 1).
+2. On your computer, in this project folder, run `npm run vapid-keys`. It prints
+   a **Public Key** and a **Private Key**. Set them as `VAPID_PUBLIC_KEY` and
+   `VAPID_PRIVATE_KEY` (tick *Contains secret values* on the private one) and
+   redeploy. Keep this pair for good — making a new one cuts off every phone
+   that already has alerts on.
+3. **On iPhone** (iOS 16.4 or later): open `https://franley.lk/admin` in
+   **Safari**, tap **Share → Add to Home Screen**, keep the name *Franley
+   Admin*, tap **Add**. Open **Franley Admin** from the Home Screen (not from
+   Safari) and sign in. iPhones only allow notifications from a web app opened
+   this way. If you added the shop to your Home Screen before, add the admin
+   again from `/admin` — that older icon opens in Safari and cannot ring.
+4. In the admin, go to **Settings → Order alerts → Turn on order alerts** and
+   tap **Allow** when the phone asks. Tap **Send a test alert** to check it.
+5. Do the same on every phone that should ring. Android (Chrome) and computers
+   need no Home Screen step — just step 4 in the browser.
+
+Cash-on-delivery and bank-transfer orders ring as soon as they are placed; card
+orders ring once PayHere confirms the payment. Tapping the alert opens the
+order. To stop a phone ringing, tap **Turn off** on it, or **Remove** it from
+the device list on another one. If alerts stop, check *iPhone Settings →
+Notifications → Franley Admin* is allowed.
 
 ---
 
@@ -152,6 +184,7 @@ header, which browsers remember.
 - [ ] **Place one real test order.** Then check that:
       the confirmation email arrived and is not in spam;
       the new-order alert reached `ORDER_NOTIFICATION_EMAIL`;
+      your phone rang with the order (if you set up section 3b);
       the order appears in `/admin/orders`;
       the stock on that product went down by the quantity ordered;
       the **Notifications** card on the order shows both emails as *Sent*.

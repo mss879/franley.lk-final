@@ -1,6 +1,7 @@
 import "server-only";
 import { createServiceClient } from "@/lib/supabase/server";
 import { loadOrderForEmail, sendOrderPlacedEmails } from "@/lib/email/send";
+import { sendNewOrderPush } from "@/lib/push";
 import { findReceivedPayment, paymentState, payhereLookupEnabled, type GatewayStatus } from "./index";
 
 type RecordResult = {
@@ -16,9 +17,10 @@ type RecordResult = {
  * PayHere's signature (notify) or asked PayHere directly (lookup) first — this
  * runs with the service-role key and trusts what it is given.
  *
- * A card order's confirmation emails go out here rather than at checkout:
- * "your order is confirmed, payment received" is only true once it is.
- * sendOnce() makes them exactly-once however many times PayHere notifies.
+ * A card order's confirmation emails and the admin's phone alert go out here
+ * rather than at checkout: "your order is confirmed, payment received" is only
+ * true once it is. sendOnce() and admin_push_log make them exactly-once
+ * however many times PayHere notifies.
  */
 export async function recordGatewayPayment(payment: {
   orderNumber: string;
@@ -78,7 +80,11 @@ export async function recordGatewayPayment(payment: {
       const order = await loadOrderForEmail(result.order_id);
       if (order) {
         const token = await tokenOpensOrder(payment.accessToken, result.order_number);
-        await sendOrderPlacedEmails(order, result.order_id, token, { paidAfterCancel: row?.status === "cancelled" });
+        const paidAfterCancel = row?.status === "cancelled";
+        await Promise.allSettled([
+          sendOrderPlacedEmails(order, result.order_id, token, { paidAfterCancel }),
+          sendNewOrderPush(order, result.order_id, { paidAfterCancel }),
+        ]);
       }
     } catch (err) {
       console.error("payment emails failed", err);

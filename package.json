@@ -7,7 +7,8 @@
     "prebuild": "node -e \"require('fs').rmSync('.next/cache/turbopack',{recursive:true,force:true})\"",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "vapid-keys": "web-push generate-vapid-keys"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.6",
@@ -20,6 +21,7 @@
     "resend": "^6.26.0",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.6.0",
+    "web-push": "^3.6.7",
     "zod": "^4.5.4"
   },
   "devDependencies": {
@@ -27,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/web-push": "^3.6.4",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
     "sharp": "^0.35.4",
