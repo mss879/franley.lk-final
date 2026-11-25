@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, X, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart/cart-context";
+import { lineKey } from "@/lib/cart/types";
 import { ButtonLink } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { useSiteSettings } from "@/lib/settings/provider";
@@ -89,7 +90,7 @@ export function BagDrawer() {
 
             <ul className="flex-1 divide-y divide-cream-300 overflow-y-auto px-6">
               {lines.map((line) => (
-                <li key={line.productId} className="flex gap-4 py-5">
+                <li key={lineKey(line)} className="flex gap-4 py-5">
                   <Link href={`/products/${line.slug}`} onClick={closeBag} className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-white">
                     {line.image && (
                       <Image src={line.image} alt={line.title} fill sizes="80px" className="object-contain p-1" />
@@ -106,7 +107,7 @@ export function BagDrawer() {
                       </div>
                       <button
                         type="button"
-                        onClick={() => remove(line.productId)}
+                        onClick={() => remove(lineKey(line))}
                         aria-label={`Remove ${line.title}`}
                         className="shrink-0 text-ink-400 transition-colors hover:text-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                       >
@@ -118,7 +119,7 @@ export function BagDrawer() {
                       <div className="flex items-center rounded-full border border-cream-300">
                         <button
                           type="button"
-                          onClick={() => setQty(line.productId, line.quantity - 1)}
+                          onClick={() => setQty(lineKey(line), line.quantity - 1)}
                           aria-label={`Decrease quantity of ${line.title}`}
                           className="grid h-8 w-8 place-items-center rounded-full transition-colors hover:text-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                         >
@@ -128,7 +129,7 @@ export function BagDrawer() {
                         <button
                           type="button"
                           disabled={line.quantity >= line.maxQuantity}
-                          onClick={() => setQty(line.productId, line.quantity + 1)}
+                          onClick={() => setQty(lineKey(line), line.quantity + 1)}
                           aria-label={`Increase quantity of ${line.title}`}
                           className="grid h-8 w-8 place-items-center rounded-full transition-colors hover:text-wine-700 disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                         >

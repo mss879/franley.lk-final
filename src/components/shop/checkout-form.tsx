@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Banknote, CreditCard, Landmark, Loader2 } from "lucide-react";
 import { useCart } from "@/lib/cart/cart-context";
+import { lineKey } from "@/lib/cart/types";
 import { SL_DISTRICTS, type PaymentMethod } from "@/lib/checkout/schema";
 import { formatPrice, cn } from "@/lib/utils";
 import { useSiteSettings } from "@/lib/settings/provider";
@@ -55,7 +56,7 @@ function PendingPaymentNotice({ pending, compact = false }: { pending: PendingPa
 const PAYMENTS: { value: PaymentMethod; label: string; note: string; Icon: typeof Banknote }[] = [
   { value: "card", label: "Pay online", note: "Visa, Mastercard, Amex and local wallets — paid securely through PayHere.", Icon: CreditCard },
   { value: "cod", label: "Cash on delivery", note: "Pay the courier when your order arrives.", Icon: Banknote },
-  { value: "bank_transfer", label: "Bank transfer", note: "We send account details right after you order.", Icon: Landmark },
+  { value: "bank_transfer", label: "Bank transfer", note: "Pay by bank deposit or online transfer.", Icon: Landmark },
 ];
 
 export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean }) {
@@ -144,17 +145,18 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
     const fd = new FormData(e.currentTarget);
     const payload = {
       email: String(fd.get("email") ?? ""),
-      fullName: String(fd.get("fullName") ?? ""),
+      firstName: String(fd.get("firstName") ?? ""),
+      lastName: String(fd.get("lastName") ?? ""),
       phone: String(fd.get("phone") ?? ""),
+      phone2: String(fd.get("phone2") ?? ""),
       addressLine1: String(fd.get("addressLine1") ?? ""),
       addressLine2: String(fd.get("addressLine2") ?? ""),
-      city: String(fd.get("city") ?? ""),
       district: String(fd.get("district") ?? ""),
       postalCode: String(fd.get("postalCode") ?? ""),
       notes: String(fd.get("notes") ?? ""),
       paymentMethod: payment,
       // Prices are deliberately absent — the server recomputes them.
-      items: lines.map((l) => ({ productId: l.productId, quantity: l.quantity })),
+      items: lines.map((l) => ({ productId: l.productId, colorId: l.colorId ?? null, quantity: l.quantity })),
     };
 
     let leaving = false;
@@ -260,14 +262,24 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
               {errors.email && <p id="email-error" className="mt-1.5 text-xs text-wine-700">{errors.email}</p>}
             </div>
             <div>
-              <label htmlFor="fullName" className="eyebrow block text-ink-600">Full name</label>
-              <input id="fullName" name="fullName" autoComplete="name" required {...invalid("fullName")} className={field("fullName")} />
-              {errors.fullName && <p id="fullName-error" className="mt-1.5 text-xs text-wine-700">{errors.fullName}</p>}
+              <label htmlFor="firstName" className="eyebrow block text-ink-600">First name</label>
+              <input id="firstName" name="firstName" autoComplete="given-name" required {...invalid("firstName")} className={field("firstName")} />
+              {errors.firstName && <p id="firstName-error" className="mt-1.5 text-xs text-wine-700">{errors.firstName}</p>}
             </div>
             <div>
-              <label htmlFor="phone" className="eyebrow block text-ink-600">Phone</label>
+              <label htmlFor="lastName" className="eyebrow block text-ink-600">Last name</label>
+              <input id="lastName" name="lastName" autoComplete="family-name" required {...invalid("lastName")} className={field("lastName")} />
+              {errors.lastName && <p id="lastName-error" className="mt-1.5 text-xs text-wine-700">{errors.lastName}</p>}
+            </div>
+            <div>
+              <label htmlFor="phone" className="eyebrow block text-ink-600">Contact number 1</label>
               <input id="phone" name="phone" type="tel" autoComplete="tel" placeholder="077 123 4567" required {...invalid("phone")} className={field("phone")} />
               {errors.phone && <p id="phone-error" className="mt-1.5 text-xs text-wine-700">{errors.phone}</p>}
+            </div>
+            <div>
+              <label htmlFor="phone2" className="eyebrow block text-ink-600">Contact number 2 (optional)</label>
+              <input id="phone2" name="phone2" type="tel" placeholder="077 123 4567" {...invalid("phone2")} className={field("phone2")} />
+              {errors.phone2 && <p id="phone2-error" className="mt-1.5 text-xs text-wine-700">{errors.phone2}</p>}
             </div>
           </div>
         </fieldset>
@@ -276,22 +288,22 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
           <legend className="font-display text-2xl">Delivery address</legend>
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label htmlFor="addressLine1" className="eyebrow block text-ink-600">Street address</label>
+              <label htmlFor="addressLine1" className="eyebrow block text-ink-600">Address line 1</label>
               <input id="addressLine1" name="addressLine1" autoComplete="address-line1" required {...invalid("addressLine1")} className={field("addressLine1")} />
               {errors.addressLine1 && <p id="addressLine1-error" className="mt-1.5 text-xs text-wine-700">{errors.addressLine1}</p>}
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="addressLine2" className="eyebrow block text-ink-600">Apartment, floor (optional)</label>
+              <label htmlFor="addressLine2" className="eyebrow block text-ink-600">Address line 2 (optional)</label>
               <input id="addressLine2" name="addressLine2" autoComplete="address-line2" {...invalid("addressLine2")} className={field("addressLine2")} />
             </div>
             <div>
-              <label htmlFor="city" className="eyebrow block text-ink-600">City</label>
-              <input id="city" name="city" autoComplete="address-level2" required {...invalid("city")} className={field("city")} />
-              {errors.city && <p id="city-error" className="mt-1.5 text-xs text-wine-700">{errors.city}</p>}
+              <label htmlFor="country" className="eyebrow block text-ink-600">Country</label>
+              <input id="country" value="Sri Lanka" readOnly aria-readonly className={cn(field("country"), "cursor-default text-ink-600")} />
             </div>
             <div>
-              <label htmlFor="district" className="eyebrow block text-ink-600">District</label>
-              <select id="district" name="district" required defaultValue="Colombo" {...invalid("district")} className={cn(field("district"), "appearance-none")}>
+              <label htmlFor="district" className="eyebrow block text-ink-600">City / District</label>
+              <select id="district" name="district" required defaultValue="" {...invalid("district")} className={cn(field("district"), "appearance-none")}>
+                <option value="" disabled>Choose your city or district</option>
                 {SL_DISTRICTS.map((d) => <option key={d} value={d}>{d}</option>)}
               </select>
               {errors.district && <p id="district-error" className="mt-1.5 text-xs text-wine-700">{errors.district}</p>}
@@ -349,7 +361,7 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
 
         <ul className="mt-6 space-y-4 border-b border-cream-300 pb-6">
           {lines.map((l) => (
-            <li key={l.productId} className="flex gap-4">
+            <li key={lineKey(l)} className="flex gap-4">
               <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-lg border border-cream-300 bg-white">
                 {l.image && <Image src={l.image} alt="" fill sizes="56px" className="object-contain p-1" />}
                 <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-ink-900 px-1 text-[10px] text-cream-50">
@@ -357,7 +369,7 @@ export function CheckoutForm({ cardEnabled = false }: { cardEnabled?: boolean })
                 </span>
               </div>
               <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                <span className="truncate text-sm">{l.title}</span>
+                <span className="min-w-0 truncate text-sm">{l.title}{l.colorName && <span className="block truncate text-xs text-ink-600">{l.colorName}</span>}</span>
                 <span className="shrink-0 text-sm tabular-nums">{formatPrice(l.priceCents * l.quantity)}</span>
               </div>
             </li>

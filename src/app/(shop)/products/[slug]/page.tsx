@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Truck, RefreshCw, MessageCircle } from "lucide-react";
-import { ProductGallery } from "@/components/shop/product-gallery";
+import {
+  ColourAvailability,
+  ColourGallery,
+  ColourPicker,
+  ProductColourProvider,
+} from "@/components/shop/product-colours";
 import { AddToBag } from "@/components/shop/add-to-bag";
 import { ProductGrid } from "@/components/shop/product-grid";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -116,8 +121,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </ol>
         </nav>
 
+        <ProductColourProvider colors={product.colors ?? []}>
         <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-          <ProductGallery images={product.images} title={product.title} />
+          <ColourGallery images={product.images} title={product.title} />
 
           <div className="lg:pt-6">
             {product.categoryName && <Eyebrow>{product.categoryName}</Eyebrow>}
@@ -139,7 +145,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </p>
 
             <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-cream-300 py-6 text-sm">
-              {product.colorName && (
+              {product.colorName && !product.colors?.length && (
                 <div>
                   <dt className="eyebrow text-ink-600">Colour</dt>
                   <dd className="mt-1.5 flex items-center gap-2">
@@ -163,7 +169,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <div>
                 <dt className="eyebrow text-ink-600">Availability</dt>
                 <dd className="mt-1.5">
-                  {product.stock <= 0 ? "Sold out" : product.stock <= 5 ? `Only ${product.stock} left` : "In stock"}
+                  <ColourAvailability stock={product.stock} />
                 </dd>
               </div>
               <div>
@@ -171,6 +177,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <dd className="mt-1.5">{CARE_BY_CATEGORY[product.categorySlug] ?? DEFAULT_CARE}</dd>
               </div>
             </dl>
+
+            <ColourPicker />
 
             <div className="mt-8">
               <AddToBag product={product} />
@@ -186,6 +194,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </ul>
           </div>
         </div>
+        </ProductColourProvider>
       </div>
 
       {related.length > 0 && (

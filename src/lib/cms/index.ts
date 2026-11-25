@@ -1,5 +1,11 @@
 import "server-only";
-import { DEFAULT_HOME, withoutRetiredImage, type HomeContent } from "./defaults";
+import {
+  DEFAULT_HOME,
+  HOME_PRODUCT_SECTIONS,
+  withoutRetiredImage,
+  type HomeContent,
+  type ProductSectionKey,
+} from "./defaults";
 import { isLive } from "@/lib/data";
 import type { HeroSlide } from "@/components/site/hero-slider";
 import type { ShowcaseCard } from "@/components/site/category-showcase";
@@ -49,6 +55,20 @@ function toShowcaseCards(
   return cards.filter((c) => c.image && c.name);
 }
 
+/**
+ * A product section whose block is missing from the published set has been
+ * unpublished by the admin, so it is left off the page. The exception is a
+ * CMS with no home blocks at all (never seeded, or unreachable): then Featured
+ * and New in render from the defaults as they always did, and only Trending —
+ * new in 0020, with no collection to show yet — stays out.
+ */
+function hiddenProductSections(blocks: Record<string, unknown>): ProductSectionKey[] {
+  const seeded = Object.keys(blocks).length > 0;
+  return HOME_PRODUCT_SECTIONS.map((s) => s.key).filter(
+    (key) => !(key in blocks) && (seeded || key === "trending"),
+  );
+}
+
 export async function getHomeContent(): Promise<HomeContent> {
   if (!isLive()) return DEFAULT_HOME;
 
@@ -69,6 +89,7 @@ export async function getHomeContent(): Promise<HomeContent> {
       ...deepMerge(DEFAULT_HOME, blocks),
       heroSlides: slides.filter((s) => s.image),
       showcase: { ...showcase, cards: toShowcaseCards(blocks, DEFAULT_HOME.showcase.cards) },
+      hiddenSections: hiddenProductSections(blocks),
     };
   } catch {
     return DEFAULT_HOME;

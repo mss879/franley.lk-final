@@ -13,8 +13,8 @@ const SHORTCUTS = [
   { href: "/admin/customers", label: "Customers", body: "Everyone who has ordered, with their contact details.", Icon: Users },
   { href: "/admin/products", label: "Products", body: "Add pieces, set prices and manage stock.", Icon: Package },
   { href: "/admin/categories", label: "Categories", body: "The structure of the range: ties, stripes, cufflinks.", Icon: FolderTree },
-  { href: "/admin/collections", label: "Collections", body: "Curated edits you pick by hand — gifts, featured.", Icon: Layers },
-  { href: "/admin/content", label: "Content & Banners", body: "Change the homepage copy and imagery.", Icon: ImageIcon },
+  { href: "/admin/collections", label: "Collections", body: "Hand-picked product lists — including the home page’s Featured, New in and Trending.", Icon: Layers },
+  { href: "/admin/content", label: "Home page & Banners", body: "Banners, section headings, and which products Featured, New in and Trending show.", Icon: ImageIcon },
   { href: "/admin/settings", label: "Settings", body: "Contact details, delivery charges, bank details.", Icon: Settings },
 ];
 

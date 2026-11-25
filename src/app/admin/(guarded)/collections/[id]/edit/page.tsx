@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft, ExternalLink } from "lucide-react";
+import { ChevronLeft, ExternalLink, House } from "lucide-react";
 import { AdminPageShell } from "@/components/admin/page-shell";
 import { CollectionForm } from "@/components/admin/collections/collection-form";
 import { CollectionProducts } from "@/components/admin/collections/collection-products";
 import { updateCollection } from "../../actions";
 import { getCollection, getCollectionMembers, listPickerProducts } from "../../data";
+import { getHomeSections } from "../../../content/home-sections";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -26,7 +27,14 @@ export default async function EditCollectionPage({ params }: Params) {
   const collection = await getCollection(id);
   if (!collection) notFound();
 
-  const [members, picker] = await Promise.all([getCollectionMembers(id), listPickerProducts()]);
+  const [members, picker, sections] = await Promise.all([
+    getCollectionMembers(id),
+    listPickerProducts(),
+    getHomeSections().catch(() => []),
+  ]);
+  // The home-page sections this collection fills, so the owner knows editing
+  // it changes the home page.
+  const onHome = sections.filter((s) => s.collection?.id === collection.id && s.shown);
   // The storefront 404s a collection with no active products, so only link to a real page.
   const visible = collection.isActive && members.some((m) => m.status === "active");
 
@@ -54,6 +62,25 @@ export default async function EditCollectionPage({ params }: Params) {
           </Link>
         )}
       </div>
+
+      {onHome.length > 0 && (
+        <div className="mb-8 flex max-w-3xl items-start gap-3 rounded-2xl border border-wine-700/25 bg-wine-700/5 px-5 py-4 text-sm leading-relaxed text-ink-800">
+          <House className="mt-0.5 h-4 w-4 shrink-0 text-wine-700" strokeWidth={1.5} aria-hidden />
+          <p>
+            This collection fills the{" "}
+            <span className="font-medium">{onHome.map((s) => s.name).join(" and ")}</span>{" "}
+            {onHome.length === 1 ? "section" : "sections"} of the home page. The first eight products
+            below, in this order, are what shoppers see there. To change the heading, go to{" "}
+            <Link
+              href={onHome[0].blockId ? `/admin/content/${onHome[0].blockId}` : "/admin/content"}
+              className="text-wine-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            >
+              Home page &amp; Banners
+            </Link>
+            .
+          </p>
+        </div>
+      )}
 
       <div className="max-w-3xl space-y-10">
         <CollectionForm

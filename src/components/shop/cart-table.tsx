@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, X } from "lucide-react";
 import { useCart } from "@/lib/cart/cart-context";
+import { lineKey } from "@/lib/cart/types";
 import { ButtonLink } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { useSiteSettings } from "@/lib/settings/provider";
@@ -33,7 +34,7 @@ export function CartTable() {
     <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
       <ul className="divide-y divide-cream-300 border-y border-cream-300">
         {lines.map((line) => (
-          <li key={line.productId} className="flex gap-5 py-6">
+          <li key={lineKey(line)} className="flex gap-5 py-6">
             <Link href={`/products/${line.slug}`} className="relative h-32 w-24 shrink-0 overflow-hidden rounded-xl border border-cream-300 bg-white">
               {line.image && <Image src={line.image} alt={line.title} fill sizes="96px" className="object-contain p-2" />}
             </Link>
@@ -49,7 +50,7 @@ export function CartTable() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => remove(line.productId)}
+                  onClick={() => remove(lineKey(line))}
                   aria-label={`Remove ${line.title}`}
                   className="shrink-0 text-ink-400 transition-colors hover:text-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                 >
@@ -61,7 +62,7 @@ export function CartTable() {
                 <div className="flex items-center rounded-full border border-cream-300">
                   <button
                     type="button"
-                    onClick={() => setQty(line.productId, line.quantity - 1)}
+                    onClick={() => setQty(lineKey(line), line.quantity - 1)}
                     aria-label={`Decrease quantity of ${line.title}`}
                     className="grid h-9 w-9 place-items-center rounded-full hover:text-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                   >
@@ -71,7 +72,7 @@ export function CartTable() {
                   <button
                     type="button"
                     disabled={line.quantity >= line.maxQuantity}
-                    onClick={() => setQty(line.productId, line.quantity + 1)}
+                    onClick={() => setQty(lineKey(line), line.quantity + 1)}
                     aria-label={`Increase quantity of ${line.title}`}
                     className="grid h-9 w-9 place-items-center rounded-full hover:text-wine-700 disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                   >

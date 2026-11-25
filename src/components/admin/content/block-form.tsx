@@ -12,6 +12,7 @@ import {
   initialValue,
   pageLabel,
   type ActionState,
+  type CollectionOption,
   type ContentBlockRow,
   type FieldDescriptor,
 } from "./types";
@@ -20,14 +21,24 @@ import { BlockPreview, hasPreview, useDebounced } from "./block-preview";
 import { ScheduleFields } from "./schedule-fields";
 import { Pill, StatusMessage, focusRing } from "./ui";
 
+/** Which media-library folder an image uploaded from this block is filed under. */
+function uploadFolderFor(key: string) {
+  if (key.startsWith("banner")) return "banners";
+  if (key === "editorial" || key === "showcase") return "editorial";
+  return "general";
+}
+
 export function BlockForm({
   block,
   fields,
   action,
+  collections = [],
 }: {
   block: ContentBlockRow;
   fields: FieldDescriptor[];
   action: (state: ActionState, formData: FormData) => Promise<ActionState>;
+  /** The shop's collections, for blocks with a "collection" field. */
+  collections?: CollectionOption[];
 }) {
   const [values, setValues] = useState<Record<string, string | boolean>>(() => {
     const out: Record<string, string | boolean> = {};
@@ -67,7 +78,7 @@ export function BlockForm({
           )}
         >
           <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
-          All content
+          Home page &amp; banners
         </Link>
         <Pill>{pageLabel(block.page)}</Pill>
         {block.is_locked && (
@@ -110,6 +121,8 @@ export function BlockForm({
                     value={values[field.name] ?? ""}
                     onChange={set(field.name)}
                     error={state?.fieldErrors?.[field.name] ?? null}
+                    collections={collections}
+                    uploadFolder={uploadFolderFor(block.key)}
                   />
                 ))}
               </div>

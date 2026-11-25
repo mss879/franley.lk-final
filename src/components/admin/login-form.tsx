@@ -37,9 +37,12 @@ export function LoginForm({
       return;
     }
 
-    // The admin layout re-checks authorisation server-side; a signed-in user
-    // who is not an admin is bounced there, not here.
-    router.replace(nextPath && nextPath.startsWith("/admin") ? nextPath : "/admin");
+    // Step two: the emailed code (/admin/verify sends it). The password alone
+    // does not make this session an admin — the database refuses admin rights
+    // until the code is entered. A signed-in user who is not an admin is
+    // bounced by the server-side gate, not here.
+    const next = nextPath && /^\/admin(?:[/?#]|$)/.test(nextPath) ? nextPath : "/admin";
+    router.replace(`/admin/verify?next=${encodeURIComponent(next)}`);
     router.refresh();
   }
 

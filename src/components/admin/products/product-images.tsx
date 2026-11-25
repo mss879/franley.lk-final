@@ -37,11 +37,21 @@ export function ProductImages({
   productId,
   productTitle,
   images,
+  colorId = null,
+  heading = "Photographs",
+  description = "Shot on white. The first image is the one the product card uses.",
+  emptyHint = "Add at least one. Without it the product card falls back to an empty frame on the storefront.",
 }: {
   productId: string;
   productTitle: string;
   images: ProductImageRow[];
+  /** Set to manage one colour's photographs; null for the general ones. */
+  colorId?: string | null;
+  heading?: string;
+  description?: string;
+  emptyHint?: string;
 }) {
+  const inputId = `product-image-upload-${colorId ?? "general"}`;
   const router = useRouter();
   const fileInput = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<string | null>(null);
@@ -83,6 +93,7 @@ export function ProductImages({
       const { data } = supabase.storage.from(PRODUCT_IMAGE_BUCKET).getPublicUrl(key);
       const result = await addProductImage({
         productId,
+        colorId,
         url: data.publicUrl,
         alt: productTitle || file.name.replace(/\.[a-z0-9]+$/i, ""),
       });
@@ -117,15 +128,13 @@ export function ProductImages({
     <section className="rounded-3xl border border-cream-300 bg-white p-6 md:p-7">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h2 className="font-display text-lg text-ink-900">Photographs</h2>
-          <p className="mt-1 text-xs text-ink-600">
-            Shot on white. The first image is the one the product card uses.
-          </p>
+          <h2 className="font-display text-lg text-ink-900">{heading}</h2>
+          <p className="mt-1 text-xs text-ink-600">{description}</p>
         </div>
 
         <div>
           <label
-            htmlFor="product-image-upload"
+            htmlFor={inputId}
             className={cn(
               "inline-flex h-11 cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-6 text-sm font-medium text-cream-50",
               "transition-colors duration-300 hover:bg-wine-700",
@@ -142,7 +151,7 @@ export function ProductImages({
           </label>
           <input
             ref={fileInput}
-            id="product-image-upload"
+            id={inputId}
             type="file"
             multiple
             accept="image/webp,image/jpeg,image/png,image/avif"
@@ -175,10 +184,7 @@ export function ProductImages({
       {images.length === 0 ? (
         <div className="mt-5 rounded-2xl border border-dashed border-cream-300 px-6 py-14 text-center">
           <p className="font-display text-xl text-ink-900">No photographs yet</p>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-ink-600">
-            Add at least one. Without it the product card falls back to an empty frame on the
-            storefront.
-          </p>
+          <p className="mx-auto mt-2 max-w-sm text-sm text-ink-600">{emptyHint}</p>
         </div>
       ) : (
         <ul className="mt-5 space-y-3">

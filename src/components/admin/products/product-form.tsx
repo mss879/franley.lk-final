@@ -59,6 +59,7 @@ export function ProductForm({
   initial,
   categories,
   previewImage,
+  stockFromColours = false,
   children,
 }: {
   mode: "create" | "edit";
@@ -66,6 +67,8 @@ export function ProductForm({
   initial: ProductFormValues;
   categories: CategoryOption[];
   previewImage: string | null;
+  /** The product has colours, so its stock is their total and is set per colour. */
+  stockFromColours?: boolean;
   /** The image manager — rendered under the form, never inside it. */
   children?: React.ReactNode;
 }) {
@@ -119,7 +122,9 @@ export function ProductForm({
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem]">
       <div className="min-w-0 space-y-8">
-        <form action={formAction} className="space-y-6">
+        {/* Has an id so the new-product photographs, rendered below it, can
+            send their hidden fields with it (form="product-form"). */}
+        <form id="product-form" action={formAction} className="space-y-6">
           {productId && <input type="hidden" name="id" value={productId} />}
 
           <FormSection title="Identity" description="What the piece is called, and where it lives on the site.">
@@ -261,8 +266,14 @@ export function ProductForm({
               inputMode="numeric"
               value={values.stock}
               error={errorFor("stock")}
+              readOnly={stockFromColours}
               onChange={(e) => set("stock", e.target.value)}
             />
+            {stockFromColours && (
+              <p className="text-xs text-ink-600 sm:col-span-2">
+                This product has colours, so its stock is the total of their stock. Change it per colour below.
+              </p>
+            )}
             <TextField
               id="lowStockThreshold"
               name="lowStockThreshold"
@@ -375,7 +386,7 @@ export function ProductForm({
                 <span className="text-sm text-ink-800">
                   Featured
                   <span className="block text-xs text-ink-600">
-                    Featured active products are pulled into the home page rail.
+                    Used on the home page only while the Featured collection is empty. Choose home page products under Collections → Featured.
                   </span>
                 </span>
               </label>

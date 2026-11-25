@@ -75,6 +75,16 @@ function schemaForField(field: FieldDescriptor): z.ZodType {
         : z.union([z.literal(""), base]);
     }
 
+    case "collection": {
+      // Mirrors the collections.slug check in 0013. Existence is checked
+      // against the table in updateContentBlock, which has the client.
+      const base = z
+        .string()
+        .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, `Pick a collection for ${label}.`)
+        .max(64);
+      return field.required ? base : z.union([z.literal(""), base]);
+    }
+
     case "url":
     case "link": {
       const base = z
@@ -161,6 +171,20 @@ export async function updateContentBlock(
       continue;
     }
     accepted[field.name] = result.data;
+  }
+
+  // A collection field must name a collection that exists. It may be hidden
+  // or empty — the storefront falls back to the section's automatic list —
+  // but a typo'd slug from a tampered form would silently do the same.
+  for (const field of fields) {
+    const slug = accepted[field.name];
+    if (field.type !== "collection" || typeof slug !== "string" || slug === "") continue;
+    const { data: found } = await supabase
+      .from("collections")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (!found) fieldErrors[field.name] = "That collection no longer exists. Pick another one.";
   }
 
   if (Object.keys(fieldErrors).length > 0) {

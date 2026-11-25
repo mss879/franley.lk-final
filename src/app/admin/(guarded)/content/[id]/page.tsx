@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { parseFields, type ContentBlockRow } from "@/components/admin/content/types";
 import { BlockForm } from "@/components/admin/content/block-form";
 import { updateContentBlock } from "../actions";
+import { listCollectionOptions } from "../home-sections";
 
 export const metadata: Metadata = { title: "Edit content" };
 export const dynamic = "force-dynamic";
@@ -32,6 +33,10 @@ export default async function ContentBlockEditorPage({
 
   const block = data as unknown as ContentBlockRow;
   const fields = parseFields(block.fields);
+  // Only a block with a "collection" field (a home product section) needs them.
+  const collections = fields.some((f) => f.type === "collection")
+    ? await listCollectionOptions()
+    : [];
 
   return (
     <AdminPageShell
@@ -39,7 +44,12 @@ export default async function ContentBlockEditorPage({
       title={block.label || block.key}
       description={block.help ?? undefined}
     >
-      <BlockForm block={block} fields={fields} action={updateContentBlock} />
+      <BlockForm
+        block={block}
+        fields={fields}
+        action={updateContentBlock}
+        collections={collections}
+      />
     </AdminPageShell>
   );
 }

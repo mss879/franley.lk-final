@@ -9,7 +9,7 @@ import {
   useReducer,
   useState,
 } from "react";
-import type { CartLine, CartState } from "./types";
+import { lineKey, type CartLine, type CartState } from "./types";
 
 const STORAGE_KEY = "franley.bag.v1";
 
@@ -18,8 +18,8 @@ type State = CartState & { hydrated: boolean };
 type Action =
   | { type: "hydrate"; lines: CartLine[] }
   | { type: "add"; line: CartLine }
-  | { type: "setQty"; productId: string; quantity: number }
-  | { type: "remove"; productId: string }
+  | { type: "setQty"; key: string; quantity: number }
+  | { type: "remove"; key: string }
   | { type: "clear" };
 
 function reducer(state: State, action: Action): State {
@@ -27,12 +27,13 @@ function reducer(state: State, action: Action): State {
     case "hydrate":
       return { lines: action.lines, hydrated: true };
     case "add": {
-      const existing = state.lines.find((l) => l.productId === action.line.productId);
+      const key = lineKey(action.line);
+      const existing = state.lines.find((l) => lineKey(l) === key);
       if (!existing) return { ...state, lines: [...state.lines, action.line] };
       return {
         ...state,
         lines: state.lines.map((l) =>
-          l.productId === action.line.productId
+          lineKey(l) === key
             ? { ...l, quantity: Math.min(l.quantity + action.line.quantity, l.maxQuantity) }
             : l,
         ),
@@ -40,19 +41,23 @@ function reducer(state: State, action: Action): State {
     }
     case "setQty": {
       if (action.quantity <= 0) {
-        return { ...state, lines: state.lines.filter((l) => l.productId !== action.productId) };
+        return { ...state, lines: state.lines.filter((l) => lineKey(l) !== action.key) };
       }
       return {
         ...state,
         lines: state.lines.map((l) =>
-          l.productId === action.productId
+          lineKey(l) === action.key
             ? { ...l, quantity: Math.min(action.quantity, l.maxQuantity) }
             : l,
         ),
       };
     }
+    // A line key, or a bare product id to drop every colour of that product.
     case "remove":
-      return { ...state, lines: state.lines.filter((l) => l.productId !== action.productId) };
+      return {
+        ...state,
+        lines: state.lines.filter((l) => lineKey(l) !== action.key && l.productId !== action.key),
+      };
     case "clear":
       return { ...state, lines: [] };
   }
@@ -68,8 +73,10 @@ type CartContextValue = {
   openBag: () => void;
   closeBag: () => void;
   add: (line: Omit<CartLine, "quantity"> & { quantity?: number }) => void;
-  setQty: (productId: string, quantity: number) => void;
-  remove: (productId: string) => void;
+  /** `key` is lineKey(line). */
+  setQty: (key: string, quantity: number) => void;
+  /** `key` is lineKey(line), or a product id to remove every colour of it. */
+  remove: (key: string) => void;
   clear: () => void;
 };
 
@@ -123,8 +130,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       openBag: () => setOpen(true),
       closeBag: () => setOpen(false),
       add,
-      setQty: (productId, quantity) => dispatch({ type: "setQty", productId, quantity }),
-      remove: (productId) => dispatch({ type: "remove", productId }),
+      setQty: (key, quantity) => dispatch({ type: "setQty", key, quantity }),
+      remove: (key) => dispatch({ type: "remove", key }),
       clear: () => dispatch({ type: "clear" }),
     };
   }, [state.lines, state.hydrated, isOpen, add]);

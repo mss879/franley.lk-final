@@ -5,7 +5,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { ValueProps } from "@/components/site/value-props";
-import { SITE } from "@/lib/constants";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -133,15 +132,14 @@ export default function AboutPage() {
       <section className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
-            <Eyebrow rule>Based in Dehiwala</Eyebrow>
+            <Eyebrow rule>Based in Colombo</Eyebrow>
             <h2 className="font-display mt-5 text-3xl leading-tight text-balance md:text-4xl">
               A small team you can actually reach
             </h2>
             <p className="mt-5 text-sm leading-relaxed text-ink-600 text-pretty md:text-base">
-              We work out of {SITE.address.line1}, {SITE.address.city}. Orders are
-              packed here, questions are answered here, and the person who replies
-              on WhatsApp is the person who knows what is in stock. If something
-              goes wrong, you are not filing a ticket into a void.
+              We are a small team based in Colombo. Orders are packed here,
+              questions are answered here, and the person who replies on WhatsApp
+              is the person who knows what is in stock.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/shop" size="lg">Shop the collection</ButtonLink>

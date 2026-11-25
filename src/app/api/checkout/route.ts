@@ -56,7 +56,16 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const input = parsed.data;
+  // The form asks for first and last name, one "City / District" and an
+  // optional second number; the order keeps its one name, city and note.
+  const input = {
+    ...parsed.data,
+    fullName: `${parsed.data.firstName} ${parsed.data.lastName}`,
+    city: parsed.data.district,
+    notes: [parsed.data.phone2 && `Second contact number: ${parsed.data.phone2}`, parsed.data.notes]
+      .filter(Boolean)
+      .join("\n"),
+  };
   const payingByCard = input.paymentMethod === "card";
 
   // Every product id in the database is a uuid. Anything else is a bag saved
@@ -105,7 +114,7 @@ export async function POST(request: NextRequest) {
   const idempotencyKey = rawKey && IDEMPOTENCY_KEY.test(rawKey) ? rawKey : null;
 
   const { data, error } = await supabase.rpc("place_order", {
-    p_items: input.items.map((i) => ({ product_id: i.productId, quantity: i.quantity })),
+    p_items: input.items.map((i) => ({ product_id: i.productId, color_id: i.colorId ?? null, quantity: i.quantity })),
     p_customer: { email: input.email, name: input.fullName, phone: input.phone },
     p_shipping: {
       line1: input.addressLine1,

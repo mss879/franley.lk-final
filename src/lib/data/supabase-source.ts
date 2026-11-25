@@ -37,9 +37,14 @@ type PublicRow = {
   category_slug: string;
   category_name: string | null;
   images: string[] | null;
+  /** 0018_product_colours.sql. Absent until that migration has run. */
+  colors?: { id: string; name: string; stock: number; images: string[] | null }[] | null;
 };
 
 function toProduct(row: PublicRow): Product {
+  const colors = (row.colors ?? []).map((c) => ({ ...c, images: c.images ?? [] }));
+  // A product photographed only per colour still needs a picture in grids.
+  const images = row.images?.length ? row.images : colors.flatMap((c) => c.images).slice(0, 1);
   return {
     id: row.id,
     slug: row.slug,
@@ -54,7 +59,8 @@ function toProduct(row: PublicRow): Product {
     // numeric(3,1) arrives as a string from PostgREST; normalise and drop a
     // trailing ".0" so the UI reads "6 cm", not "6.0 cm".
     widthCm: row.width_cm == null ? null : String(row.width_cm).replace(/\.0$/, ""),
-    images: row.images ?? [],
+    images,
+    colors,
     featured: row.featured,
     stock: row.stock,
     status: row.status,

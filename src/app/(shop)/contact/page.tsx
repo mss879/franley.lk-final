@@ -88,11 +88,7 @@ export default async function ContactPage() {
           {/* ---- Details ---- */}
           <div>
             <Eyebrow rule>Customer support</Eyebrow>
-            <h2 className="font-display mt-5 text-3xl">Talk to a person</h2>
-            <p className="mt-4 text-sm leading-relaxed text-ink-600 text-pretty">
-              We are a small team in {SITE.address.city}, so you will be speaking
-              to someone who knows what is actually on the shelf.
-            </p>
+            <h2 className="font-display mt-5 text-3xl">Contact us</h2>
 
             <dl className="mt-10 space-y-8">
               {details(s).map(({ Icon, label, lines, href }) => (

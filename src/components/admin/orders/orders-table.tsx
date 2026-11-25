@@ -3,8 +3,10 @@ import { ChevronRight } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { formatDateTime } from "./format";
 import { OrderStatusBadge, PaymentStatusBadge } from "./status-badge";
+import { OrderRowDelete } from "./order-delete-form";
 import {
   PAYMENT_METHOD_LABEL,
+  canDeleteOrder,
   type OrderStatus,
   type PaymentMethod,
   type PaymentStatus,
@@ -41,11 +43,14 @@ const td = "px-5 py-4 align-middle";
 export function OrdersTable({
   rows,
   caption = "Orders, newest first",
+  allowDelete = false,
 }: {
   rows: OrderListRow[];
   /** Read out to screen readers only; say whose orders these are when the
    *  table sits on anything other than the orders list. */
   caption?: string;
+  /** Adds a delete button to rows admin_delete_order (0021) would accept. */
+  allowDelete?: boolean;
 }) {
   return (
     <div className="overflow-hidden rounded-3xl border border-cream-300 bg-white">
@@ -62,6 +67,11 @@ export function OrdersTable({
               <th scope="col" className={`${th} text-right`}>Total</th>
               <th scope="col" className={th}>Payment</th>
               <th scope="col" className={th}>Status</th>
+              {allowDelete && (
+                <th scope="col" className={`${th} w-12`}>
+                  <span className="sr-only">Actions</span>
+                </th>
+              )}
             </tr>
           </thead>
           <tbody className="divide-y divide-cream-300">
@@ -95,6 +105,13 @@ export function OrdersTable({
                 <td className={td}>
                   <OrderStatusBadge status={row.status} />
                 </td>
+                {allowDelete && (
+                  <td className={`${td} pl-0 text-right`}>
+                    {canDeleteOrder(row.status, row.payment_status) && (
+                      <OrderRowDelete orderId={row.id} orderNumber={row.order_number} />
+                    )}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -104,10 +121,10 @@ export function OrdersTable({
       {/* Mobile: one tappable card per order */}
       <ul className="divide-y divide-cream-300 md:hidden">
         {rows.map((row) => (
-          <li key={row.id}>
+          <li key={row.id} className="flex items-start">
             <Link
               href={`/admin/orders/${row.id}`}
-              className="flex items-start gap-4 p-5 transition-colors duration-200 hover:bg-cream-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-inset"
+              className="flex min-w-0 flex-1 items-start gap-4 p-5 transition-colors duration-200 hover:bg-cream-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-inset"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
@@ -128,6 +145,11 @@ export function OrdersTable({
               </div>
               <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-ink-400" strokeWidth={1.5} aria-hidden />
             </Link>
+            {allowDelete && canDeleteOrder(row.status, row.payment_status) && (
+              <div className="py-4 pr-3">
+                <OrderRowDelete orderId={row.id} orderNumber={row.order_number} />
+              </div>
+            )}
           </li>
         ))}
       </ul>

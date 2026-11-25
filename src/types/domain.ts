@@ -39,10 +39,21 @@ export type Product = {
   colorName: string | null;
   colorHex: string | null;
   widthCm: string | null;
+  /** The general photographs. A colour's own photographs are on the colour. */
   images: string[];
+  /** Colour options, each with its own stock and photographs. Empty for a single-colour product. */
+  colors?: ProductColor[];
   featured: boolean;
+  /** For a product with colours, the sum of their stock. */
   stock: number;
   status: "active" | "draft" | "archived";
+};
+
+export type ProductColor = {
+  id: string;
+  name: string;
+  stock: number;
+  images: string[];
 };
 
 export type ProductQuery = {

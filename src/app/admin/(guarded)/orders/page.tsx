@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ReceiptText, Search, X } from "lucide-react";
+import { CheckCircle2, ReceiptText, Search, X } from "lucide-react";
 import { AdminPageShell } from "@/components/admin/page-shell";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
@@ -82,7 +82,15 @@ const CLOSED = '("cancelled","refunded")';
 export default async function OrdersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; q?: string; page?: string; pay?: string; method?: string }>;
+  searchParams: Promise<{
+    status?: string;
+    q?: string;
+    page?: string;
+    pay?: string;
+    method?: string;
+    deleted?: string;
+    restocked?: string;
+  }>;
 }) {
   const params = await searchParams;
   const status = params.status && isOrderStatus(params.status) ? params.status : undefined;
@@ -93,6 +101,8 @@ export default async function OrdersPage({
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
   const from = (page - 1) * PAGE_SIZE;
   const filter = q ? searchFilter(q) : null;
+  // Set by deleteOrder's redirect from the order page. Shown as text only.
+  const deletedNumber = (params.deleted ?? "").trim().slice(0, 40);
 
   const supabase = await createClient();
 
@@ -170,6 +180,26 @@ export default async function OrdersPage({
       title="Orders"
       description="Every order placed on the storefront, newest first. Open one to move it along, add a tracking number or leave a note for the team."
     >
+      {deletedNumber && (
+        <div
+          role="status"
+          className="mb-6 flex items-start gap-3 rounded-2xl border border-cream-300 bg-cream-100 px-5 py-4"
+        >
+          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-wine-700" strokeWidth={1.5} aria-hidden />
+          <p className="flex-1 text-sm text-ink-800">
+            Order <span className="font-medium tabular-nums">{deletedNumber}</span> was deleted
+            {params.restocked === "1" ? " and its stock returned to the shelf" : ""}.
+          </p>
+          <Link
+            href={ordersHref({ status, q: q || undefined, pay, method })}
+            aria-label="Dismiss"
+            className="rounded-full p-1 text-ink-600 transition-colors hover:text-wine-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+          >
+            <X className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+          </Link>
+        </div>
+      )}
+
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         <Stat label="Orders today" value={String(todayResult.count ?? 0)} hint="Since midnight, Colombo" />
         <Stat label="Awaiting confirmation" value={String(pendingResult.count ?? 0)} hint="Still pending" />
@@ -276,7 +306,7 @@ export default async function OrdersPage({
           </div>
         ) : rows.length > 0 ? (
           <>
-            <OrdersTable rows={rows} />
+            <OrdersTable rows={rows} allowDelete />
             <OrderPagination
               page={page}
               pageCount={pageCount}

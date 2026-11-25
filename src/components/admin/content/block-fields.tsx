@@ -1,12 +1,20 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import Image from "next/image";
-import { ImagePlus, X } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ImagePlus, Loader2, Plus, Upload, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { isImageField, isLinkField, type FieldDescriptor } from "./types";
-import { mediaUrl, type MediaAsset } from "./media";
+import { createMediaAsset } from "@/app/admin/(guarded)/content/actions";
+import {
+  isImageField,
+  isLinkField,
+  type CollectionOption,
+  type FieldDescriptor,
+} from "./types";
+import { ACCEPTED_MIME, MEDIA_BUCKET, mediaUrl, type MediaAsset } from "./media";
 import { MediaPickerDialog } from "./media-picker";
+import { appendUploaded, uploadToBucket } from "./upload";
 import { FieldShell, focusRing, inputArea, inputPill, selectPill } from "./ui";
 
 export const FIELD_INPUT_PREFIX = "f:";
@@ -18,11 +26,17 @@ export function BlockFieldControl({
   value,
   onChange,
   error,
+  collections = [],
+  uploadFolder = "general",
 }: {
   field: FieldDescriptor;
   value: string | boolean;
   onChange: (next: string | boolean) => void;
   error?: string | null;
+  /** The shop's collections, for a "collection" field. */
+  collections?: CollectionOption[];
+  /** Media library folder that an image uploaded from this form is filed under. */
+  uploadFolder?: string;
 }) {
   const reactId = useId();
   const id = `${reactId}-${field.name.replace(/[^a-zA-Z0-9]/g, "-")}`;
@@ -66,6 +80,21 @@ export function BlockFieldControl({
         value={text}
         onChange={onChange}
         error={error}
+        uploadFolder={uploadFolder}
+      />
+    );
+  }
+
+  if (field.type === "collection") {
+    return (
+      <CollectionField
+        id={id}
+        name={name}
+        field={field}
+        value={text}
+        onChange={onChange}
+        error={error}
+        collections={collections}
       />
     );
   }
@@ -205,6 +234,7 @@ function ImageField({
   value,
   onChange,
   error,
+  uploadFolder,
 }: {
   id: string;
   name: string;
@@ -212,13 +242,56 @@ function ImageField({
   value: string;
   onChange: (next: string) => void;
   error?: string | null;
+  uploadFolder: string;
 }) {
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadNote, setUploadNote] = useState<{ ok: boolean; text: string } | null>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const fileId = `${id}-file`;
 
   const pick = (asset: MediaAsset) => {
     onChange(mediaUrl(asset));
+    setUploadNote(null);
     setPickerOpen(false);
   };
+
+  /**
+   * Straight from this form: the file goes into the cms-media bucket from the
+   * browser (as the media library does), is recorded in the library so it
+   * can be picked again later, and fills this field. The block's own
+   * "description" field carries the alt text, so the library copy is filed
+   * as decorative.
+   */
+  async function upload(file: File) {
+    setUploadNote(null);
+    setUploading(true);
+    const result = await uploadToBucket(file);
+    if (!result.ok) {
+      setUploadNote({ ok: false, text: result.message });
+      setUploading(false);
+      return;
+    }
+
+    onChange(mediaUrl({ bucket: MEDIA_BUCKET, storage_path: result.file.storage_path, external_url: null }));
+
+    const formData = new FormData();
+    appendUploaded(formData, result.file);
+    formData.set("alt", "");
+    formData.set("is_decorative", "on");
+    formData.set("title", file.name.slice(0, 200));
+    formData.set("folder", uploadFolder);
+    const registered = await createMediaAsset(null, formData).catch(() => null);
+
+    setUploadNote({
+      ok: true,
+      text: registered?.ok
+        ? "Uploaded. Press “Save changes” to put it on the site."
+        : "Uploaded. Press “Save changes” to put it on the site. (It was not added to the media library.)",
+    });
+    setUploading(false);
+    if (fileInput.current) fileInput.current.value = "";
+  }
 
   return (
     <FieldShell
@@ -254,6 +327,33 @@ function ImageField({
             className={inputPill}
           />
           <div className="flex flex-wrap items-center gap-2">
+            <label
+              htmlFor={fileId}
+              className={cn(
+                "inline-flex h-9 cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-4 text-xs font-medium text-cream-50 transition-colors hover:bg-wine-700",
+                "focus-within:ring-2 focus-within:ring-[var(--focus-ring)] focus-within:ring-offset-2",
+                uploading && "cursor-wait opacity-80",
+              )}
+            >
+              {uploading ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+              ) : (
+                <Upload className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+              )}
+              {uploading ? "Uploading…" : "Upload new image"}
+              <input
+                id={fileId}
+                ref={fileInput}
+                type="file"
+                accept={ACCEPTED_MIME.join(",")}
+                disabled={uploading}
+                className="sr-only"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) void upload(file);
+                }}
+              />
+            </label>
             <button
               type="button"
               onClick={() => setPickerOpen(true)}
@@ -279,10 +379,122 @@ function ImageField({
               </button>
             )}
           </div>
+          <p aria-live="polite" className="min-h-4 text-xs leading-relaxed">
+            {uploadNote && (
+              <span className={uploadNote.ok ? "text-ink-600" : "text-wine-700"}>{uploadNote.text}</span>
+            )}
+          </p>
         </div>
       </div>
 
       <MediaPickerDialog open={pickerOpen} onClose={() => setPickerOpen(false)} onPick={pick} />
+    </FieldShell>
+  );
+}
+
+/**
+ * Which collection fills a home-page product section. A select over the shop's
+ * collections, plus the way through to choosing that collection's products —
+ * which is the part the owner actually came for.
+ */
+function CollectionField({
+  id,
+  name,
+  field,
+  value,
+  onChange,
+  error,
+  collections,
+}: {
+  id: string;
+  name: string;
+  field: FieldDescriptor;
+  value: string;
+  onChange: (next: string) => void;
+  error?: string | null;
+  collections: CollectionOption[];
+}) {
+  const selected = collections.find((c) => c.slug === value) ?? null;
+  // A slug saved before its collection was renamed or deleted still shows,
+  // so the admin can see what is wrong instead of a silently-changed select.
+  const missing = value !== "" && !selected;
+  const notLive = selected && (!selected.isActive || selected.liveCount === 0);
+
+  return (
+    <FieldShell
+      htmlFor={id}
+      label={field.label}
+      help={field.help}
+      required={field.required}
+      error={error}
+    >
+      <select
+        id={id}
+        name={name}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={selectPill}
+      >
+        {value === "" && (
+          <option value="" disabled>
+            Choose a collection
+          </option>
+        )}
+        {missing && <option value={value}>{value} (no longer exists)</option>}
+        {collections.map((c) => (
+          <option key={c.id} value={c.slug}>
+            {c.name}
+            {c.isActive ? ` · ${c.liveCount} live` : " · hidden"}
+          </option>
+        ))}
+      </select>
+
+      <div className="mt-3 flex flex-col gap-2 rounded-2xl border border-cream-300 bg-cream-50 px-4 py-3">
+        {selected ? (
+          <>
+            <p className="text-sm text-ink-800">
+              Showing the products in <span className="font-medium">“{selected.name}”</span>, in that
+              collection’s order — the first eight appear here.
+            </p>
+            {notLive && (
+              <p className="text-xs leading-relaxed text-wine-700">
+                {selected.isActive
+                  ? "This collection has no active products yet, "
+                  : "This collection is hidden, "}
+                so the section shows its automatic list instead until it does.
+              </p>
+            )}
+            <Link
+              href={`/admin/collections/${selected.id}/edit`}
+              className={cn(
+                "inline-flex w-fit items-center gap-1.5 rounded-full text-sm font-medium text-wine-700 underline-offset-4 hover:underline",
+                focusRing,
+              )}
+            >
+              Choose the products in “{selected.name}”
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
+            </Link>
+            <p className="text-xs text-ink-600">Save any changes on this page first.</p>
+          </>
+        ) : (
+          <p className="text-xs leading-relaxed text-ink-600">
+            {missing
+              ? "That collection no longer exists, so the section shows its automatic list. Pick another one."
+              : "Pick the collection whose products this section shows."}
+          </p>
+        )}
+        <Link
+          href="/admin/collections/new"
+          className={cn(
+            "inline-flex w-fit items-center gap-1.5 rounded-full text-xs text-ink-600 transition-colors hover:text-wine-700",
+            focusRing,
+          )}
+        >
+          <Plus className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+          Make a new collection for this section
+        </Link>
+      </div>
     </FieldShell>
   );
 }

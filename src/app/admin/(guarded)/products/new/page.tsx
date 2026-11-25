@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { ImagePlus } from "lucide-react";
 import { AdminPageShell } from "@/components/admin/page-shell";
 import { EMPTY_PRODUCT, ProductForm } from "@/components/admin/products/product-form";
+import { NewProductPhotos } from "@/components/admin/products/new-product-photos";
 import { getCategoryOptions } from "../queries";
 
 export const metadata: Metadata = { title: "New product" };
@@ -12,7 +12,7 @@ export default async function NewProductPage() {
   return (
     <AdminPageShell
       title="New product"
-      description="Create the record first, then add its photographs. New products start as drafts."
+      description="Fill in the details and add photographs, then press Create. New products start as drafts."
     >
       {categories.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-cream-300 bg-white px-6 py-16 text-center">
@@ -23,14 +23,7 @@ export default async function NewProductPage() {
         </div>
       ) : (
         <ProductForm mode="create" initial={EMPTY_PRODUCT} categories={categories} previewImage={null}>
-          <section className="rounded-3xl border border-dashed border-cream-300 bg-white p-6 text-center md:p-7">
-            <ImagePlus className="mx-auto h-6 w-6 text-ink-400" strokeWidth={1.25} aria-hidden />
-            <h2 className="font-display mt-3 text-lg text-ink-900">Photographs come next</h2>
-            <p className="mx-auto mt-2 max-w-md text-sm text-ink-600">
-              Images are filed under the product’s own folder in storage, so they can only be
-              uploaded once the product exists. Create it and you land straight on the gallery.
-            </p>
-          </section>
+          <NewProductPhotos />
         </ProductForm>
       )}
     </AdminPageShell>

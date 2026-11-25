@@ -135,7 +135,7 @@ function PickerBody({
           {!loading && loaded.error && <p className="text-sm text-wine-700">{loaded.error}</p>}
           {!loading && !loaded.error && assets.length === 0 && (
             <p className="text-sm text-ink-600">
-              No images here yet. Upload some from Content &amp; Banners → Media library.
+              No images here yet. Use “Upload new image” on the form, or the Media library under Home page &amp; Banners.
             </p>
           )}
           {assets.length > 0 && (

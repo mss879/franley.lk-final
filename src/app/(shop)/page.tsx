@@ -10,6 +10,7 @@ import { ProductCard } from "@/components/shop/product-card";
 import { getProducts } from "@/lib/data";
 import { getHomeContent } from "@/lib/cms";
 import { buildMetadata } from "@/lib/seo";
+import type { Product, ProductQuery } from "@/types/domain";
 
 export const revalidate = 60;
 
@@ -19,13 +20,57 @@ export const metadata: Metadata = buildMetadata({
   canonical: "/",
 });
 
-export default async function HomePage() {
-  const [content, featured, latest] = await Promise.all([
-    getHomeContent(),
-    getProducts({ featured: true, limit: 8 }),
-    getProducts({ sort: "newest", limit: 8 }),
-  ]);
+const SECTION_SIZE = 8;
 
+/**
+ * A home product section shows its collection's products in the collection's
+ * own order (0020_home_sections.sql). Only when that collection is missing,
+ * hidden or empty does it fall back to the automatic list it showed before —
+ * and the "View all" link follows whichever list is on screen.
+ */
+async function sectionProducts(
+  collectionSlug: string,
+  fallback: { query: ProductQuery; href: string } | null,
+): Promise<{ products: Product[]; href: string | null }> {
+  if (collectionSlug) {
+    const picked = await getProducts({ collectionSlug, limit: SECTION_SIZE });
+    if (picked.products.length > 0) {
+      return { products: picked.products, href: `/collections/${collectionSlug}` };
+    }
+  }
+  if (!fallback) return { products: [], href: null };
+  const auto = await getProducts({ ...fallback.query, limit: SECTION_SIZE });
+  return { products: auto.products, href: fallback.href };
+}
+
+function toRailItems(products: Product[]) {
+  return products.map((p) => ({
+    href: `/products/${p.slug}`,
+    src: p.images[0] ?? "/brand/og-hero.jpg",
+    alt: p.title,
+    title: p.title,
+    priceCents: p.priceCents,
+    categoryName: p.categoryName,
+  }));
+}
+
+export default async function HomePage() {
+  const content = await getHomeContent();
+  const showTrending = !content.hiddenSections.includes("trending");
+
+  const [featured, latest, trending] = await Promise.all([
+    sectionProducts(content.collection.collection, {
+      query: { featured: true },
+      href: "/shop",
+    }),
+    sectionProducts(content.lookbook.collection, {
+      query: { sort: "newest" },
+      href: "/shop?sort=newest",
+    }),
+    showTrending
+      ? sectionProducts(content.trending.collection, null)
+      : Promise.resolve({ products: [] as Product[], href: null }),
+  ]);
 
   return (
     <>
@@ -41,7 +86,7 @@ export default async function HomePage() {
           eyebrow={content.collection.eyebrow}
           title={content.collection.title}
           lede={content.collection.lede}
-          action={{ href: "/shop", label: "View all" }}
+          action={{ href: featured.href ?? "/shop", label: "View all" }}
         />
         <div className="mt-14 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
           {featured.products.map((p) => (
@@ -74,22 +119,32 @@ export default async function HomePage() {
             eyebrow={content.lookbook.eyebrow}
             title={content.lookbook.title}
             lede={content.lookbook.lede}
-            action={{ href: "/shop?sort=newest", label: "View all" }}
+            action={{ href: latest.href ?? "/shop?sort=newest", label: "View all" }}
           />
           <div className="mt-14">
-            <ArrivalsRail
-              items={latest.products.map((p) => ({
-                href: `/products/${p.slug}`,
-                src: p.images[0] ?? "/brand/og-hero.jpg",
-                alt: p.title,
-                title: p.title,
-                priceCents: p.priceCents,
-                categoryName: p.categoryName,
-              }))}
-            />
+            <ArrivalsRail items={toRailItems(latest.products)} />
           </div>
         </div>
       </section>
+
+      {/* ---- Trending: the same rail on the plain page colour, so it reads as
+          its own band rather than a continuation of New in. Left out when
+          its block is unpublished or its collection has nothing live. ---- */}
+      {trending.products.length > 0 && (
+        <section className="border-t border-cream-300 py-20 md:py-28">
+          <div className="mx-auto max-w-[1400px] px-5 md:px-10">
+            <SectionHeading
+              eyebrow={content.trending.eyebrow}
+              title={content.trending.title}
+              lede={content.trending.lede}
+              action={trending.href ? { href: trending.href, label: "View all" } : undefined}
+            />
+            <div className="mt-14">
+              <ArrivalsRail items={toRailItems(trending.products)} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <ValueProps />
     </>

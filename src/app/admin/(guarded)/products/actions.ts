@@ -97,6 +97,8 @@ const productSchema = z.object({
 });
 
 type ProductRow = {
+  /** Only on create, when the form made the id up front for its photographs. */
+  id?: string;
   title: string;
   slug: string;
   description: string | null;
@@ -201,14 +203,35 @@ export async function createProduct(
   const parsed = parseProduct(fd);
   if (!parsed.ok) return parsed.state;
 
+  // The new-product form uploads photographs before the product exists, into
+  // products/<newId>/ (the bucket policy pins keys to a product's uuid), and
+  // sends that id and the uploaded URLs with the form.
+  const newId = z.uuid().safeParse(field(fd, "newId"));
+  let pendingImages: string[] = [];
+  try {
+    const raw = JSON.parse(field(fd, "pendingImages") ?? "[]");
+    if (Array.isArray(raw)) pendingImages = raw.filter((u): u is string => typeof u === "string").slice(0, 20);
+  } catch {
+    /* no photographs sent */
+  }
+
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
-    .insert(parsed.row)
+    .insert(newId.success ? { ...parsed.row, id: newId.data } : parsed.row)
     .select("id")
     .single();
 
   if (error) return dbErrorState(error);
+
+  const images = pendingImages
+    .map((url) => imageInputSchema.shape.url.safeParse(url))
+    .filter((r) => r.success)
+    .map((r, position) => ({ product_id: data.id, url: r.data, alt: parsed.row.title, position }));
+  if (images.length) {
+    const { error: imageError } = await supabase.from("product_images").insert(images);
+    if (imageError) console.error("new product photographs were not attached", imageError);
+  }
 
   revalidateCatalogue();
   redirect(`/admin/products/${data.id}/edit?created=1`);
@@ -340,6 +363,8 @@ const imageInputSchema = z.object({
 
 export async function addProductImage(input: {
   productId: string;
+  /** The colour this photograph shows; omitted for a general photograph. */
+  colorId?: string | null;
   url: string;
   alt: string;
   width?: number;
@@ -350,6 +375,7 @@ export async function addProductImage(input: {
   const parsed = imageInputSchema.safeParse(input);
   if (!parsed.success) return { ok: false, message: parsed.error.issues[0]?.message ?? "Invalid image." };
   const v = parsed.data;
+  const colorId = input.colorId && z.uuid().safeParse(input.colorId).success ? input.colorId : null;
 
   const supabase = await createClient();
   const { data: last } = await supabase
@@ -363,6 +389,7 @@ export async function addProductImage(input: {
 
   const { error } = await supabase.from("product_images").insert({
     product_id: v.productId,
+    color_id: colorId,
     url: v.url,
     alt: v.alt,
     position,
@@ -416,15 +443,15 @@ export async function moveProductImage(
   const supabase = await createClient();
   const { data: image, error: readError } = await supabase
     .from("product_images")
-    .select("product_id")
+    .select("product_id, color_id")
     .eq("id", imageId)
     .single();
   if (readError || !image) return { ok: false, message: readError?.message ?? "Image not found." };
 
-  const { data: siblings, error: listError } = await supabase
-    .from("product_images")
-    .select("id")
-    .eq("product_id", image.product_id)
+  // Reorder within the image's own set: the general photographs, or one colour's.
+  let siblingsQuery = supabase.from("product_images").select("id").eq("product_id", image.product_id);
+  siblingsQuery = image.color_id ? siblingsQuery.eq("color_id", image.color_id) : siblingsQuery.is("color_id", null);
+  const { data: siblings, error: listError } = await siblingsQuery
     .order("position", { ascending: true })
     .order("created_at", { ascending: true });
   if (listError || !siblings) return { ok: false, message: listError?.message ?? "Could not read the gallery." };
@@ -481,5 +508,101 @@ export async function deleteProductImage(imageId: string): Promise<ActionResult>
 
   revalidateCatalogue();
   revalidatePath(`/admin/products/${image.product_id}/edit`);
+  return { ok: true };
+}
+
+// ---------------------------------------------------------------------------
+// Colours (0018_product_colours.sql): each has its own stock and photographs.
+// products.stock follows the sum of the colours by trigger.
+// ---------------------------------------------------------------------------
+
+const colourSchema = z.object({
+  name: z.string().trim().min(1, "Give the colour a name.").max(60, "Keep the colour name under 60 characters."),
+  stock: z.coerce
+    .number()
+    .int("Stock must be a whole number.")
+    .min(0, "Stock cannot be negative.")
+    .max(1_000_000, "That stock figure is implausibly large."),
+});
+
+function colourError(error: { code?: string; message: string }): ActionResult {
+  return {
+    ok: false,
+    message: error.code === "23505" ? "This product already has a colour with that name." : error.message,
+  };
+}
+
+export async function addProductColour(input: { productId: string; name: string; stock: string | number }): Promise<ActionResult> {
+  await requireAdmin();
+
+  const productId = z.uuid().safeParse(input.productId);
+  const parsed = colourSchema.safeParse(input);
+  if (!productId.success) return { ok: false, message: "Missing product id." };
+  if (!parsed.success) return { ok: false, message: parsed.error.issues[0]?.message ?? "Invalid colour." };
+
+  const supabase = await createClient();
+  const { data: last } = await supabase
+    .from("product_colors")
+    .select("position")
+    .eq("product_id", productId.data)
+    .order("position", { ascending: false })
+    .limit(1);
+
+  const { error } = await supabase.from("product_colors").insert({
+    product_id: productId.data,
+    name: parsed.data.name,
+    stock: parsed.data.stock,
+    position: (last?.[0]?.position ?? -1) + 1,
+  });
+  if (error) return colourError(error);
+
+  revalidateCatalogue();
+  revalidatePath(`/admin/products/${productId.data}/edit`);
+  return { ok: true };
+}
+
+export async function updateProductColour(
+  colourId: string,
+  input: { name: string; stock: string | number },
+): Promise<ActionResult> {
+  await requireAdmin();
+
+  const id = z.uuid().safeParse(colourId);
+  const parsed = colourSchema.safeParse(input);
+  if (!id.success) return { ok: false, message: "Missing colour id." };
+  if (!parsed.success) return { ok: false, message: parsed.error.issues[0]?.message ?? "Invalid colour." };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("product_colors")
+    .update({ name: parsed.data.name, stock: parsed.data.stock })
+    .eq("id", id.data)
+    .select("product_id")
+    .single();
+  if (error) return colourError(error);
+
+  revalidateCatalogue();
+  revalidatePath(`/admin/products/${data.product_id}/edit`);
+  return { ok: true };
+}
+
+/** Its photographs stay on the product as general ones (color_id is set null). */
+export async function deleteProductColour(colourId: string): Promise<ActionResult> {
+  await requireAdmin();
+
+  const id = z.uuid().safeParse(colourId);
+  if (!id.success) return { ok: false, message: "Missing colour id." };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("product_colors")
+    .delete()
+    .eq("id", id.data)
+    .select("product_id")
+    .single();
+  if (error) return { ok: false, message: error.message };
+
+  revalidateCatalogue();
+  revalidatePath(`/admin/products/${data.product_id}/edit`);
   return { ok: true };
 }

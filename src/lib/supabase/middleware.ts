@@ -50,6 +50,12 @@ export async function updateSession(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   const { pathname } = request.nextUrl;
 
+  // Signed in is all this checks. /admin/verify (the emailed-code step) is
+  // reachable for any signed-in user; whether they are an admin and whether
+  // this session has entered its code is decided by requireAdmin() and, for
+  // the data itself, by is_admin() in the database (0022_admin_email_2fa.sql).
+  // A signed-in visitor to /admin/login goes to /admin, which forwards an
+  // unverified admin to /admin/verify — where "sign out" lets them switch.
   const isAdminArea = pathname.startsWith("/admin");
   const isLoginPage = pathname === "/admin/login";
 

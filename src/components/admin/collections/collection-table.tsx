@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ImageOff } from "lucide-react";
+import { House, ImageOff } from "lucide-react";
 import type { CollectionListRow } from "@/app/admin/(guarded)/collections/data";
 import { cn } from "@/lib/utils";
 import { CollectionRowActions, CollectionStatusToggle } from "./row-actions";
@@ -29,7 +29,14 @@ function Thumbnail({ url }: { url: string | null }) {
   );
 }
 
-export function CollectionTable({ rows }: { rows: CollectionListRow[] }) {
+export function CollectionTable({
+  rows,
+  homeSections = {},
+}: {
+  rows: CollectionListRow[];
+  /** Collection id -> the home-page sections it fills ("Featured", "New in"…). */
+  homeSections?: Record<string, string[]>;
+}) {
   return (
     <div className="overflow-hidden rounded-3xl border border-cream-300 bg-white">
       <div className="overflow-x-auto">
@@ -78,6 +85,12 @@ export function CollectionTable({ rows }: { rows: CollectionListRow[] }) {
                         {row.name}
                       </Link>
                       <p className="mt-0.5 truncate text-xs text-ink-600">/collections/{row.slug}</p>
+                      {homeSections[row.id]?.length ? (
+                        <p className="mt-1.5 inline-flex items-center gap-1.5 rounded-full border border-wine-700/25 bg-wine-700/8 px-2.5 py-0.5 text-[11px] font-medium text-wine-700">
+                          <House className="h-3 w-3" strokeWidth={2} aria-hidden />
+                          Home page: {homeSections[row.id].join(", ")}
+                        </p>
+                      ) : null}
                       {row.description && (
                         <p className="mt-1 max-w-[34ch] truncate text-xs text-ink-600">
                           {row.description}

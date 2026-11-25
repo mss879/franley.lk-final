@@ -8,7 +8,7 @@ steps 4–6 can follow the same day.
 ## 1. Supabase — the database
 
 Follow **[supabase/README.md](supabase/README.md)** end to end. It covers
-creating the project, running the seventeen migration files in order (then
+creating the project, running the twenty-two migration files in order (then
 `0010_guardrails.sql` once more), creating your admin login by hand, and the two
 dashboard settings that must be changed.
 

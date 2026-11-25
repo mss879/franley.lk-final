@@ -48,7 +48,7 @@ function bannerPreview(index: number): PreviewSpec {
   };
 }
 
-function headingPreview(slot: "collection" | "lookbook"): PreviewSpec {
+function headingPreview(slot: "collection" | "lookbook" | "trending"): PreviewSpec {
   return {
     dark: false,
     render: (payload) => {
@@ -87,6 +87,7 @@ const PREVIEWS: Record<string, PreviewSpec> = {
   },
   "home:collection": headingPreview("collection"),
   "home:lookbook": headingPreview("lookbook"),
+  "home:trending": headingPreview("trending"),
   "global:announcement": {
     dark: true,
     render: (payload) => {

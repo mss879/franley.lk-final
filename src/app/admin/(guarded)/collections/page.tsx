@@ -5,6 +5,7 @@ import { AdminPageShell } from "@/components/admin/page-shell";
 import { CategoryFeedback } from "@/components/admin/categories/feedback";
 import { CollectionTable } from "@/components/admin/collections/collection-table";
 import { listCollections } from "./data";
+import { getHomeSections } from "../content/home-sections";
 
 export const metadata: Metadata = { title: "Collections" };
 
@@ -48,6 +49,16 @@ export default async function CollectionsPage({
 
   const active = rows.filter((row) => row.isActive).length;
 
+  // Which collections fill the home page's Featured / New in / Trending.
+  const sections = await getHomeSections(
+    rows.map((r) => ({ id: r.id, slug: r.slug, name: r.name, isActive: r.isActive, liveCount: r.liveCount })),
+  ).catch(() => []);
+  const homeSections: Record<string, string[]> = {};
+  for (const s of sections) {
+    if (!s.collection || !s.shown) continue;
+    (homeSections[s.collection.id] ??= []).push(s.name);
+  }
+
   return (
     <AdminPageShell
       title="Collections"
@@ -75,8 +86,21 @@ export default async function CollectionsPage({
           </div>
 
           <CategoryFeedback>
-            <CollectionTable rows={rows} />
+            <CollectionTable rows={rows} homeSections={homeSections} />
           </CategoryFeedback>
+
+          <p className="mt-5 max-w-2xl text-xs leading-relaxed text-ink-600">
+            Collections marked “Home page” fill the Featured, New in and Trending sections of the
+            home page — open one to choose its products and their order. Which collection each
+            section uses, and its heading, are under{" "}
+            <Link
+              href="/admin/content"
+              className="text-wine-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            >
+              Home page &amp; Banners
+            </Link>
+            .
+          </p>
 
           <p className="mt-5 max-w-2xl text-xs leading-relaxed text-ink-600">
             Deleting a collection only removes the grouping — every product in it stays in the

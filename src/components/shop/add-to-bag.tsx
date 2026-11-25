@@ -4,25 +4,34 @@ import { useState } from "react";
 import { Minus, Plus, Check } from "lucide-react";
 import { useCart } from "@/lib/cart/cart-context";
 import { Button } from "@/components/ui/button";
+import { useProductColour } from "@/components/shop/product-colours";
 import type { Product } from "@/types/domain";
 
 export function AddToBag({ product }: { product: Product }) {
   const { add } = useCart();
+  const colour = useProductColour();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
 
+  // A product sold in colours is bought in one of them, from that colour's stock.
+  const selected = colour?.selected ?? null;
+  const needsColour = Boolean(colour) && !selected;
+  const stock = selected ? selected.stock : product.stock;
   const soldOut = product.stock <= 0;
+  const colourSoldOut = Boolean(selected) && stock <= 0;
 
   const onAdd = () => {
+    if (needsColour || colourSoldOut) return;
     add({
       productId: product.id,
       slug: product.slug,
       title: product.title,
       priceCents: product.priceCents,
-      image: product.images[0] ?? null,
-      colorName: product.colorName,
-      maxQuantity: product.stock,
-      quantity: qty,
+      image: selected?.images[0] ?? product.images[0] ?? null,
+      colorId: selected?.id ?? null,
+      colorName: selected?.name ?? product.colorName,
+      maxQuantity: stock,
+      quantity: Math.min(qty, stock),
     });
     setAdded(true);
     window.setTimeout(() => setAdded(false), 2000);
@@ -51,8 +60,8 @@ export function AddToBag({ product }: { product: Product }) {
         <span className="min-w-6 text-center text-sm tabular-nums" aria-live="polite">{qty}</span>
         <button
           type="button"
-          onClick={() => setQty((q) => Math.min(product.stock, q + 1))}
-          disabled={qty >= product.stock}
+          onClick={() => setQty((q) => Math.min(Math.max(stock, 1), q + 1))}
+          disabled={qty >= stock}
           aria-label="Increase quantity"
           className="grid h-12 w-12 place-items-center rounded-full transition-colors hover:text-wine-700 disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
         >
@@ -62,8 +71,17 @@ export function AddToBag({ product }: { product: Product }) {
 
       {/* sm:flex-1 only: in the stacked mobile column, flex-1 sets a 0 basis on
           the vertical axis and collapsed this 56px button to its 20px text. */}
-      <Button onClick={onAdd} size="lg" className="w-full sm:w-auto sm:flex-1">
-        {added ? (
+      <Button
+        onClick={onAdd}
+        size="lg"
+        disabled={needsColour || colourSoldOut}
+        className="w-full sm:w-auto sm:flex-1"
+      >
+        {needsColour ? (
+          "Choose a colour"
+        ) : colourSoldOut ? (
+          "This colour is sold out"
+        ) : added ? (
           <>
             <Check className="h-4 w-4" strokeWidth={2} aria-hidden />
             Added to bag

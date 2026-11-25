@@ -26,11 +26,25 @@ export const FIELD_TYPES = [
   "number",
   "select",
   "string_list",
+  // The slug of a collection, picked from a list of the shop's collections
+  // (0020_home_sections.sql). Options come from the database at render time,
+  // not from the descriptor.
+  "collection",
 ] as const;
 
 export type FieldType = (typeof FIELD_TYPES)[number];
 
 export type SelectOption = { value: string; label: string };
+
+/** A collection a "collection" field can point at, with what the admin needs to judge it. */
+export type CollectionOption = {
+  id: string;
+  slug: string;
+  name: string;
+  isActive: boolean;
+  /** Active products in it — what the storefront would actually show. */
+  liveCount: number;
+};
 
 export type FieldDescriptor = {
   /** Dotted path into payload ("primaryCta.label"), or "$root" when the payload itself is the value. */
@@ -219,10 +233,14 @@ export function pageLabel(page: string) {
 /** Where on the storefront a block shows up, in words the client can act on. */
 const BLOCK_LOCATIONS: Record<string, string> = {
   "home:hero": "The big banner at the top of the home page",
+  "home:banner_1": "The first slide of the big banner at the top of the home page",
+  "home:banner_2": "The second slide of the big banner at the top of the home page",
+  "home:showcase": "The two large category cards directly under the banner",
+  "home:trending": "The Trending rail of product cards near the bottom of the home page",
   "home:editorial": "The story band with the two overlapping photographs",
   "home:marquee": "The scrolling strip of short phrases under the hero",
-  "home:collection": "The heading above the featured product grid",
-  "home:lookbook": "The heading above the new-arrivals cards",
+  "home:collection": "The Featured product grid under the category cards",
+  "home:lookbook": "The New in rail of product cards on the tinted band",
   "home:categories": "The heading above the category tiles",
   "global:announcement": "The thin strip across the very top of every page",
 };

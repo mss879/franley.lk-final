@@ -57,7 +57,7 @@ export default async function MediaLibraryPage({
         )}
       >
         <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
-        Content &amp; Banners
+        Home page &amp; Banners
       </Link>
 
       {error && (

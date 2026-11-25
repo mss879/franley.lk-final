@@ -14,6 +14,7 @@ import { PaymentStatusControls } from "@/components/admin/orders/payment-status-
 import { EmailLog, type EmailLogRow } from "@/components/admin/orders/email-log";
 import { emailEnabled } from "@/lib/email/send";
 import { OrderCancelForm } from "@/components/admin/orders/order-cancel-form";
+import { OrderDeleteForm } from "@/components/admin/orders/order-delete-form";
 import { AdminNoteForm, TrackingForm } from "@/components/admin/orders/order-annotations";
 import { OrderTimeline, type OrderEvent } from "@/components/admin/orders/order-timeline";
 import { formatDateTime, whatsappHref } from "@/components/admin/orders/format";
@@ -22,6 +23,7 @@ import { payhereRefundEnabled } from "@/lib/payhere";
 import {
   CANCELLABLE_STATUSES,
   NEXT_STATUSES,
+  canDeleteOrder,
   PAYMENT_METHOD_LABEL,
   type OrderStatus,
   type PaymentMethod,
@@ -159,6 +161,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
   const refundNote =
     events.find((e) => e.note && /PayHere( refund| shows payment|: refunded)/i.test(e.note))?.note ?? null;
   const canCancel = CANCELLABLE_STATUSES.includes(order.status);
+  const canDelete = canDeleteOrder(order.status, order.payment_status);
 
   const waText = `Hello ${order.customer_name.split(" ")[0]}, this is Franley about your order ${order.order_number}.`;
 
@@ -435,6 +438,14 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
           </Card>
 
           {canCancel && <OrderCancelForm orderId={order.id} />}
+
+          {canDelete && (
+            <OrderDeleteForm
+              orderId={order.id}
+              orderNumber={order.order_number}
+              cancelled={order.status === "cancelled"}
+            />
+          )}
         </aside>
       </div>
     </AdminPageShell>

@@ -5,6 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { AdminPageShell } from "@/components/admin/page-shell";
 import { ProductForm, type ProductFormValues } from "@/components/admin/products/product-form";
 import { ProductImages, type ProductImageRow } from "@/components/admin/products/product-images";
+import { ProductColours, type ProductColourRow } from "@/components/admin/products/product-colours";
 import { resolveImageSrc, type ProductStatus } from "@/components/admin/products/shared";
 import { createClient } from "@/lib/supabase/server";
 import { getCategoryOptions } from "../../queries";
@@ -47,7 +48,7 @@ export default async function EditProductPage({
 
   const supabase = await createClient();
 
-  const [{ data, error }, imagesResult, categories] = await Promise.all([
+  const [{ data, error }, imagesResult, coloursResult, categories] = await Promise.all([
     supabase
       .from("products")
       .select(
@@ -57,7 +58,13 @@ export default async function EditProductPage({
       .maybeSingle(),
     supabase
       .from("product_images")
-      .select("id, url, alt, position")
+      .select("id, url, alt, position, color_id")
+      .eq("product_id", id)
+      .order("position", { ascending: true })
+      .order("created_at", { ascending: true }),
+    supabase
+      .from("product_colors")
+      .select("id, name, stock")
       .eq("product_id", id)
       .order("position", { ascending: true })
       .order("created_at", { ascending: true }),
@@ -68,7 +75,10 @@ export default async function EditProductPage({
   if (!data) notFound();
 
   const product = data as ProductRow;
-  const images = (imagesResult.data ?? []) as ProductImageRow[];
+  const allImages = (imagesResult.data ?? []) as (ProductImageRow & { color_id: string | null })[];
+  // General photographs open the product page; each colour's are shown once picked.
+  const images = allImages.filter((img) => !img.color_id);
+  const colours = (coloursResult.data ?? []) as ProductColourRow[];
 
   const initial: ProductFormValues = {
     title: product.title,
@@ -98,7 +108,8 @@ export default async function EditProductPage({
           role="status"
           className="mb-6 rounded-2xl border border-cream-300 bg-cream-100 px-4 py-3 text-sm text-ink-800"
         >
-          Product created. Add its photographs below, then set the status to Active when it is ready.
+          Product created. Add colours and their photographs below if it comes in several, then set the
+          status to Active when it is ready.
         </p>
       )}
 
@@ -120,9 +131,21 @@ export default async function EditProductPage({
         productId={product.id}
         initial={initial}
         categories={categories}
-        previewImage={images[0] ? resolveImageSrc(images[0].url) : null}
+        previewImage={(images[0] ?? allImages[0]) ? resolveImageSrc((images[0] ?? allImages[0]).url) : null}
+        stockFromColours={colours.length > 0}
       >
-        <ProductImages productId={product.id} productTitle={product.title} images={images} />
+        <ProductImages
+          productId={product.id}
+          productTitle={product.title}
+          images={images}
+          heading={colours.length ? "General photographs" : "Photographs"}
+          description={
+            colours.length
+              ? "The whole range together. The product page opens on these; each colour's own photographs are below."
+              : "Shot on white. The first image is the one the product card uses."
+          }
+        />
+        <ProductColours productId={product.id} productTitle={product.title} colours={colours} images={allImages} />
       </ProductForm>
     </AdminPageShell>
   );

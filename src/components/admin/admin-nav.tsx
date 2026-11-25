@@ -9,6 +9,7 @@ import {
   Image as ImageIcon, LogOut, Menu, X, ExternalLink,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { signOutAdmin } from "@/app/admin/verify/actions";
 import { cn } from "@/lib/utils";
 import { useFocusTrap } from "@/lib/a11y/use-focus-trap";
 
@@ -19,7 +20,7 @@ const LINKS = [
   { href: "/admin/products", label: "Products", Icon: Package },
   { href: "/admin/categories", label: "Categories", Icon: FolderTree },
   { href: "/admin/collections", label: "Collections", Icon: Layers },
-  { href: "/admin/content", label: "Content & Banners", Icon: ImageIcon },
+  { href: "/admin/content", label: "Home page & Banners", Icon: ImageIcon },
   { href: "/admin/settings", label: "Settings", Icon: Settings },
 ];
 
@@ -34,10 +35,17 @@ export function AdminNav({ email }: { email: string }) {
   // the tab order. Same defect and same fix as the storefront header.
   useFocusTrap({ active: open, containerRef: drawerRef, onClose: () => setOpen(false) });
 
+  // Server-side, so this session's verified-admin row (0022) is deleted with
+  // the service key before the Supabase session ends. The browser sign-out
+  // is the fallback if the action cannot be reached.
   const signOut = async () => {
-    await createClient().auth.signOut();
-    router.replace("/admin/login");
-    router.refresh();
+    try {
+      await signOutAdmin();
+    } catch {
+      await createClient().auth.signOut();
+      router.replace("/admin/login");
+      router.refresh();
+    }
   };
 
   const isActive = (href: string, exact?: boolean) =>

@@ -62,6 +62,21 @@ export const NEXT_STATUSES: Record<OrderStatus, OrderStatus[]> = {
  *  order that is already cancelled. */
 export const CANCELLABLE_STATUSES: OrderStatus[] = ["pending", "confirmed", "packed", "shipped"];
 
+/**
+ * Mirrors the rule in admin_delete_order (0021): an order may be deleted only
+ * when no money was ever received for it AND it is cancelled or has not
+ * shipped. Paid, refunded, shipped and delivered orders are a financial record
+ * and stay. The database is the authority — this only decides whether the
+ * button is shown. (It also refuses a card order under an hour old, which the
+ * button leaves to the database's message.)
+ */
+export const DELETABLE_PAYMENT_STATUSES: PaymentStatus[] = ["unpaid", "pending", "failed"];
+export const DELETABLE_STATUSES: OrderStatus[] = ["cancelled", "pending", "confirmed", "packed"];
+
+export function canDeleteOrder(status: OrderStatus, paymentStatus: PaymentStatus): boolean {
+  return DELETABLE_PAYMENT_STATUSES.includes(paymentStatus) && DELETABLE_STATUSES.includes(status);
+}
+
 export function isOrderStatus(value: string): value is OrderStatus {
   return (ORDER_STATUSES as readonly string[]).includes(value);
 }

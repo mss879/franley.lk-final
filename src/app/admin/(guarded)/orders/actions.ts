@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/supabase/admin-guard";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
@@ -160,6 +161,48 @@ export async function cancelOrder(_prev: ActionState, formData: FormData): Promi
     message: parsed.data.restock
       ? "Order cancelled and the stock returned to the shelf."
       : "Order cancelled. Stock was left as it is.",
+  };
+}
+
+const deleteSchema = z.object({
+  orderId: idSchema,
+  redirectToList: z.boolean(),
+});
+
+/**
+ * Deletes a cancelled or never-paid, unshipped order through
+ * admin_delete_order (0021) — there is no DELETE grant on orders, so this RPC
+ * is the only way. It refuses anything that became a sale, returns the stock of
+ * an order that was not yet cancelled (through admin_cancel_order) and
+ * recomputes the customer's totals. No email: the order no longer exists.
+ */
+export async function deleteOrder(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  await requireAdmin();
+
+  const parsed = deleteSchema.safeParse({
+    orderId: field(formData, "orderId"),
+    redirectToList: field(formData, "redirectToList") === "1",
+  });
+  if (!parsed.success) return firstIssue(parsed.error);
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_delete_order", { p_order_id: parsed.data.orderId });
+  if (error) return { ok: false, message: error.message };
+
+  const result = data as { order_number?: string; restocked?: boolean } | null;
+  const number = result?.order_number ?? "The order";
+
+  // Every admin screen that counts orders or customer totals is now stale.
+  revalidatePath("/admin", "layout");
+
+  // redirect() throws, so it stays outside any try/catch.
+  if (parsed.data.redirectToList) {
+    redirect(`/admin/orders?deleted=${encodeURIComponent(number)}${result?.restocked ? "&restocked=1" : ""}`);
+  }
+
+  return {
+    ok: true,
+    message: `${number} was deleted${result?.restocked ? " and its stock returned to the shelf" : ""}.`,
   };
 }
 

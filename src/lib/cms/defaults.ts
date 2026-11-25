@@ -12,9 +12,43 @@ export type HomeContent = {
   showcase: ShowcaseContent;
   editorial: EditorialContent;
   marquee: string[];
-  collection: { eyebrow: string; title: string; lede: string };
-  lookbook: { eyebrow: string; title: string; lede: string };
+  /** The Featured product grid. */
+  collection: ProductSection;
+  /** The New-in rail. */
+  lookbook: ProductSection;
+  /** The Trending rail. */
+  trending: ProductSection;
+  /** Product sections whose block the admin has unpublished — see getHomeContent(). */
+  hiddenSections: ProductSectionKey[];
 };
+
+/**
+ * A home-page product section: a heading the owner writes, and the slug of the
+ * collection whose products fill it (0020_home_sections.sql).
+ */
+export type ProductSection = {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  collection: string;
+};
+
+export type ProductSectionKey = "collection" | "lookbook" | "trending";
+
+/**
+ * The three product sections, keyed by their content_blocks key. `name` is
+ * what the admin calls the section; `fallback` says, in the owner's words,
+ * what the section shows when its collection is empty or missing.
+ */
+export const HOME_PRODUCT_SECTIONS: {
+  key: ProductSectionKey;
+  name: string;
+  fallback: string;
+}[] = [
+  { key: "collection", name: "Featured", fallback: "the products ticked “Featured”" },
+  { key: "lookbook", name: "New in", fallback: "the eight newest products" },
+  { key: "trending", name: "Trending", fallback: "nothing — the section is left out" },
+];
 
 export const DEFAULT_HOME: HomeContent = {
   heroSlides: [
@@ -82,12 +116,21 @@ export const DEFAULT_HOME: HomeContent = {
     eyebrow: "The Collection",
     title: "Pieces worth the knot",
     lede: "A tight, considered range — solids that go with everything and stripes that do the talking.",
+    collection: "featured",
   },
   lookbook: {
     eyebrow: "Just in",
     title: "New this season",
     lede: "The latest additions to the range — worth a look before they move.",
+    collection: "new-in",
   },
+  trending: {
+    eyebrow: "Trending",
+    title: "Most wanted right now",
+    lede: "The pieces customers keep coming back for.",
+    collection: "trending",
+  },
+  hiddenSections: [],
 };
 
 /**

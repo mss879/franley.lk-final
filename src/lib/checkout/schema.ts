@@ -21,12 +21,16 @@ const phone = z
 
 export const checkoutSchema = z.object({
   email: z.email("Enter a valid email address").max(254, "That email address is too long"),
-  fullName: z.string().trim().min(2, "Enter your full name").max(120),
+  firstName: z.string().trim().min(1, "Enter your first name").max(60),
+  lastName: z.string().trim().min(1, "Enter your last name").max(60),
   phone,
-  addressLine1: z.string().trim().min(4, "Enter your street address").max(200),
+  // A second number the courier can try. It travels in the order note, so the
+  // database and its place_order contract stay as they are.
+  phone2: phone.optional().or(z.literal("")),
+  addressLine1: z.string().trim().min(4, "Enter your address").max(200),
   addressLine2: z.string().trim().max(200).optional().or(z.literal("")),
-  city: z.string().trim().min(2, "Enter your city").max(100),
-  district: z.enum(SL_DISTRICTS),
+  // One "City / District" field: the district doubles as the city.
+  district: z.enum(SL_DISTRICTS, "Choose your city or district"),
   postalCode: z
     .string()
     .trim()
@@ -44,6 +48,8 @@ export const checkoutSchema = z.object({
     .array(
       z.object({
         productId: z.string().min(1),
+        // The colour chosen, for a product sold in several (product_colors.id).
+        colorId: z.uuid().nullish(),
         quantity: z.number().int().min(1).max(99),
       }),
     )

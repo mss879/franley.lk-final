@@ -42,7 +42,8 @@ export default async function AdminLoginPage({
         <div className="mt-8 rounded-3xl bg-cream-50 p-8">
           <h1 className="font-display text-2xl">Sign in</h1>
           <p className="mt-2 text-sm text-ink-600">
-            Use the account created for you in Supabase.
+            Use the account created for you in Supabase. We will then email
+            you a 6-digit code to finish signing in.
           </p>
           <LoginForm nextPath={next} initialError={error ? ERRORS[error] : undefined} />
         </div>

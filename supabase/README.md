@@ -4,7 +4,7 @@ This folder holds the database for **franley.lk**: the products, the categories,
 the orders, and the content you can edit from the admin panel.
 
 It is written for someone who has never used a database before. You do not need
-to understand the SQL. You need to **paste seventeen files, in order, into one box on
+to understand the SQL. You need to **paste twenty-two files, in order, into one box on
 a website**, run the safety check once more at the end, and then create your admin
 login. That is the whole job. It takes about twenty minutes.
 
@@ -29,10 +29,10 @@ You need:
 
 ---
 
-## Step 2 — Run the seventeen migration files, in order
+## Step 2 — Run the twenty-two migration files, in order
 
-Everything the database needs is in `supabase/migrations/`. There are seventeen files.
-**Run them in number order — 0001 first, 0017 last — then run `0010_guardrails.sql`
+Everything the database needs is in `supabase/migrations/`. There are twenty-two files.
+**Run them in number order — 0001 first, 0022 last — then run `0010_guardrails.sql`
 one more time.** Each one builds on the one before it, and the final re-run of 0010
 checks the files that came after it the first time round.
 
@@ -44,7 +44,7 @@ checks the files that came after it the first time round.
 5. You should see **Success. No rows returned**, or a short green notice. That
    is what success looks like.
 6. Clear the box, and repeat steps 3–5 for `0002`, then `0003`, and so on,
-   all the way to `0017`.
+   all the way to `0022`.
 7. Finally, run `0010_guardrails.sql` once more.
 
 Some of the files print a friendly summary when they finish:
@@ -65,7 +65,7 @@ If you see those lines, the database is correct.
 
 ### If you prefer the command line
 
-If you have the Supabase CLI installed, the same seventeen files run with:
+If you have the Supabase CLI installed, the same twenty-two files run with:
 
 ```bash
 supabase link --project-ref <your-project-ref>
@@ -187,6 +187,11 @@ The database cannot do these for you.
 | `0015_ops_and_fixes.sql` | Releasing abandoned card orders, real contact details in the settings, and a few small fixes. |
 | `0016_security_hardening.sql` | Security fixes: only the website's server can place an order, order pages can no longer be locked out, uploaded images cannot be listed, and admin rights need a confirmed account. |
 | `0017_push_notifications.sql` | New-order alerts on your phone: the devices that have alerts turned on, and a record so each order rings only once. |
+| `0018_product_colours.sql` | Colour options on a product, each with its own photographs and stock. Checkout takes stock from the colour bought; cancelling puts it back there. |
+| `0019_tie_categories.sql` | Two more categories under Neckties: Modern ties and Regular ties (wider than 7.5 cm). |
+| `0020_home_sections.sql` | The home page's Featured, New in and Trending sections each show a collection you choose, so you pick their products under Collections. |
+| `0021_delete_orders.sql` | Deleting an order from the admin — only one that was never paid and never shipped. Paid, refunded and shipped orders are kept. |
+| `0022_admin_email_2fa.sql` | Two-step sign-in for the admin: a 6-digit code emailed at every sign-in, enforced by the database. The file's header has the emergency switch if emails ever stop arriving. |
 
 ---
 
