@@ -52,6 +52,7 @@ export function Header() {
   }, [menuOpen]);
 
   return (
+    <>
     <header
       className={cn(
         "sticky top-0 z-50 transition-colors duration-500 ease-[--ease-lux]",
@@ -151,11 +152,16 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile sheet */}
+    </header>
+
+      {/* Mobile sheet. A sibling of the header, not a child: the header's
+          backdrop-blur makes it the containing block for fixed descendants,
+          which shrank this "full-screen" sheet to the header's 80px and left
+          the links floating over the page. */}
       <div
         ref={sheetRef}
         hidden={!menuOpen}
-        className="focus-on-dark fixed inset-0 z-50 bg-ink-900 text-cream-100 lg:hidden"
+        className="focus-on-dark fixed inset-0 z-[60] overflow-y-auto bg-ink-900 text-cream-100 lg:hidden"
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
@@ -189,6 +195,6 @@ export function Header() {
           </ButtonLink>
         </nav>
       </div>
-    </header>
+    </>
   );
 }
