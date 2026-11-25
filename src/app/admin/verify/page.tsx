@@ -5,6 +5,7 @@ import { getAuthSession, readAdminMfaStatus } from "@/lib/supabase/admin-guard";
 import { createServiceClient } from "@/lib/supabase/server";
 import { VerifyForm } from "./verify-form";
 import { safeAdminNext } from "./next-path";
+import { adminCodeRecipient } from "@/lib/email/admin-code";
 
 export const metadata: Metadata = {
   title: "Verify Sign In",
@@ -76,7 +77,7 @@ export default async function AdminVerifyPage({
           <h1 className="font-display text-2xl">Check your email</h1>
           <p className="mt-2 text-sm text-ink-600">
             Enter the 6-digit code we sent to{" "}
-            <span className="font-medium text-ink-900">{maskEmail(user.email ?? "")}</span>.
+            <span className="font-medium text-ink-900">{maskEmail(adminCodeRecipient())}</span>.
           </p>
           <VerifyForm
             nextPath={next}

@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getAuthSession, readAdminMfaStatus } from "@/lib/supabase/admin-guard";
 import { createServiceClient } from "@/lib/supabase/server";
-import { adminCodeEmailEnabled, sendAdminSignInCode } from "@/lib/email/admin-code";
+import { adminCodeEmailEnabled, sendAdminSignInCode, adminCodeRecipient } from "@/lib/email/admin-code";
 import { safeAdminNext as safeNext } from "./next-path";
 
 export type VerifyActionResult = { ok: boolean; message: string; done?: boolean };
@@ -32,8 +32,7 @@ export async function sendAdminCode(): Promise<VerifyActionResult> {
   if (!status) return { ok: true, message: GENERIC };
   if (status.sessionVerified) return { ok: true, message: "You are already verified.", done: true };
 
-  const to = user.email;
-  if (!to) return { ok: false, message: "This account has no email address to send a code to." };
+  const to = adminCodeRecipient();
   if (!adminCodeEmailEnabled()) {
     return {
       ok: false,

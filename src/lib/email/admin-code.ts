@@ -69,3 +69,11 @@ export async function sendAdminSignInCode(opts: {
     return { sent: false, reason: message };
   }
 }
+
+/**
+ * Where every admin sign-in code goes: the shop's support inbox, not the
+ * signing-in account's own address. ADMIN_CODE_EMAIL overrides it.
+ */
+export function adminCodeRecipient(): string {
+  return process.env.ADMIN_CODE_EMAIL?.trim() || "support@franley.lk";
+}
